@@ -41,31 +41,19 @@ function toolCard(id) {
 }
 function workflowDiagram(stages) {
   const edge = (from, to, type, d, label = '', x = 0, y = 0) => `<g class="workflow-connection edge-${type}" data-from="${from}" data-to="${to}"><path d="${d}" marker-end="url(#workflow-arrow-${type})"/>${label ? `<text x="${x}" y="${y}">${label}</text>` : ''}</g>`;
-  const desktop = [
-    edge('goals', 'data', 'main', 'M225 140H275'),
-    edge('data', 'training', 'main', 'M475 140H525'),
-    edge('training', 'evaluation', 'main', 'M725 140H775'),
-    edge('evaluation', 'serving', 'pass', 'M875 182V258', '通过', 915, 225),
-    edge('serving', 'feedback', 'main', 'M775 300H725'),
-    edge('evaluation', 'training', 'rework', 'M835 98V65H625V98', '未通过：改模型', 730, 56),
-    edge('evaluation', 'data', 'rework', 'M910 98V25H375V98', '未通过：补数据', 620, 20),
-    edge('serving', 'evaluation', 'rework', 'M825 258V215H800V182', '优化后回归评测', 730, 220),
-    edge('feedback', 'goals', 'iteration', 'M525 300H125V182', '下一轮迭代', 325, 290)
+  const edges = [
+    edge('goals', 'data', 'main', 'M180 70H220'),
+    edge('data', 'training', 'main', 'M380 70H420'),
+    edge('training', 'evaluation', 'main', 'M580 70H620'),
+    edge('evaluation', 'serving', 'pass', 'M780 70H820', '通过', 800, 54),
+    edge('serving', 'feedback', 'main', 'M980 70H1020'),
+    edge('evaluation', 'training', 'rework', 'M675 112V158H500V112', '未通过：改模型', 585, 149),
+    edge('evaluation', 'data', 'rework', 'M715 112V208H300V112', '未通过：补数据', 505, 199),
+    edge('serving', 'evaluation', 'rework', 'M900 112V158H745V112', '优化后回归评测', 825, 149),
+    edge('feedback', 'goals', 'iteration', 'M1100 112V260H100V112', '下一轮迭代', 600, 251)
   ].join('');
-  const compact = [
-    edge('goals', 'data', 'main', 'M172 80H228'),
-    edge('data', 'training', 'main', 'M300 122V198'),
-    edge('training', 'evaluation', 'main', 'M228 240H172'),
-    edge('evaluation', 'serving', 'pass', 'M100 282V388', '通过', 125, 340),
-    edge('serving', 'feedback', 'main', 'M172 430H228'),
-    edge('evaluation', 'training', 'rework', 'M135 198V160H265V198', '未通过：改模型', 200, 153),
-    edge('evaluation', 'data', 'rework', 'M28 220H0V20H300V38', '未通过：补数据', 200, 15),
-    edge('serving', 'evaluation', 'rework', 'M145 388V282', '优化后回归评测', 240, 340),
-    edge('feedback', 'goals', 'iteration', 'M300 472V530H12V80H28', '下一轮迭代', 200, 552)
-  ].join('');
-  const svg = (layout, viewBox, edges) => `<svg class="workflow-lines workflow-${layout}" viewBox="${viewBox}" preserveAspectRatio="none" role="img" aria-label="评测通过进入发布；未通过返回模型或数据；优化后回归评测；运行反馈返回目标，开始下一轮迭代。">${(markers + edges).replaceAll('workflow-arrow-', `workflow-${layout}-arrow-`)}</svg>`;
   const markers = `<defs>${['main', 'pass', 'rework', 'iteration'].map(type => `<marker id="workflow-arrow-${type}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="arrow-${type}" d="M1 1L9 5L1 9Z"/></marker>`).join('')}</defs>`;
-  return `<figure class="workflow-diagram"><div class="workflow-canvas">${svg('desktop', '0 0 1000 400', desktop)}${svg('compact', '0 0 400 580', compact)}${stages.map(m => `<a class="workflow-step workflow-${m.id} tone-${m.id}" href="${moduleLink(m.id)}"><span class="step-number">${m.number}</span><span class="step-icon">${icon(m.icon)}</span><strong>${m.title}</strong><small>${m.english}</small></a>`).join('')}</div><figcaption class="workflow-legend"><span class="legend-main">研发主线</span><span class="legend-pass">评测通过</span><span class="legend-rework">未通过 / 回归评测</span><span class="legend-iteration">下一轮迭代</span></figcaption></figure>`;
+  return `<figure class="workflow-diagram"><div class="workflow-viewport" tabindex="0" aria-label="研发流程图，可横向滚动"><div class="workflow-canvas"><svg class="workflow-lines" viewBox="0 0 1200 300" preserveAspectRatio="none" role="img" aria-label="六个阶段从左到右展开；评测通过进入发布；下方箭头表示未通过返回模型或数据、优化后回归评测，以及运行反馈返回目标的下一轮迭代。">${markers}${edges}</svg>${stages.map(m => `<a class="workflow-step workflow-${m.id} tone-${m.id}" href="${moduleLink(m.id)}"><span class="step-number">${m.number}</span><span class="step-icon">${icon(m.icon)}</span><strong>${m.title}</strong><small>${m.english}</small></a>`).join('')}</div></div><figcaption class="workflow-legend"><span class="legend-main">研发主线</span><span class="legend-pass">评测通过</span><span class="legend-rework">未通过 / 回归评测</span><span class="legend-iteration">下一轮迭代</span></figcaption></figure>`;
 }
 function home() {
   renderNavigation('home'); breadcrumbs('研发总览');
