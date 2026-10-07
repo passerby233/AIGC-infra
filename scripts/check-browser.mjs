@@ -163,20 +163,43 @@ try {
   await route('#/tools', '平台与工具');
   await evaluate(`document.querySelector('[data-filter="all"]').click();document.querySelector('[data-preview="prim-eval"]').click()`);
   await waitFor('document.querySelector("#main h1")?.textContent === "评测与验收" && location.hash.includes("section=interface-preview")');
-  const cleaned = await evaluate(`(async()=>{const {renderMarkdown}=await import('./app.mjs');return renderMarkdown('<script>window.bad=1</script><img src=x onerror=alert(1)><a href="javascript:alert(1)">bad</a><iframe src="https://invalid/"></iframe><a href="../project.yaml">project</a>','algorithm-template/docs/problem.md')})()`);
+  const cleaned = await evaluate(`(async()=>{const {renderMarkdown}=await import(document.querySelector('script[type="module"]').src);return renderMarkdown('<script>window.bad=1</script><img src=x onerror=alert(1)><a href="javascript:alert(1)">bad</a><iframe src="https://invalid/"></iframe><a href="../project.yaml">project</a>','algorithm-template/docs/problem.md')})()`);
   assert.doesNotMatch(cleaned, /<script|onerror|javascript:|<iframe/);
   assert.match(cleaned, /#\/doc\/algorithm-template%2Fproject.yaml/);
 
   await route('#/video-generation', '视频生成技术汇总');
-  assert.equal(await evaluate('document.querySelectorAll(".vgm-category").length'), 7);
-  assert.equal(await evaluate('document.querySelectorAll(".vgm-category-topics a").length'), 54);
+  await waitFor('!!document.querySelector(".vgm-detail-heading")');
+  assert.equal(await evaluate('document.querySelectorAll(".vgm-view-tab[role=tab]").length'), 7);
+  assert.equal(await evaluate('document.querySelectorAll(".vgm-category").length'), 0);
+  assert.ok(await evaluate('document.querySelector(".vgm-view-tabs").getBoundingClientRect().top > document.querySelector(".vgm-search").getBoundingClientRect().bottom'), '分类按钮在搜索栏下方');
+  assert.equal(await evaluate('new Set([...document.querySelectorAll(".vgm-view-tab")].map(tab=>getComputedStyle(tab).getPropertyValue("--vgm-accent").trim())).size'), 7, '七个大类分别使用代表色');
+  assert.ok(await evaluate('new Set([...document.querySelectorAll(".vgm-view-tab")].map(tab=>tab.getBoundingClientRect().top)).size===1'), '七个按钮保持横排');
   assert.ok(await evaluate('document.querySelector(\'#navigation a[href="#/tools"]\').nextElementSibling.getAttribute("href") === "#/video-generation"'), '技术入口紧跟平台工具');
   assert.equal(await evaluate('document.querySelector(\'#navigation a[href="#/video-generation"]\').getAttribute("aria-current")'), 'page');
   await screenshot('video-map-desktop');
   const videoViews = await evaluate('(async()=> (await (await fetch("./data/content.json")).json()).videoMap.views.map(view=>({id:view.id,label:view.label,topics:view.subclasses.map(topic=>({id:topic.id,label:topic.label,points:topic.subdivisions.length,works:topic.works.length}))})))()');
+  await evaluate('window.vgmPage=document.querySelector(".vgm-page");window.vgmHeader=document.querySelector(".vgm-header");window.vgmSearch=document.querySelector("#vgm-search");window.vgmHashChanges=0;window.addEventListener("hashchange",()=>window.vgmHashChanges++);vgmSearch.value="TeaCache";vgmSearch.dispatchEvent(new Event("input",{bubbles:true}));window.scrollTo({top:80,behavior:"instant"})');
+  const vgmPosition = await evaluate('scrollY');
+  for (const view of videoViews) {
+    await evaluate(`document.querySelector('[data-vgm-view="${view.id}"]').click()`);
+    await waitFor('document.querySelector(".vgm-view-intro h2")?.textContent === ' + JSON.stringify(view.label));
+    assert.ok(await evaluate(`document.querySelector('.vgm-page')===vgmPage && document.querySelector('.vgm-header')===vgmHeader && document.querySelector('#vgm-search')===vgmSearch && vgmSearch.value==='TeaCache' && Math.abs(scrollY-${vgmPosition})<=1`), '切换大类只更新内容，保留页面、搜索框与滚动位置');
+    assert.equal(await evaluate('document.querySelectorAll(".vgm-view-tab[aria-selected=true]").length'), 1);
+    assert.equal(await evaluate('document.querySelector(".vgm-view-tab[aria-selected=true]").dataset.vgmView'), view.id);
+    assert.equal(await evaluate('document.querySelectorAll(".vgm-branch").length'), view.topics.length);
+  }
+  assert.equal(await evaluate('vgmHashChanges'), 0, '按钮切换不触发路由跳转');
+  await evaluate('vgmSearch.value="";vgmSearch.dispatchEvent(new Event("input",{bubbles:true}));document.querySelector(".vgm-view-tab[aria-selected=true]").focus()');
+  await command('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Home', code: 'Home', windowsVirtualKeyCode: 36 });
+  await command('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Home', code: 'Home', windowsVirtualKeyCode: 36 });
+  await waitFor('document.activeElement.dataset.vgmView === "view.tasks" && document.activeElement.getAttribute("aria-selected") === "true"');
+  await command('Input.dispatchKeyEvent', { type: 'keyDown', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await command('Input.dispatchKeyEvent', { type: 'keyUp', key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39 });
+  await waitFor('document.activeElement.dataset.vgmView === "view.paradigms" && document.activeElement.getAttribute("aria-selected") === "true"');
   for (const view of videoViews) {
     for (const topic of view.topics) {
-      await route('#/video-generation/' + view.id + '?topic=' + topic.id, view.label);
+      await route('#/video-generation/' + view.id + '?topic=' + topic.id, '视频生成技术汇总');
+      await waitFor('document.querySelector(".vgm-view-intro h2")?.textContent === ' + JSON.stringify(view.label));
       await waitFor('document.querySelector(".vgm-detail-heading")?.textContent === ' + JSON.stringify(topic.label));
       assert.equal(await evaluate('document.querySelectorAll(".vgm-branch").length'), view.topics.length);
       assert.equal(await evaluate('document.querySelectorAll(".vgm-point").length'), topic.points);
@@ -184,7 +207,7 @@ try {
       assert.ok(await evaluate('[...document.querySelectorAll(".vgm-work a")].every(a=>a.rel.includes("noopener") && a.href.startsWith("https://"))'));
     }
   }
-  await route('#/video-generation/view.control?topic=control.motion', '可控性');
+  await route('#/video-generation/view.control?topic=control.motion', '视频生成技术汇总');
   await waitFor('document.querySelector(".vgm-detail-heading")?.textContent === "运动"');
   await evaluate('document.querySelector(".vgm-branch.is-selected .vgm-leaf").click()');
   assert.equal(await evaluate('document.querySelectorAll(".vgm-point.is-selected").length'), 1);
@@ -201,6 +224,8 @@ try {
   await command('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', text: '\r', unmodifiedText: '\r', windowsVirtualKeyCode: 13 });
   await command('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
   await waitFor('document.querySelector(".vgm-detail-heading")?.textContent === "相机" && document.querySelector(\'[data-vgm-topic="control.camera"]\').open');
+  await evaluate('document.querySelector(".vgm-branch.is-selected .vgm-leaf").click();window.vgmSavedPoint=document.querySelector(".vgm-point.is-selected").dataset.vgmDetailPoint;document.querySelector(\'[data-vgm-view="view.training"]\').click();document.querySelector(\'[data-vgm-view="view.control"]\').click()');
+  assert.ok(await evaluate('document.querySelector(".vgm-detail-heading").textContent==="相机" && document.querySelector(".vgm-point.is-selected").dataset.vgmDetailPoint===vgmSavedPoint && document.querySelector(\'[data-vgm-topic="control.camera"]\').open'), '切回大类恢复子类、技术点与展开状态');
   await screenshot('video-map-category-desktop');
   await evaluate('(()=>{const input=document.querySelector("#vgm-search"); input.value="TeaCache"; input.dispatchEvent(new Event("input",{bubbles:true}));})()');
   assert.equal(await evaluate('document.querySelectorAll(".vgm-search-result").length'), 2);
@@ -217,7 +242,7 @@ try {
   assert.ok(await evaluate('document.querySelector(".markdown pre code").textContent.includes("R76")'));
   await command('Page.reload');
   await waitFor('document.querySelector(".markdown pre code")?.textContent.includes("R76")');
-  await route('#/video-generation/view.architecture?topic=architecture.attention', '模型结构与表示');
+  await route('#/video-generation/view.architecture?topic=architecture.attention', '视频生成技术汇总');
   await waitFor('document.querySelector(".vgm-detail-heading")?.textContent === "时空连接与注意力"');
   await command('Page.reload');
   await waitFor('document.querySelector(".vgm-detail-heading")?.textContent === "时空连接与注意力"');
@@ -249,7 +274,13 @@ try {
   await route('#/video-generation', '视频生成技术汇总');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), '手机技术总览不横向溢出');
   await screenshot('video-map-mobile');
-  await evaluate('document.querySelector(".vgm-category-topics a").click()');
+  assert.ok(await evaluate('document.querySelector(".vgm-view-tabs").scrollWidth > document.querySelector(".vgm-view-tabs").clientWidth'), '手机分类按钮在栏内横向滚动');
+  assert.ok(await evaluate('new Set([...document.querySelectorAll(".vgm-view-tab")].map(tab=>tab.getBoundingClientRect().top)).size===1'), '手机七个按钮保持单行');
+  await evaluate('document.querySelector("[data-vgm-view=\\"view.capabilities\\"]").click()');
+  await waitFor('document.querySelector(".vgm-view-intro h2")?.textContent === "能力与核心问题"');
+  assert.equal(await evaluate('document.querySelectorAll(".vgm-branch").length'), 12);
+  assert.ok(await evaluate('(()=>{const tab=document.querySelector(".vgm-view-tab.is-current").getBoundingClientRect();const strip=document.querySelector(".vgm-view-tabs").getBoundingClientRect();return tab.left>=strip.left-1 && tab.right<=strip.right+1})()'), '手机选中的分类按钮保持可见');
+  await evaluate('document.querySelectorAll(".vgm-branch > summary")[1].click()');
   await waitFor('!!document.querySelector(".vgm-detail-heading")');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), '手机分类树和资料面板不横向溢出');
   await evaluate('document.querySelector(".vgm-branch.is-selected .vgm-leaf").click()');
@@ -260,7 +291,7 @@ try {
 
   assert.deepEqual(exceptions, [], '浏览器执行异常');
   assert.deepEqual(failures, [], '资源请求失败');
-  console.log('浏览器通过：9 个模块、数据流程、视频技术 7 类/54 个子类、分类树/键盘展开、跨类搜索、历史与刷新、资料锚点/JSON、手机布局和代理路径。');
+  console.log('浏览器通过：9 个模块、数据流程、视频技术 7 色横排按钮/原位切换/54 个子类、键盘切换与展开、跨类搜索、历史与刷新、资料锚点/JSON、手机横排与布局和代理路径。');
   console.log(`截图：${output}`);
 } finally {
   socket?.close();

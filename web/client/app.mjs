@@ -186,7 +186,7 @@ function videoGenerationPage(viewId, query) {
   const map = content.videoMap;
   if (!map || viewId && !map.views.some(view => view.id === viewId)) return notFound('没有找到这个技术分类。');
   renderNavigation('video-generation');
-  breadcrumbs('视频生成技术汇总', ...(viewId ? [map.views.find(view => view.id === viewId).label] : []));
+  breadcrumbs('视频生成技术汇总');
   const params = new URLSearchParams(query);
   disposePage = mountVideoMap(main, map, { esc, icon, docLink }, { viewId, topicId: params.get('topic'), point: params.get('point'), work: params.get('work') });
 }
