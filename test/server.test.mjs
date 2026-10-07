@@ -12,6 +12,7 @@ async function fixture(t, basePath = '/') {
   await mkdir(path.join(root, 'previews'), { recursive: true });
   await writeFile(path.join(root, 'index.html'), '<h1>AIGC Infra</h1>');
   await writeFile(path.join(root, 'app.mjs'), 'export const test = true;');
+  await writeFile(path.join(root, 'pipeline.pdf'), '%PDF-1.7\n% fixture');
   await writeFile(path.join(root, '.env'), 'TEST_SECRET=hidden');
   await writeFile(path.join(parent, 'private.md'), 'outside serving root');
   await writeFile(path.join(root, 'previews/test.html'), '<p>只读参考</p>');
@@ -41,6 +42,10 @@ test('默认监听所有 IPv4 网卡；静态页面、HEAD 与健康检查可用
   assert.equal(head.status, 200); assert.equal(head.body, '');
   assert.equal(head.headers['content-length'], page.headers['content-length']);
   assert.deepEqual(JSON.parse((await request('/api/health')).body), { status: 'ok', service: 'aigc-infra' });
+  const pdf = await request('/pipeline.pdf');
+  assert.equal(pdf.status, 200);
+  assert.equal(pdf.headers['content-type'], 'application/pdf');
+  assert.ok(pdf.body.startsWith('%PDF-'));
 });
 
 test('拒绝路径越界、隐藏文件、写请求和非法编码；预览禁用脚本', async t => {

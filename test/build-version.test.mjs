@@ -8,7 +8,7 @@ import path from 'node:path';
 test('重新构建后脚本、依赖模块、样式与内容请求一起换版本，避开旧缓存', async t => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'aigc-version-'));
   t.after(() => rm(root, { recursive: true, force: true }));
-  for (const entry of ['README.md', 'docs', 'web', 'vgm-map']) {
+  for (const entry of ['README.md', 'docs', 'web', 'vgm-map', 'img']) {
     await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
   }
   await build({ root });

@@ -91,6 +91,18 @@ try {
   assert.equal(await evaluate('document.querySelectorAll("#data-processing .data-processing-lane").length'), 2);
   assert.equal(await evaluate('document.querySelectorAll(".data-connection,.data-handoff-lines,#module-tools,.data-capability-card").length'), 0, '能力模块不显示流转箭头或重复职责卡片');
   assert.equal(await evaluate('document.querySelector("#data-processing h2").textContent'), '数据处理管线');
+  assert.equal(await evaluate('document.querySelectorAll("#data-processing [data-diagram-panel]").length'), 2);
+  await evaluate('document.querySelector("#data-pipeline-diagrams").scrollIntoView({behavior:"instant"})');
+  const sourcePosition = await evaluate('scrollY');
+  for (const [pipeline, file] of [['multi','multishot'],['single','singleshot']]) {
+    await evaluate(`document.querySelector('[data-diagram-select=${pipeline}]').click()`);
+    await waitFor(`(()=>{const panel=document.querySelector('[data-diagram-panel=${pipeline}]');const img=panel.querySelector('img');return !panel.hidden&&img.complete&&img.naturalWidth>5000})()`);
+    assert.ok(await evaluate(`Math.abs(scrollY-${sourcePosition})<=1`), '原图切换保持页面位置');
+    const pdf = await fetch(base + 'images/' + file + '.pdf');
+    assert.equal(pdf.status, 200);
+    assert.equal(pdf.headers.get('content-type'), 'application/pdf');
+    assert.ok(Buffer.from(await pdf.arrayBuffer()).subarray(0,5).equals(Buffer.from('%PDF-')));
+  }
   await screenshot('data-desktop');
   const dataLinks = await evaluate('[...new Set([...document.querySelectorAll(".data-module-node,.data-tool-link")].map(a=>a.getAttribute("href")))].filter(href=>href.startsWith("#/doc/"))');
   for (const href of dataLinks) {
@@ -287,6 +299,10 @@ try {
     assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'));
   }
   await screenshot('data-stage-mobile');
+  await evaluate('document.querySelector("#data-pipeline-diagrams").scrollIntoView({behavior:"instant"});document.querySelector("[data-diagram-select=multi]").click()');
+  await waitFor('document.querySelector("#data-diagram-multi img").complete && document.querySelector("#data-diagram-multi img").naturalWidth>5000');
+  assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'), '手机原图预览不溢出页面');
+  await screenshot('data-pipelines-mobile');
 
   await route('#/video-generation', '视频生成技术汇总');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), '手机技术总览不横向溢出');

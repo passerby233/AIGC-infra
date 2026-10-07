@@ -1,6 +1,6 @@
 import { marked } from './vendor/marked.esm.js';
 import { mountVideoMap, videoMapLink } from './video-map.mjs';
-import { dataEngineeringView } from './data-engineering.mjs';
+import { dataEngineeringView, mountDataDiagrams } from './data-engineering.mjs';
 import { foundationView } from './foundation.mjs';
 const main = document.querySelector('#main');
 const esc = (value = '') => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -80,6 +80,7 @@ function modulePage(module, params = new URLSearchParams()) {
   ${data ? '' : `<section id="module-context"><div class="section-header"><div><div class="eyebrow">CONTEXT & BOUNDARIES</div><h2>职责、产物与协作边界</h2></div>${documentAction(module.readme, '完整模块说明', 'text-link')}</div><div class="context-layout"><div class="fact-list">${facts.length ? facts.map(([key, value]) => `<div class="fact-row"><h3>${esc(key)}</h3><div>${renderMarkdown(value, module.readme)}</div></div>`).join('') : `<div class="fact-row"><h3>职责</h3><p>${module.description}</p></div><div class="fact-row"><h3>输入 → 输出</h3><p>${module.output}</p></div>`}</div><aside class="process-panel"><div class="eyebrow">WORKFLOW</div><h3>如何开展这一阶段</h3><ol>${module.steps.map(step => `<li>${esc(step)}</li>`).join('')}</ol><div class="process-output"><small>阶段产物</small><p>${module.output}</p></div></aside></div></section>`}
   <section id="module-documents"><div class="section-header"><div><div class="eyebrow">PLANS & DOCUMENTATION</div><h2>阅读完整方案</h2></div><span class="subtle-label">与仓库 Markdown 保持一致</span></div><div class="document-list">${module.documents.map(d => `<a class="document-row" href="${docLink(d.id)}"><span class="document-icon">${icon('file')}</span><div><h3>${esc(d.title)}</h3><small>${esc(d.id.split('/').at(-1))}</small></div><span class="document-type">${d.id.includes('requirements') ? '需求' : d.id.includes('design') ? '设计' : '说明'}</span>${icon('arrow')}</a>`).join('')}</div></section>${module.number ? `<nav class="stage-pagination" aria-label="阶段切换">${[Number(module.number) - 2, Number(module.number)].map((index, i) => { const m = content.modules[index]; return m?.number ? `<a href="${moduleLink(m.id)}"><small>${i ? '下一阶段' : '上一阶段'}</small><span>${i ? '' : '← '}${m.number} ${m.title}${i ? ' →' : ''}</span></a>` : '<span></span>'; }).join('')}</nav>` : ''}</div>`;
   main.querySelectorAll('.module-tabs a').forEach(el => el.addEventListener('click', event => { event.preventDefault(); main.querySelector(el.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+  if (data) mountDataDiagrams(main);
 }
 function updateDataStage(params) {
   const architecture = content.modules.find(module => module.id === 'data').dataArchitecture;
@@ -101,6 +102,8 @@ function resolveLink(href, currentDoc) {
     if (u.origin !== 'https://documents.invalid') return null;
     const id = decodeURIComponent(u.pathname.slice(1));
     if (content.documents[id]) return { href: docLink(id, decodeURIComponent(u.hash.slice(1))) };
+    const diagram = content.modules.find(module => module.id === 'data').dataArchitecture.lanes.flatMap(lane => [lane.diagram.image, lane.diagram.pdf]).find(asset => id === 'AIGC-infra/img/' + asset.split('/').at(-1));
+    if (diagram) return { href: './' + diagram, external: true };
   } catch { /* Unresolved source references are displayed without a broken URL. */ }
   return null;
 }

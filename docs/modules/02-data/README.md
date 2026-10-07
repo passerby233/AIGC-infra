@@ -38,7 +38,7 @@
 | [数据工程需求](001-data-engineering.requirements.md) | 现有规范、功能范围、交付与验收要求 | 需求梳理；新增验收场景为草案 |
 | [数据工程设计](001-data-engineering.design.md) | 数据对象、下载写库、处理协议、版本与平台接入、后续开发顺序 | 设计草案；下载 meta 的 MongoDB 选型已确认 |
 | [数据模块分层与交付](002-data-modules.design.md) | 五个能力模块的职责、工具入口与交付约定 | 模块边界已确认；具体接入待核对 |
-| [数据处理管线](003-data-processing.design.md) | SingleShot / MultiShot 的内部步骤、可视化详情与处理边界 | 已有管线映射；原始画布接入待可访问来源 |
+| [数据处理管线](003-data-processing.design.md) | SingleShot / MultiShot 的内部步骤、可视化详情与处理边界 | 已接入两张原始 PDF 管线图；实际配置待核对 |
 
 关键待定：下载质量阈值冲突与分包口径、现有数据库字段映射、SingleShot / MultiShot 算子版本、标注与多参考方案、平台适配接口，以及各项目的质量和性能验收门槛。
 

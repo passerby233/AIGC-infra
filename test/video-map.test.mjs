@@ -44,7 +44,7 @@ test('独立构建打包分类、专题及 JSON 来源，源文件相对链接�
   const parent = await mkdtemp(path.join(os.tmpdir(), 'aigc-video-build-'));
   const root = path.join(parent, 'portal');
   t.after(async () => { assert.equal(path.dirname(path.resolve(parent)), path.resolve(os.tmpdir())); await rm(parent, { recursive: true, force: true }); });
-  for (const entry of ['README.md', 'docs', 'web', 'vgm-map']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
+  for (const entry of ['README.md', 'docs', 'web', 'vgm-map', 'img']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
   const content = await build({ root });
   assert.equal(content.videoMap.views.length, 7);
   for (const view of content.videoMap.views) assert.ok(content.documents['AIGC-infra/vgm-map/' + view.doc_path]);

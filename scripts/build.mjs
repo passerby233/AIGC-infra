@@ -78,6 +78,12 @@ export async function build({ root = projectRoot, out = path.join(root, 'dist') 
   }
   await mkdir(out, { recursive: true });
   await cp(path.join(root, 'web/client'), out, { recursive: true });
+  await mkdir(path.join(out, 'images'), { recursive: true });
+  for (const lane of dataArchitecture.lanes) {
+    for (const asset of [lane.diagram.image, lane.diagram.pdf]) {
+      await cp(path.join(root, 'img', path.basename(asset)), path.join(out, asset));
+    }
+  }
   await mkdir(path.join(out, 'data'), { recursive: true });
   const content = { title: config.title, subtitle: config.subtitle, modules: summaries, tools: resolvedTools, documents, videoMap, builtAt: new Date().toISOString() };
   const buildVersion = content.builtAt.replace(/\D/g, '');

@@ -27,8 +27,8 @@ export const dataArchitecture = {
     condition_features: { title: '条件与特征', detail: '参考图 · 音色 · 关键帧', section: '条件与特征提取', tone: 'feedback', optional: true, input: '样本媒体 · 标注与分析 · 模型需求', operations: ['参考图与关键帧', '参考音色', '角色 / speaker 关联', '按需 latent / embedding'], output: '条件资产 · 特征与来源引用', contract: '记录时间位置、提取方法和来源关系。特征绑定编码器、预处理版本与输入样本，格式与训练侧共同确认。' }
   },
   lanes: [
-    { id: 'single', title: 'SingleShot', label: '单镜头样本', segment: '单镜头切分', steps: ['raw_ingest', 'segment', 'quality', 'analyze', 'caption', 'condition_features'] },
-    { id: 'multi', title: 'MultiShot', label: '场景与多镜头样本', segment: '场景与镜头关系', steps: ['raw_ingest', 'segment', 'quality', 'caption', 'analyze', 'condition_features'] }
+    { id: 'single', title: 'SingleShot', label: '单镜头样本', segment: '单镜头切分', diagram: { title: '单分镜管线图', image: 'images/singleshot.png', pdf: 'images/singleshot.pdf', width: 6750, height: 3106 }, steps: ['raw_ingest', 'segment', 'quality', 'analyze', 'caption', 'condition_features'] },
+    { id: 'multi', title: 'MultiShot', label: '场景与多镜头样本', segment: '场景与镜头关系', diagram: { title: '多分镜管线图', image: 'images/multishot.png', pdf: 'images/multishot.pdf', width: 6750, height: 2588 }, steps: ['raw_ingest', 'segment', 'quality', 'caption', 'analyze', 'condition_features'] }
   ]
 };
 export const shared = [

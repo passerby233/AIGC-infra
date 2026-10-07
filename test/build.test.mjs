@@ -9,7 +9,7 @@ async function fixture(t) {
   const parent = await mkdtemp(path.join(os.tmpdir(), 'aigc-build-'));
   const root = path.join(parent, 'portal');
   await mkdir(root);
-  for (const entry of ['README.md', 'docs', 'web', 'vgm-map']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
+  for (const entry of ['README.md', 'docs', 'web', 'vgm-map', 'img']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
   t.after(() => rm(parent, { recursive: true, force: true }));
   return root;
 }
@@ -58,6 +58,10 @@ test('数据模块与处理算子分层，独立部署包含所有模块和步�
   for (const lane of architecture.lanes) {
     assert.equal(lane.steps[0], 'raw_ingest');
     for (const id of lane.steps) assert.ok(processing.text.includes('## ' + architecture.steps[id].section));
+    for (const asset of [lane.diagram.image, lane.diagram.pdf]) {
+      const source = await readFile(path.join(root, 'img', path.basename(asset)));
+      assert.deepEqual(await readFile(path.join(root, 'dist', asset)), source, '独立部署包含原图与预览：' + asset);
+    }
   }
   const [single, multi] = architecture.lanes;
   assert.ok(single.steps.indexOf('analyze') < single.steps.indexOf('caption'));

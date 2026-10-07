@@ -12,7 +12,14 @@
 
 网页的「数据处理管线」对应上层五个能力模块中的「数据处理」。点击 Stage 只切换下方详情与管线选中状态，保留管线节点、键盘焦点、页面及图内滚动位置，支持连续点击不同 Stage。详情只展示当前模块的输入、处理能力、输出与交付约定，不重复展示前后模块；以不同颜色区分输入、输出及处理能力。接口字段作为次级文档入口。处理能力按配置启用，不将同一 Stage 内所有算子强制串成线性流程。
 
-原始结构图：[SingleShot / MultiShot 数据处理管线图](https://icn21egtt26t.feishu.cn/wiki/ZfCJw093viCnZjkV42Zc5NpVnGe)。目前此链接要求登录，尚未读取其中的画布内容；本站当前管线依赖依据已有协议，待取得可访问画布或 SVG / PNG 导出后与原图核对并接入。
+原始结构图已通过本地 PDF 接入页面：
+
+- [单分镜管线图 / SingleShot](../../../img/singleshot.pdf) · [高清预览](../../../img/singleshot.png)
+- [多分镜管线图 / MultiShot](../../../img/multishot.pdf) · [高清预览](../../../img/multishot.png)
+
+两张图位于网页「数据处理管线」内的「完整管线图」区域，支持原位切换、打开高清图及原始 PDF。原图完整保留阶段、算子依赖、说明、候选和待交付标记；图中的模型名称不作为已完成选型或部署的声明。可交互 Stage 概览仍用于连续切换当前模块详情。
+
+更新 PDF 后，在 Windows PowerShell 执行 `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/render-pipeline-diagrams.ps1` 重新生成预览，再构建门户。部署使用已生成的 PNG 与原始 PDF，不依赖 Windows 的渲染组件。
 
 ## 两条管线的步骤依赖
 
