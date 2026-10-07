@@ -3,8 +3,13 @@
 .data-overview-diagram{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
 .data-diagram-viewport{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:2px}
 .data-diagram-viewport:focus-visible{outline:3px solid #94b0ff;outline-offset:2px}
-.data-overview-canvas{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;min-width:930px}
+.data-cycle-label{display:flex;align-items:center;gap:12px;margin:0 2px 16px;font-size:12px;font-weight:600;color:#415773}.data-cycle-label span{font-size:11px;font-weight:400;color:#8795a7}
+.data-overview-canvas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 18px;min-width:930px}
 .data-module-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--tone);border-radius:10px;background:var(--tone-soft);box-shadow:inset 0 3px 0 var(--tone),0 4px 12px #233d710a;padding:16px 12px 12px}
+.data-cycle-card{position:relative}.data-cycle-card::after{content:"";position:absolute;left:50%;top:100%;height:31px;border-left:2px solid #99c7bd;pointer-events:none}
+.data-storage-foundation{grid-column:1/-1;display:grid;grid-template-columns:200px 1fr 210px;gap:24px;align-items:center;padding:18px 22px;background:#edf7f4;border-color:#83b9aa;box-shadow:inset 0 3px 0 #4c9b84}
+.data-storage-foundation .data-module-node{display:grid;grid-template-columns:36px 1fr;column-gap:10px;align-items:center;padding:0}.data-storage-foundation .data-node-icon{grid-row:1/4;margin:0}.data-storage-foundation .data-node-link{grid-column:2}.data-storage-foundation .data-module-entries{margin:0;border-top:0;border-left:1px solid #b8d6ce;padding:0 0 0 20px}
+.data-storage-description{border-left:1px solid #b8d6ce;padding-left:24px}.data-support-label{display:inline-block;color:#337e69;font-size:11px;font-weight:600;border:1px solid #bdddd1;border-radius:5px;background:#fff9;padding:3px 8px}.data-storage-description p{font-size:13px;line-height:1.8;color:#3d685c;margin:9px 0 4px}.data-storage-description small{font-size:11px;color:#678d81}
 .data-module-node{display:flex;align-items:center;flex-direction:column;gap:4px;border-radius:6px;padding:2px 0 10px}
 .data-module-node:hover strong{color:var(--tone)}
 .data-node-icon{color:var(--tone);display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:#ffffffb8;margin-bottom:5px}
