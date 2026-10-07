@@ -1,6 +1,7 @@
 import { marked } from './vendor/marked.esm.js';
 import { mountVideoMap, videoMapLink } from './video-map.mjs';
 import { dataEngineeringView } from './data-engineering.mjs';
+import { foundationView } from './foundation.mjs';
 const main = document.querySelector('#main');
 const esc = (value = '') => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const paths = {
@@ -68,6 +69,7 @@ function home() {
   <section class="dashboard-callout"><div><div class="eyebrow">PROJECTS & GOALS</div><h2>目标留在项目里，<br>视野汇总到算法组。</h2><p>每个项目从 algorithm-template 初始化。未来通过算法组 dashboard，统一查看各项目的目标与证据。</p><a class="button button-light" href="#/module/goals">查看协议与建设计划 ${icon('arrow')}</a></div><div class="dashboard-plan">${badge('正在开发')}<h3>算法组项目与 Goals</h3><ol><li>项目登记与协议读取</li><li>目标、源文档与证据汇总</li><li>变更刷新与真实入口接入</li></ol></div></section></div>`;
 }
 function modulePage(module, params = new URLSearchParams()) {
+  if (module.id === 'foundation') return foundationPage(module);
   renderNavigation(module.id); breadcrumbs(module.number ? '研发流程' : '共享能力', module.title);
   const facts = Object.entries(module.facts).filter(([key]) => ['职责', '输入 → 输出', 'Infra 用途', '项目关联', '边界'].includes(key));
   const data = module.dataArchitecture ? dataEngineeringView(module.dataArchitecture, { content, esc, icon, docLink, moduleLink, externalLink, params }) : null;
@@ -148,10 +150,16 @@ function enhanceDocument() {
     if (edges.length) code.closest('pre').outerHTML = `<div class="document-diagram" aria-label="文档流程关系">${edges.map(e => `<div><strong>${esc(e.from)}</strong><span>${e.label ? `<small>${esc(e.label)}</small>` : ''}→</span><strong>${esc(e.to)}</strong></div>`).join('')}</div>`;
   }
 }
+function foundationPage(module, section) {
+  renderNavigation(module.id); breadcrumbs('共享能力', module.title);
+  main.innerHTML = foundationView(module, { content, esc, icon, moduleLink, renderMarkdown });
+  if (section) requestAnimationFrame(() => document.getElementById(section)?.scrollIntoView());
+}
 function documentPage(id, section) {
   const doc = content.documents[id];
   if (!doc) return notFound('这份文档尚未收录。');
   const module = content.modules.find(m => m.documents.some(d => d.id === id));
+  if (module?.id === 'foundation' && id === module.readme) return foundationPage(module, section);
   const videoDoc = id.startsWith('AIGC-infra/vgm-map/');
   renderNavigation(videoDoc ? 'video-generation' : module?.id || 'architecture'); breadcrumbs(videoDoc ? '视频生成技术汇总' : module?.title || (doc.scope === 'algorithm-template' ? '项目协议' : '架构与文档'), doc.title);
   main.innerHTML = `<div class="page doc-page"><div class="doc-topline"><a class="text-link" href="${videoDoc ? videoMapLink() : module ? moduleLink(module.id) : '#/'}">← ${videoDoc ? '视频生成技术汇总' : module?.title || '研发总览'}</a><button class="button button-small button-secondary" data-download="${esc(id)}">下载源文件 ↓</button></div><div class="doc-heading"><div class="eyebrow">${doc.scope === 'algorithm-template' ? 'ALGORITHM TEMPLATE · 项目协议模板' : 'PLANS & DOCUMENTATION'}</div><h1>${esc(doc.title)}</h1><span class="document-path">${esc(id)}</span>${doc.scope === 'algorithm-template' ? '<p class="document-note">模板说明与填写约定；真实项目目标以各项目仓库为准。</p>' : ''}</div><div class="reader-layout"><article class="markdown">${renderMarkdown(doc.text, id)}</article><aside class="document-outline"><span>本页目录</span><nav id="document-toc" aria-label="文档章节"></nav></aside></div></div>`;

@@ -76,6 +76,13 @@ try {
   const modules = [['goals', '目标与基准'], ['data', '数据工程'], ['training', '模型实验与训练'], ['evaluation', '评测与验收'], ['serving', '推理优化与发布'], ['feedback', '运行反馈与迭代'], ['lifecycle', '项目生命周期管理'], ['viewer', '统一 DataViewer'], ['foundation', '公共技术底座']];
   for (const [id, title] of modules) {
     await route('#/module/' + id, title);
+    if (id === 'foundation') {
+      assert.equal(await evaluate('document.querySelectorAll(".foundation-capability").length'), 5);
+      assert.equal(await evaluate('document.querySelectorAll("#module-tools,#module-context,#module-documents,.module-tabs").length'), 0);
+      assert.equal(await evaluate('document.querySelector(".foundation-platform a").getAttribute("href")'), 'https://paas.myhexin.com/mfasset/resourcePoolV2?tenantId=262&projectId=42');
+      await screenshot('foundation-desktop');
+      continue;
+    }
     assert.ok(await evaluate('document.querySelectorAll(".document-row").length >= 1'));
     assert.ok(await evaluate(id === 'data' ? 'document.querySelectorAll(".data-module-card").length === 5' : 'document.querySelectorAll(".tool-card").length >= 1'));
   }
