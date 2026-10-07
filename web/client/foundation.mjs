@@ -9,12 +9,17 @@ export function foundationView(module, { content, esc, icon, moduleLink, renderM
   const table = [...reader.querySelectorAll('table')].find(table => table.querySelector('th')?.textContent === '能力');
   if (table) {
     const rows = [...table.querySelectorAll('tbody tr')].map(row => [...row.querySelectorAll('td')].map(cell => cell.innerHTML));
-    const headers = [...table.querySelectorAll('th')].map(cell => cell.textContent);
     const symbols = ['server', 'database', 'branches', 'grid', 'chart'];
+    const viewport = document.createElement('div');
+    viewport.className = 'foundation-capabilities-viewport';
+    viewport.tabIndex = 0;
+    viewport.setAttribute('role', 'region');
+    viewport.setAttribute('aria-label', '五项通用能力及对应 infra 工具，可横向滚动');
     const grid = document.createElement('div');
     grid.className = 'foundation-capabilities';
-    grid.innerHTML = rows.map(([title, tools, purpose], index) => `<article class="foundation-capability"><div class="foundation-capability-heading"><span>${icon(symbols[index])}</span><h3>${title}</h3><small>${String(index + 1).padStart(2, '0')}</small></div><dl><dt>${esc(headers[1])}</dt><dd>${tools}</dd><dt>${esc(headers[2])}</dt><dd>${purpose}</dd></dl></article>`).join('');
-    table.closest('.table-scroll').replaceWith(grid);
+    grid.innerHTML = rows.map(([title, tools], index) => `<article class="foundation-capability"><div class="foundation-capability-heading"><span>${icon(symbols[index])}</span><h3>${title}</h3></div><small class="foundation-capability-tools">${tools}</small></article>`).join('');
+    viewport.append(grid);
+    table.closest('.table-scroll').before(viewport);
 
     const stages = content.modules.filter(entry => entry.number);
     const shared = content.modules.filter(entry => !entry.number && entry.id !== module.id);

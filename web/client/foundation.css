@@ -26,16 +26,16 @@
 .foundation-base > div > span { margin-left: auto; font-size: 11px; color: #becde4; }
 .foundation-base ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 16px 0 0; list-style: none; }
 .foundation-base li { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 0; padding: 10px 4px; border: 1px solid #567098; border-radius: 7px; font-size: 12px; }
-.foundation-capabilities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 18px 0 28px; }
-.foundation-capability { padding: 22px; border: 1px solid #dee5ef; border-radius: 12px; background: #fff; }
-.foundation-capability:last-child { grid-column: 1 / -1; }
-.foundation-capability-heading { display: flex; align-items: center; gap: 12px; }
-.foundation-capability-heading > span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 9px; background: #edf3fc; color: #5578b5; }
-.foundation-capability-heading h3 { margin: 0; font-size: 17px; }
-.foundation-capability-heading small { margin-left: auto; color: #94a3b8; font-size: 11px; }
-.foundation-capability dl { margin: 18px 0 0; font-size: 13px; }
-.foundation-capability dt { margin: 12px 0 4px; font-size: 11px; color: #8897ab; }
-.foundation-capability dd { margin: 0; overflow-wrap: anywhere; }
+.foundation-capabilities-viewport { overflow-x: auto; margin: 18px 0 22px; padding-bottom: 6px; }
+.foundation-capabilities { display: grid; grid-template-columns: repeat(5, minmax(160px, 1fr)); gap: 12px; }
+.foundation-capability { padding: 16px; border: 1px solid #dee5ef; border-radius: 12px; background: #fff; }
+.foundation-capability-heading { display: flex; align-items: center; gap: 8px; }
+.foundation-capability-heading > span { display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: 7px; background: #edf3fc; color: #5578b5; }
+.foundation-capability-heading .icon { width: 17px; height: 17px; }
+.foundation-capability-heading h3 { margin: 0; font-size: 14px; }
+.foundation-capability-tools { display: block; margin-top: 12px; font-size: 12px; line-height: 1.8; color: #72839b; overflow-wrap: anywhere; }
+.foundation-reader .table-scroll { margin-top: 0; }
+.foundation-reader table { min-width: 640px; width: 100%; }
 .foundation-reader a:focus-visible { outline: 2px solid #5076b8; outline-offset: 4px; }
 .foundation-reader .foundation-stage-grid a:hover { border-color: #8ca8d2; background: #f5f8ff; }
 @media (max-width: 900px) {
@@ -52,6 +52,4 @@
   .foundation-base { padding: 16px 12px; }
   .foundation-base > div > span { flex-basis: 100%; margin-left: 0; }
   .foundation-base ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .foundation-capabilities { grid-template-columns: minmax(0, 1fr); }
-  .foundation-capability { padding: 18px; }
 }
