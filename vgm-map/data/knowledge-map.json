@@ -1,0 +1,3137 @@
+{
+  "schema_version": "0.2",
+  "scope": "core_seed",
+  "checked_on": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "description": "七类专题设计的首批共享实体索引；完整扩展大纲在 docs/views。无网站实现代码。",
+  "source_registry": "research/sources.json",
+  "navigation_policy": "多个导航入口复用同一实体；example_ids 单独作为案例呈现，不与概念同层混排。",
+  "entities": [
+    {
+      "id": "task.t2v",
+      "type": "task",
+      "label": "文生视频",
+      "aliases": [
+        "Text-to-Video",
+        "T2V"
+      ],
+      "source_ids": [
+        "R05",
+        "R08"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "以文字条件生成视频，重点是对象、动作与关系的执行。"
+    },
+    {
+      "id": "task.i2v",
+      "type": "task",
+      "label": "图生视频",
+      "aliases": [
+        "Image-to-Video",
+        "I2V"
+      ],
+      "source_ids": [
+        "R07"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "以图像提供视觉条件，并生成随时间变化的视频。"
+    },
+    {
+      "id": "task.reference-video",
+      "type": "task",
+      "label": "参考生成",
+      "aliases": [
+        "Reference-conditioned Video",
+        "Ref2V"
+      ],
+      "source_ids": [
+        "R28",
+        "R08"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "用参考材料指定主体、身份或风格，允许场景与动作变化。"
+    },
+    {
+      "id": "task.video-editing",
+      "type": "task",
+      "label": "视频编辑",
+      "aliases": [
+        "Video Editing",
+        "视频重绘"
+      ],
+      "source_ids": [
+        "R08",
+        "R09"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "改变源视频的指定内容，并保留其他内容及时间连续性。"
+    },
+    {
+      "id": "task.video-continuation",
+      "type": "task",
+      "label": "视频续写",
+      "aliases": [
+        "Video Continuation",
+        "Extrapolation"
+      ],
+      "source_ids": [
+        "R19",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "使用已知视频上下文生成后续时间段。"
+    },
+    {
+      "id": "task.audio-video",
+      "type": "task",
+      "label": "音频驱动视频",
+      "aliases": [
+        "Audio-to-Video",
+        "A2V"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "以音频驱动视觉动作，可能同时使用图像身份条件。"
+    },
+    {
+      "id": "task.multimodal-video",
+      "type": "task",
+      "label": "多条件视频生成",
+      "aliases": [
+        "Multimodal-to-Video"
+      ],
+      "source_ids": [
+        "R29"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "组合不同模态的条件约束视频生成。"
+    },
+    {
+      "id": "task.joint-av",
+      "type": "task",
+      "label": "联合音视频生成",
+      "aliases": [
+        "Joint Audio-Video Generation"
+      ],
+      "source_ids": [
+        "R41"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "把音频和视频作为共同生成的输出模态。"
+    },
+    {
+      "id": "concept.gan",
+      "type": "concept",
+      "label": "对抗生成",
+      "aliases": [
+        "GAN",
+        "Generative Adversarial Network"
+      ],
+      "source_ids": [
+        "R10"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过生成器与判别器的对抗学习构造生成模型。"
+    },
+    {
+      "id": "concept.vae-modeling",
+      "type": "concept",
+      "label": "变分潜变量生成",
+      "aliases": [
+        "VAE Generative Modeling"
+      ],
+      "source_ids": [
+        "R11"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "借助潜变量、先验和变分推断学习生成分布。"
+    },
+    {
+      "id": "concept.diffusion",
+      "type": "concept",
+      "label": "扩散生成",
+      "aliases": [
+        "Diffusion"
+      ],
+      "source_ids": [
+        "R12",
+        "R19"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过加噪与学习去噪过程构造生成模型。"
+    },
+    {
+      "id": "concept.latent-diffusion",
+      "type": "concept",
+      "label": "潜空间扩散",
+      "aliases": [
+        "Latent Diffusion",
+        "LDM"
+      ],
+      "source_ids": [
+        "R13",
+        "R07"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "在自编码器的潜空间中学习生成，并解码为可见内容。"
+    },
+    {
+      "id": "concept.flow-matching",
+      "type": "concept",
+      "label": "流匹配",
+      "aliases": [
+        "Flow Matching",
+        "FM"
+      ],
+      "source_ids": [
+        "R14"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过速度场回归学习连续生成路径。"
+    },
+    {
+      "id": "concept.rectified-flow",
+      "type": "concept",
+      "label": "Rectified Flow",
+      "aliases": [
+        "RF",
+        "整流流"
+      ],
+      "source_ids": [
+        "R15"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "学习接近直线路径的流，并可通过 rectification 改善耦合。"
+    },
+    {
+      "id": "concept.autoregressive",
+      "type": "concept",
+      "label": "自回归生成",
+      "aliases": [
+        "Autoregressive",
+        "AR"
+      ],
+      "source_ids": [
+        "R18",
+        "R20"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "按指定单位顺序对条件分布进行分解和生成。"
+    },
+    {
+      "id": "concept.masked-generation",
+      "type": "concept",
+      "label": "掩码生成",
+      "aliases": [
+        "Masked Generation",
+        "Masked Token Prediction"
+      ],
+      "source_ids": [
+        "R17"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "预测缺失 token，逐步补全生成表示。"
+    },
+    {
+      "id": "concept.ar-diffusion",
+      "type": "concept",
+      "label": "自回归与扩散组合",
+      "aliases": [
+        "Autoregressive Diffusion"
+      ],
+      "source_ids": [
+        "R20",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07",
+      "summary": "外层顺序生成，内部以扩散生成当前单元。"
+    },
+    {
+      "id": "concept.joint-generation",
+      "type": "concept",
+      "label": "整段联合生成",
+      "aliases": [
+        "Joint Generation",
+        "Full-clip Generation"
+      ],
+      "source_ids": [
+        "R19",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "将一段视频作为整体生成状态联合处理。"
+    },
+    {
+      "id": "concept.causal-generation",
+      "type": "concept",
+      "label": "因果生成",
+      "aliases": [
+        "Causal Generation"
+      ],
+      "source_ids": [
+        "R20",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "限制生成单元对未来未知内容的依赖。"
+    },
+    {
+      "id": "concept.chunk-generation",
+      "type": "concept",
+      "label": "分块生成",
+      "aliases": [
+        "Chunk-wise Generation",
+        "Block-wise Generation"
+      ],
+      "source_ids": [
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "按时间块利用历史上下文生成后续单元。"
+    },
+    {
+      "id": "concept.sliding-window",
+      "type": "concept",
+      "label": "滑动窗口",
+      "aliases": [
+        "Sliding Window"
+      ],
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "用有限窗口选择当前生成所需的时间上下文。"
+    },
+    {
+      "id": "concept.long-context",
+      "type": "concept",
+      "label": "上下文延展",
+      "aliases": [
+        "Context Extension",
+        "Long Context"
+      ],
+      "source_ids": [
+        "R19",
+        "R23"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "扩展生成可使用的历史上下文与长度范围。"
+    },
+    {
+      "id": "concept.hierarchical-generation",
+      "type": "concept",
+      "label": "分层生成",
+      "aliases": [
+        "Hierarchical Generation"
+      ],
+      "source_ids": [
+        "R24"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过规划、粗序列和局部渲染分层生成。"
+    },
+    {
+      "id": "concept.exposure-bias",
+      "type": "concept",
+      "label": "暴露偏差",
+      "aliases": [
+        "Exposure Bias",
+        "Train-Test Gap"
+      ],
+      "source_ids": [
+        "R20"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "训练与推理历史来源的差异可能导致误差积累。"
+    },
+    {
+      "id": "concept.streaming",
+      "type": "concept",
+      "label": "流式与交互生成",
+      "aliases": [
+        "Streaming",
+        "Interactive Generation"
+      ],
+      "source_ids": [
+        "R23",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "持续输出片段，并可能接收动态更新的条件。"
+    },
+    {
+      "id": "concept.memory",
+      "type": "concept",
+      "label": "历史状态与记忆",
+      "aliases": [
+        "State",
+        "Memory"
+      ],
+      "source_ids": [
+        "R23"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "保存历史信息供后续生成使用，不等同于显式世界状态。"
+    },
+    {
+      "id": "concept.pixel-space",
+      "type": "concept",
+      "label": "像素空间表示",
+      "aliases": [
+        "Pixel Space"
+      ],
+      "source_ids": [
+        "R12",
+        "R19"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "直接使用像素级视频数据作为生成状态。"
+    },
+    {
+      "id": "concept.continuous-latent",
+      "type": "concept",
+      "label": "连续潜变量表示",
+      "aliases": [
+        "Continuous Latent"
+      ],
+      "source_ids": [
+        "R13",
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "以连续潜变量表示压缩后的视觉内容。"
+    },
+    {
+      "id": "concept.discrete-token",
+      "type": "concept",
+      "label": "离散视频 token",
+      "aliases": [
+        "Discrete Video Tokens"
+      ],
+      "source_ids": [
+        "R17"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "以离散 token 表示视频内容。"
+    },
+    {
+      "id": "concept.video-vae",
+      "type": "concept",
+      "label": "时空视频 VAE",
+      "aliases": [
+        "Video VAE",
+        "视频自编码器"
+      ],
+      "source_ids": [
+        "R04",
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "为视频生成提供时空压缩与重建模块。"
+    },
+    {
+      "id": "concept.causal-vae",
+      "type": "concept",
+      "label": "因果视频 VAE",
+      "aliases": [
+        "Causal Video VAE"
+      ],
+      "source_ids": [
+        "R04",
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "在视频编解码模块内保持指定的时间因果性。"
+    },
+    {
+      "id": "concept.dit",
+      "type": "concept",
+      "label": "视频 DiT",
+      "aliases": [
+        "Diffusion Transformer",
+        "DiT"
+      ],
+      "source_ids": [
+        "R16",
+        "R04"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "用 Transformer 骨干处理生成过程中的视频表示。"
+    },
+    {
+      "id": "concept.unet",
+      "type": "concept",
+      "label": "U-Net 视频骨干",
+      "aliases": [
+        "Video U-Net",
+        "3D U-Net"
+      ],
+      "source_ids": [
+        "R19",
+        "R30"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "以 U-Net 类多尺度网络处理视频生成状态。"
+    },
+    {
+      "id": "concept.patchify",
+      "type": "concept",
+      "label": "时空 patch 化",
+      "aliases": [
+        "Patchify",
+        "Tubelet"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "把视频表示切分成网络处理的时空 token。"
+    },
+    {
+      "id": "concept.rope3d",
+      "type": "concept",
+      "label": "三维旋转位置编码",
+      "aliases": [
+        "3D RoPE"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "为时空 token 提供三维坐标相关的位置编码。"
+    },
+    {
+      "id": "concept.spatiotemporal-attention",
+      "type": "concept",
+      "label": "时空注意力",
+      "aliases": [
+        "Spatio-temporal Attention"
+      ],
+      "source_ids": [
+        "R05",
+        "R43"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "定义视频中空间与时间 token 的信息连接。"
+    },
+    {
+      "id": "concept.full-attention",
+      "type": "concept",
+      "label": "全时空注意力",
+      "aliases": [
+        "3D Full Attention"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "允许指定视频范围内的时空 token 直接连接。"
+    },
+    {
+      "id": "concept.factorized-attention",
+      "type": "concept",
+      "label": "分解时空注意力",
+      "aliases": [
+        "Factorized Spatial-Temporal Attention"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "分解空间与时间方向的信息连接。"
+    },
+    {
+      "id": "concept.sparse-attention",
+      "type": "concept",
+      "label": "稀疏注意力",
+      "aliases": [
+        "Sparse Attention"
+      ],
+      "source_ids": [
+        "R43",
+        "R35"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "选择部分连接进行注意力计算。"
+    },
+    {
+      "id": "concept.causal-attention",
+      "type": "concept",
+      "label": "因果注意力",
+      "aliases": [
+        "Causal Attention",
+        "Causal Mask"
+      ],
+      "source_ids": [
+        "R17",
+        "R22"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过掩码限制注意力访问未来位置。"
+    },
+    {
+      "id": "concept.condition-injection",
+      "type": "concept",
+      "label": "条件注入",
+      "aliases": [
+        "Condition Injection",
+        "Condition Fusion"
+      ],
+      "source_ids": [
+        "R13",
+        "R29"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "把外部条件与生成网络中的特征结合。"
+    },
+    {
+      "id": "concept.cross-attention",
+      "type": "concept",
+      "label": "交叉注意力",
+      "aliases": [
+        "Cross Attention"
+      ],
+      "source_ids": [
+        "R13",
+        "R04"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "使一组表示通过注意力读取另一组条件表示。"
+    },
+    {
+      "id": "concept.adaln",
+      "type": "concept",
+      "label": "自适应层归一化与调制",
+      "aliases": [
+        "AdaLN",
+        "Adaptive LayerNorm"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "用条件信息调制归一化或特征变换。"
+    },
+    {
+      "id": "concept.semantic-control",
+      "type": "concept",
+      "label": "语义指令控制",
+      "aliases": [
+        "Semantic Control",
+        "Instruction Control"
+      ],
+      "source_ids": [
+        "R02",
+        "R33"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "用文字语义和指令约束生成内容。"
+    },
+    {
+      "id": "concept.identity-control",
+      "type": "concept",
+      "label": "身份控制",
+      "aliases": [
+        "Identity Control"
+      ],
+      "source_ids": [
+        "R28"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过身份条件帮助指定人物保持一致。"
+    },
+    {
+      "id": "concept.style-control",
+      "type": "concept",
+      "label": "风格控制",
+      "aliases": [
+        "Style Control"
+      ],
+      "source_ids": [
+        "R09",
+        "R02"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以风格条件约束外观与表现形式。"
+    },
+    {
+      "id": "concept.structure-control",
+      "type": "concept",
+      "label": "空间结构控制",
+      "aliases": [
+        "Structural Control",
+        "Depth",
+        "Layout"
+      ],
+      "source_ids": [
+        "R02",
+        "R29"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以深度、布局等信号约束空间结构。"
+    },
+    {
+      "id": "concept.motion-control",
+      "type": "concept",
+      "label": "运动控制",
+      "aliases": [
+        "Motion Control"
+      ],
+      "source_ids": [
+        "R26",
+        "R27"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过显式信号约束对象或人物运动。"
+    },
+    {
+      "id": "concept.pose-control",
+      "type": "concept",
+      "label": "姿态控制",
+      "aliases": [
+        "Pose Control",
+        "Skeleton"
+      ],
+      "source_ids": [
+        "R27"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以姿态或骨架序列引导人物运动。"
+    },
+    {
+      "id": "concept.trajectory-control",
+      "type": "concept",
+      "label": "轨迹控制",
+      "aliases": [
+        "Trajectory Control"
+      ],
+      "source_ids": [
+        "R26"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "将指定路径绑定到点或对象的运动。"
+    },
+    {
+      "id": "concept.optical-flow",
+      "type": "concept",
+      "label": "光流运动表示",
+      "aliases": [
+        "Optical Flow"
+      ],
+      "source_ids": [
+        "R02"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "表示相邻帧之间的图像运动，与 Flow Matching 区分。"
+    },
+    {
+      "id": "concept.camera-control",
+      "type": "concept",
+      "label": "相机控制",
+      "aliases": [
+        "Camera Control",
+        "Camera Trajectory"
+      ],
+      "source_ids": [
+        "R25"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以相机条件约束观看方向和运动。"
+    },
+    {
+      "id": "concept.keyframe-control",
+      "type": "concept",
+      "label": "关键帧时间锚点",
+      "aliases": [
+        "Keyframe Control",
+        "First/Last Frame"
+      ],
+      "source_ids": [
+        "R02"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以指定时间上的帧内容提供生成锚点。"
+    },
+    {
+      "id": "concept.audio-control",
+      "type": "concept",
+      "label": "音频与口型控制",
+      "aliases": [
+        "Audio Control",
+        "Lip Sync"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过音频条件约束口型、表情或动作。"
+    },
+    {
+      "id": "concept.multi-control",
+      "type": "concept",
+      "label": "多条件组合",
+      "aliases": [
+        "Multi-Control",
+        "Compositional Control"
+      ],
+      "source_ids": [
+        "R29",
+        "R02"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "融合多路条件并处理绑定、强度与冲突。"
+    },
+    {
+      "id": "concept.data-curation",
+      "type": "concept",
+      "label": "数据处理与过滤",
+      "aliases": [
+        "Data Curation",
+        "Filtering"
+      ],
+      "source_ids": [
+        "R07",
+        "R04"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "筛选、组织与混合训练数据。"
+    },
+    {
+      "id": "concept.captioning",
+      "type": "concept",
+      "label": "视频描述与重标注",
+      "aliases": [
+        "Video Captioning",
+        "Recaptioning"
+      ],
+      "source_ids": [
+        "R05",
+        "R04"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "为视频描述对象、动作和时间关系。"
+    },
+    {
+      "id": "concept.pretraining",
+      "type": "concept",
+      "label": "预训练",
+      "aliases": [
+        "Pretraining",
+        "Image-Video Joint Training"
+      ],
+      "source_ids": [
+        "R07",
+        "R06"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "从规模化数据中学习基础生成能力。"
+    },
+    {
+      "id": "concept.progressive-training",
+      "type": "concept",
+      "label": "渐进训练",
+      "aliases": [
+        "Progressive Training"
+      ],
+      "source_ids": [
+        "R05",
+        "R06"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "分阶段调整训练分辨率、长度或数据设置。"
+    },
+    {
+      "id": "concept.lora",
+      "type": "concept",
+      "label": "低秩参数适配",
+      "aliases": [
+        "LoRA",
+        "Low-Rank Adaptation"
+      ],
+      "source_ids": [
+        "R31",
+        "R07"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过低秩增量参数进行适配，不规定优化目标。"
+    },
+    {
+      "id": "concept.sft",
+      "type": "concept",
+      "label": "监督微调",
+      "aliases": [
+        "SFT",
+        "Supervised Fine-Tuning"
+      ],
+      "source_ids": [
+        "R03"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "使用监督样本优化已有模型。"
+    },
+    {
+      "id": "concept.distillation",
+      "type": "concept",
+      "label": "教师学生蒸馏",
+      "aliases": [
+        "Distillation"
+      ],
+      "source_ids": [
+        "R22",
+        "R03"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "用教师的行为或分布信号训练学生。"
+    },
+    {
+      "id": "concept.preference-optimization",
+      "type": "concept",
+      "label": "偏好优化",
+      "aliases": [
+        "Preference Optimization",
+        "DPO"
+      ],
+      "source_ids": [
+        "R36",
+        "R03"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "利用偏好数据优化生成行为。"
+    },
+    {
+      "id": "concept.reward-rl",
+      "type": "concept",
+      "label": "奖励与强化学习",
+      "aliases": [
+        "Reward Optimization",
+        "RL",
+        "GRPO"
+      ],
+      "source_ids": [
+        "R42",
+        "R03"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过奖励和强化学习更新生成策略。"
+    },
+    {
+      "id": "concept.cfg",
+      "type": "concept",
+      "label": "分类器自由引导",
+      "aliases": [
+        "Classifier-Free Guidance",
+        "CFG"
+      ],
+      "source_ids": [
+        "R33"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "结合条件与无条件预测进行生成引导。"
+    },
+    {
+      "id": "concept.solver",
+      "type": "concept",
+      "label": "采样与数值求解",
+      "aliases": [
+        "Sampler",
+        "ODE Solver",
+        "Scheduler"
+      ],
+      "source_ids": [
+        "R14",
+        "R15"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "把模型预测转为采样或连续路径的数值更新。"
+    },
+    {
+      "id": "concept.consistency",
+      "type": "concept",
+      "label": "一致性与少步生成",
+      "aliases": [
+        "Consistency Models",
+        "LCM"
+      ],
+      "source_ids": [
+        "R32"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "学习可支持少步生成的一致性映射；视频实例需独立验证。"
+    },
+    {
+      "id": "concept.kv-cache",
+      "type": "concept",
+      "label": "历史 KV 缓存",
+      "aliases": [
+        "Key-Value Cache",
+        "KV Cache"
+      ],
+      "source_ids": [
+        "R20",
+        "R23"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "复用可用历史表示的注意力 key/value。"
+    },
+    {
+      "id": "concept.denoising-cache",
+      "type": "concept",
+      "label": "去噪特征缓存",
+      "aliases": [
+        "Denoising Feature Cache",
+        "Diffusion Cache"
+      ],
+      "source_ids": [
+        "R34"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "在去噪步骤之间复用部分模型计算。"
+    },
+    {
+      "id": "concept.vae-cache",
+      "type": "concept",
+      "label": "VAE 历史特征缓存",
+      "aliases": [
+        "VAE Feature Cache"
+      ],
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "在分块编解码中复用历史特征。"
+    },
+    {
+      "id": "concept.quantization",
+      "type": "concept",
+      "label": "量化与精度",
+      "aliases": [
+        "Quantization",
+        "INT8"
+      ],
+      "source_ids": [
+        "R23",
+        "R35"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "改变数值表示精度以优化资源使用。"
+    },
+    {
+      "id": "concept.parallelism",
+      "type": "concept",
+      "label": "训练推理并行",
+      "aliases": [
+        "Parallelism",
+        "Sequence Parallelism"
+      ],
+      "source_ids": [
+        "R04",
+        "R35"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "在多设备间划分数据、序列、模型或计算。"
+    },
+    {
+      "id": "capability.visual-quality",
+      "type": "capability",
+      "label": "视觉质量",
+      "aliases": [
+        "Visual Quality",
+        "Fidelity",
+        "Aesthetics"
+      ],
+      "source_ids": [
+        "R37",
+        "R38"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "视频的细节、伪影、形态和美学表现。"
+    },
+    {
+      "id": "capability.semantic-alignment",
+      "type": "capability",
+      "label": "语义与指令执行",
+      "aliases": [
+        "Semantic Alignment",
+        "Prompt Following"
+      ],
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "视频是否执行指定对象、关系和动作要求。"
+    },
+    {
+      "id": "capability.motion-quality",
+      "type": "capability",
+      "label": "运动质量",
+      "aliases": [
+        "Motion Quality",
+        "Motion Smoothness"
+      ],
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "运动是否足够动态、自然、连贯和多样。"
+    },
+    {
+      "id": "capability.temporal-consistency",
+      "type": "capability",
+      "label": "时间一致性",
+      "aliases": [
+        "Temporal Consistency",
+        "Flicker"
+      ],
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "相邻时间与片段之间是否存在异常变化。"
+    },
+    {
+      "id": "capability.subject-consistency",
+      "type": "capability",
+      "label": "主体一致性",
+      "aliases": [
+        "Subject Consistency",
+        "Identity Persistence"
+      ],
+      "source_ids": [
+        "R37",
+        "R28"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "主体身份与属性在时间和视角变化中是否保持。"
+    },
+    {
+      "id": "capability.geometry",
+      "type": "capability",
+      "label": "空间与几何一致性",
+      "aliases": [
+        "Geometry",
+        "View Consistency"
+      ],
+      "source_ids": [
+        "R38",
+        "R25"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "场景结构、视角与遮挡关系是否一致。"
+    },
+    {
+      "id": "capability.physical-consistency",
+      "type": "capability",
+      "label": "物理与常识合理性",
+      "aliases": [
+        "Physical Consistency",
+        "Physical Commonsense"
+      ],
+      "source_ids": [
+        "R39",
+        "R38"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "交互与变化是否符合场景物理和常识。"
+    },
+    {
+      "id": "capability.long-horizon",
+      "type": "capability",
+      "label": "长程与叙事一致性",
+      "aliases": [
+        "Long-horizon Consistency",
+        "Story Coherence"
+      ],
+      "source_ids": [
+        "R24",
+        "R23"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "更长时间或跨镜头的状态与叙事是否保持。"
+    },
+    {
+      "id": "capability.controllability",
+      "type": "capability",
+      "label": "控制忠实度",
+      "aliases": [
+        "Control Faithfulness",
+        "Controllability"
+      ],
+      "source_ids": [
+        "R38",
+        "R02"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "生成结果是否执行外部控制条件。"
+    },
+    {
+      "id": "capability.av-sync",
+      "type": "capability",
+      "label": "音画对应与同步",
+      "aliases": [
+        "Audio-Visual Synchronization"
+      ],
+      "source_ids": [
+        "R30",
+        "R41"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "声音与视觉动作或事件是否对应。"
+    },
+    {
+      "id": "capability.efficiency",
+      "type": "capability",
+      "label": "效率与资源",
+      "aliases": [
+        "Latency",
+        "Throughput",
+        "VRAM"
+      ],
+      "source_ids": [
+        "R23",
+        "R35"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "延迟、吞吐、显存与任务成本等资源表现。"
+    },
+    {
+      "id": "benchmark.vbench",
+      "type": "benchmark",
+      "label": "VBench 视频质量基准",
+      "aliases": [
+        "VBench"
+      ],
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "detail_sample",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "以多维协议观察视频生成质量。"
+    },
+    {
+      "id": "benchmark.vbench2",
+      "type": "benchmark",
+      "label": "VBench-2.0 内在忠实度基准",
+      "aliases": [
+        "VBench-2.0"
+      ],
+      "source_ids": [
+        "R38"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "评估包含物理与常识等内在忠实度维度。"
+    },
+    {
+      "id": "benchmark.videophy",
+      "type": "benchmark",
+      "label": "VideoPhy 物理常识基准",
+      "aliases": [
+        "VideoPhy"
+      ],
+      "source_ids": [
+        "R39"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "评估视频中物理活动的语义和物理合理性。"
+    },
+    {
+      "id": "metric.fvd",
+      "type": "metric",
+      "label": "Fréchet 视频距离",
+      "aliases": [
+        "FVD",
+        "Frechet Video Distance"
+      ],
+      "source_ids": [
+        "R40"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/07-capabilities.md",
+      "checked_on": "2026-10-07",
+      "summary": "比较生成与参考视频在特征空间中的分布距离。"
+    },
+    {
+      "id": "method.self-forcing",
+      "type": "method",
+      "label": "Self Forcing",
+      "aliases": [
+        "Self Forcing"
+      ],
+      "source_ids": [
+        "R20"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "研究自生成上下文下的自回归视频扩散训练。"
+    },
+    {
+      "id": "method.diffusion-forcing",
+      "type": "method",
+      "label": "Diffusion Forcing",
+      "aliases": [
+        "Diffusion Forcing"
+      ],
+      "source_ids": [
+        "R21"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "以每 token 独立噪声水平进行条件序列去噪。"
+    },
+    {
+      "id": "method.causvid",
+      "type": "method",
+      "label": "CausVid",
+      "aliases": [
+        "CausVid"
+      ],
+      "source_ids": [
+        "R22"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "将双向教师转换为少步因果视频学生。"
+    },
+    {
+      "id": "method.longlive",
+      "type": "method",
+      "label": "LongLive",
+      "aliases": [
+        "LongLive"
+      ],
+      "source_ids": [
+        "R23"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "研究带动态提示的交互长视频生成。"
+    },
+    {
+      "id": "method.moviedreamer",
+      "type": "method",
+      "label": "MovieDreamer",
+      "aliases": [
+        "MovieDreamer"
+      ],
+      "source_ids": [
+        "R24"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/03-temporal.md",
+      "checked_on": "2026-10-07",
+      "summary": "组合全局自回归叙事与局部扩散渲染。"
+    },
+    {
+      "id": "method.cameractrl",
+      "type": "method",
+      "label": "CameraCtrl",
+      "aliases": [
+        "CameraCtrl"
+      ],
+      "source_ids": [
+        "R25"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "为视频生成引入相机姿态条件模块。"
+    },
+    {
+      "id": "method.draganything",
+      "type": "method",
+      "label": "DragAnything",
+      "aliases": [
+        "DragAnything"
+      ],
+      "source_ids": [
+        "R26"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "通过实体表示和轨迹约束对象运动。"
+    },
+    {
+      "id": "method.animate-anyone",
+      "type": "method",
+      "label": "Animate Anyone",
+      "aliases": [
+        "Animate Anyone"
+      ],
+      "source_ids": [
+        "R27"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "结合参考外观、姿态和时序建模进行角色动画。"
+    },
+    {
+      "id": "method.consisid",
+      "type": "method",
+      "label": "ConsisID",
+      "aliases": [
+        "ConsisID"
+      ],
+      "source_ids": [
+        "R28"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "以特定身份条件方案生成身份保留视频。"
+    },
+    {
+      "id": "method.videocomposer",
+      "type": "method",
+      "label": "VideoComposer",
+      "aliases": [
+        "VideoComposer"
+      ],
+      "source_ids": [
+        "R29"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "组合文本、空间和时间条件控制视频。"
+    },
+    {
+      "id": "method.hallo",
+      "type": "method",
+      "label": "Hallo",
+      "aliases": [
+        "Hallo"
+      ],
+      "source_ids": [
+        "R30"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/05-control.md",
+      "checked_on": "2026-10-07",
+      "summary": "研究语音驱动的肖像动画与动作对齐。"
+    },
+    {
+      "id": "method.teacache",
+      "type": "method",
+      "label": "TeaCache",
+      "aliases": [
+        "TeaCache"
+      ],
+      "source_ids": [
+        "R34"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "根据去噪步骤变化估计进行缓存复用。"
+    },
+    {
+      "id": "method.localdpo",
+      "type": "method",
+      "label": "LocalDPO",
+      "aliases": [
+        "LocalDPO"
+      ],
+      "source_ids": [
+        "R36"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "构造局部时空偏好并进行区域目标优化。"
+    },
+    {
+      "id": "method.dancegrpo",
+      "type": "method",
+      "label": "DanceGRPO",
+      "aliases": [
+        "DanceGRPO"
+      ],
+      "source_ids": [
+        "R42"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/06-training-inference.md",
+      "checked_on": "2026-10-07",
+      "summary": "将 GRPO 适配到视觉生成的奖励优化。"
+    },
+    {
+      "id": "method.vsa",
+      "type": "method",
+      "label": "VSA",
+      "aliases": [
+        "Video Sparse Attention",
+        "VSA"
+      ],
+      "source_ids": [
+        "R43"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "在训练与推理中使用可训练稀疏注意力。"
+    },
+    {
+      "id": "model.wan-report",
+      "type": "model",
+      "label": "Wan 2025 技术报告模型系列",
+      "aliases": [
+        "Wan",
+        "Wan2.1"
+      ],
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "2025 技术报告对应的 Wan 系列，属性按报告版本保存。"
+    },
+    {
+      "id": "model.cogvideox-report",
+      "type": "model",
+      "label": "CogVideoX 技术报告模型系列",
+      "aliases": [
+        "CogVideoX"
+      ],
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07",
+      "summary": "CogVideoX 公开技术报告对应系列，检查点能力另行核验。"
+    },
+    {
+      "id": "model.svd-report",
+      "type": "model",
+      "label": "Stable Video Diffusion 技术报告系列",
+      "aliases": [
+        "Stable Video Diffusion",
+        "SVD"
+      ],
+      "source_ids": [
+        "R07"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "Stable Video Diffusion 报告对应系列，任务支持按版本核验。"
+    },
+    {
+      "id": "model.ltx2-family",
+      "type": "model",
+      "label": "LTX-2 音视频模型家族",
+      "aliases": [
+        "LTX-2"
+      ],
+      "source_ids": [
+        "R41"
+      ],
+      "evidence_status": "author_report",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/01-tasks.md",
+      "checked_on": "2026-10-07",
+      "summary": "官方仓库描述的音视频模型家族，不代表全部检查点配置。"
+    },
+    {
+      "id": "concept.ar-transformer",
+      "type": "concept",
+      "label": "自回归 Transformer 骨干",
+      "aliases": [
+        "Autoregressive Transformer",
+        "AR Transformer"
+      ],
+      "summary": "以 Transformer 作为自回归条件预测的网络结构，与概率分解概念区分。",
+      "source_ids": [
+        "R18"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/04-architecture.md",
+      "checked_on": "2026-10-07"
+    },
+    {
+      "id": "concept.ddpm",
+      "type": "concept",
+      "label": "去噪扩散概率模型",
+      "aliases": [
+        "DDPM",
+        "Denoising Diffusion Probabilistic Models"
+      ],
+      "summary": "采用离散噪声步骤和去噪学习的扩散概率建模框架。",
+      "source_ids": [
+        "R12"
+      ],
+      "evidence_status": "literature_synthesis",
+      "content_status": "design_outline",
+      "doc_path": "docs/views/02-paradigms.md",
+      "checked_on": "2026-10-07"
+    }
+  ],
+  "views": [
+    {
+      "id": "view.tasks",
+      "label": "任务与输入输出",
+      "doc_path": "docs/views/01-tasks.md",
+      "sections": [
+        {
+          "id": "tasks.text",
+          "label": "文生视频",
+          "entity_ids": [
+            "task.t2v"
+          ],
+          "example_ids": [
+            "model.cogvideox-report"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R04",
+            "R58"
+          ],
+          "representative_catalog_anchor": "tasks-text"
+        },
+        {
+          "id": "tasks.image",
+          "label": "图生视频",
+          "entity_ids": [
+            "task.i2v",
+            "concept.keyframe-control"
+          ],
+          "example_ids": [
+            "model.svd-report"
+          ],
+          "representative_source_ids": [
+            "R07",
+            "R51",
+            "R52",
+            "R53"
+          ],
+          "representative_catalog_anchor": "tasks-image"
+        },
+        {
+          "id": "tasks.reference",
+          "label": "参考生成",
+          "entity_ids": [
+            "task.reference-video",
+            "concept.identity-control",
+            "concept.style-control"
+          ],
+          "example_ids": [
+            "method.consisid"
+          ],
+          "representative_source_ids": [
+            "R28",
+            "R54",
+            "R55",
+            "R50"
+          ],
+          "representative_catalog_anchor": "tasks-reference"
+        },
+        {
+          "id": "tasks.video",
+          "label": "视频到视频",
+          "entity_ids": [
+            "task.video-editing",
+            "task.video-continuation"
+          ],
+          "aliases": [
+            "Video-to-Video",
+            "V2V"
+          ],
+          "representative_source_ids": [
+            "R08",
+            "R09",
+            "R50",
+            "R53"
+          ],
+          "representative_catalog_anchor": "tasks-video"
+        },
+        {
+          "id": "tasks.audio",
+          "label": "音频驱动",
+          "entity_ids": [
+            "task.audio-video"
+          ],
+          "example_ids": [
+            "method.hallo"
+          ],
+          "representative_source_ids": [
+            "R30",
+            "R67",
+            "R73",
+            "R76",
+            "R75"
+          ],
+          "representative_catalog_anchor": "tasks-audio"
+        },
+        {
+          "id": "tasks.multimodal",
+          "label": "多条件输入",
+          "entity_ids": [
+            "task.multimodal-video",
+            "concept.multi-control"
+          ],
+          "example_ids": [
+            "method.videocomposer"
+          ],
+          "representative_source_ids": [
+            "R29",
+            "R74",
+            "R27",
+            "R30",
+            "R50"
+          ],
+          "representative_catalog_anchor": "tasks-multimodal"
+        },
+        {
+          "id": "tasks.outputs",
+          "label": "输出模态扩展",
+          "entity_ids": [
+            "task.joint-av"
+          ],
+          "example_ids": [
+            "model.ltx2-family"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R68",
+            "R08",
+            "R41"
+          ],
+          "representative_catalog_anchor": "tasks-outputs"
+        }
+      ]
+    },
+    {
+      "id": "view.paradigms",
+      "label": "生成范式",
+      "doc_path": "docs/views/02-paradigms.md",
+      "sections": [
+        {
+          "id": "paradigms.gan",
+          "label": "对抗生成",
+          "entity_ids": [
+            "concept.gan"
+          ],
+          "representative_source_ids": [
+            "R44",
+            "R45",
+            "R10"
+          ],
+          "representative_catalog_anchor": "paradigms-gan"
+        },
+        {
+          "id": "paradigms.vae",
+          "label": "变分潜变量生成",
+          "entity_ids": [
+            "concept.vae-modeling"
+          ],
+          "representative_source_ids": [
+            "R46",
+            "R47",
+            "R11"
+          ],
+          "representative_catalog_anchor": "paradigms-vae"
+        },
+        {
+          "id": "paradigms.diffusion",
+          "label": "扩散与得分建模",
+          "entity_ids": [
+            "concept.diffusion",
+            "concept.ddpm",
+            "concept.latent-diffusion"
+          ],
+          "representative_source_ids": [
+            "R19",
+            "R07",
+            "R12",
+            "R13"
+          ],
+          "representative_catalog_anchor": "paradigms-diffusion"
+        },
+        {
+          "id": "paradigms.flow",
+          "label": "流与速度场建模",
+          "entity_ids": [
+            "concept.flow-matching",
+            "concept.rectified-flow"
+          ],
+          "representative_source_ids": [
+            "R14",
+            "R15",
+            "R04"
+          ],
+          "representative_catalog_anchor": "paradigms-flow"
+        },
+        {
+          "id": "paradigms.ar",
+          "label": "自回归生成",
+          "entity_ids": [
+            "concept.autoregressive"
+          ],
+          "representative_source_ids": [
+            "R18",
+            "R20",
+            "R66"
+          ],
+          "representative_catalog_anchor": "paradigms-ar"
+        },
+        {
+          "id": "paradigms.masked",
+          "label": "掩码生成",
+          "entity_ids": [
+            "concept.masked-generation"
+          ],
+          "representative_source_ids": [
+            "R48",
+            "R17"
+          ],
+          "representative_catalog_anchor": "paradigms-masked"
+        },
+        {
+          "id": "paradigms.hybrid",
+          "label": "混合范式",
+          "entity_ids": [
+            "concept.ar-diffusion",
+            "concept.hierarchical-generation"
+          ],
+          "example_ids": [
+            "method.self-forcing",
+            "method.moviedreamer"
+          ],
+          "representative_source_ids": [
+            "R20",
+            "R22",
+            "R24",
+            "R58"
+          ],
+          "representative_catalog_anchor": "paradigms-hybrid"
+        }
+      ]
+    },
+    {
+      "id": "view.temporal",
+      "label": "时序生成机制",
+      "doc_path": "docs/views/03-temporal.md",
+      "sections": [
+        {
+          "id": "temporal.joint",
+          "label": "整段联合生成",
+          "entity_ids": [
+            "concept.joint-generation"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R04",
+            "R53"
+          ],
+          "representative_catalog_anchor": "temporal-joint"
+        },
+        {
+          "id": "temporal.causal",
+          "label": "因果生成",
+          "entity_ids": [
+            "concept.causal-generation",
+            "concept.chunk-generation",
+            "concept.exposure-bias"
+          ],
+          "example_ids": [
+            "method.causvid",
+            "method.self-forcing"
+          ],
+          "representative_source_ids": [
+            "R22",
+            "R20",
+            "R21"
+          ],
+          "representative_catalog_anchor": "temporal-causal"
+        },
+        {
+          "id": "temporal.context",
+          "label": "上下文延展",
+          "entity_ids": [
+            "concept.sliding-window",
+            "concept.long-context"
+          ],
+          "example_ids": [
+            "method.longlive"
+          ],
+          "representative_source_ids": [
+            "R57",
+            "R23",
+            "R56"
+          ],
+          "representative_catalog_anchor": "temporal-context"
+        },
+        {
+          "id": "temporal.hierarchical",
+          "label": "分层生成",
+          "entity_ids": [
+            "concept.hierarchical-generation"
+          ],
+          "example_ids": [
+            "method.moviedreamer"
+          ],
+          "representative_source_ids": [
+            "R24",
+            "R58",
+            "R72"
+          ],
+          "representative_catalog_anchor": "temporal-hierarchical"
+        },
+        {
+          "id": "temporal.memory",
+          "label": "状态与记忆",
+          "entity_ids": [
+            "concept.memory",
+            "concept.kv-cache"
+          ],
+          "representative_source_ids": [
+            "R56",
+            "R57",
+            "R66"
+          ],
+          "representative_catalog_anchor": "temporal-memory"
+        },
+        {
+          "id": "temporal.streaming",
+          "label": "流式与交互",
+          "entity_ids": [
+            "concept.streaming"
+          ],
+          "example_ids": [
+            "method.longlive"
+          ],
+          "representative_source_ids": [
+            "R20",
+            "R23",
+            "R66"
+          ],
+          "representative_catalog_anchor": "temporal-streaming"
+        }
+      ]
+    },
+    {
+      "id": "view.architecture",
+      "label": "模型结构与表示",
+      "doc_path": "docs/views/04-architecture.md",
+      "sections": [
+        {
+          "id": "architecture.representation",
+          "label": "视频表示",
+          "entity_ids": [
+            "concept.pixel-space",
+            "concept.continuous-latent",
+            "concept.discrete-token"
+          ],
+          "representative_source_ids": [
+            "R19",
+            "R07",
+            "R49"
+          ],
+          "representative_catalog_anchor": "architecture-representation"
+        },
+        {
+          "id": "architecture.codec",
+          "label": "视频编解码器",
+          "entity_ids": [
+            "concept.video-vae",
+            "concept.causal-vae"
+          ],
+          "example_ids": [
+            "model.wan-report",
+            "model.cogvideox-report"
+          ],
+          "representative_source_ids": [
+            "R07",
+            "R04",
+            "R05",
+            "R49"
+          ],
+          "representative_catalog_anchor": "architecture-codec"
+        },
+        {
+          "id": "architecture.backbone",
+          "label": "骨干",
+          "entity_ids": [
+            "concept.unet",
+            "concept.dit",
+            "concept.ar-transformer"
+          ],
+          "representative_source_ids": [
+            "R19",
+            "R65",
+            "R05",
+            "R18"
+          ],
+          "representative_catalog_anchor": "architecture-backbone"
+        },
+        {
+          "id": "architecture.position",
+          "label": "Token 化与位置",
+          "entity_ids": [
+            "concept.patchify",
+            "concept.rope3d"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R65",
+            "R04"
+          ],
+          "representative_catalog_anchor": "architecture-position"
+        },
+        {
+          "id": "architecture.attention",
+          "label": "时空连接与注意力",
+          "entity_ids": [
+            "concept.spatiotemporal-attention",
+            "concept.full-attention",
+            "concept.factorized-attention",
+            "concept.sparse-attention",
+            "concept.causal-attention"
+          ],
+          "example_ids": [
+            "method.vsa"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R65",
+            "R43",
+            "R22"
+          ],
+          "representative_catalog_anchor": "architecture-attention"
+        },
+        {
+          "id": "architecture.condition",
+          "label": "条件编码与注入",
+          "entity_ids": [
+            "concept.condition-injection",
+            "concept.cross-attention",
+            "concept.adaln"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R04",
+            "R51",
+            "R50"
+          ],
+          "representative_catalog_anchor": "architecture-condition"
+        },
+        {
+          "id": "architecture.efficiency",
+          "label": "模块级效率",
+          "entity_ids": [
+            "concept.vae-cache",
+            "concept.kv-cache",
+            "concept.sparse-attention"
+          ],
+          "representative_source_ids": [
+            "R04",
+            "R49",
+            "R43",
+            "R64"
+          ],
+          "representative_catalog_anchor": "architecture-efficiency"
+        }
+      ]
+    },
+    {
+      "id": "view.control",
+      "label": "可控性",
+      "doc_path": "docs/views/05-control.md",
+      "sections": [
+        {
+          "id": "control.semantic",
+          "label": "语义与指令",
+          "entity_ids": [
+            "concept.semantic-control"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R08",
+            "R58",
+            "R33"
+          ],
+          "representative_catalog_anchor": "control-semantic"
+        },
+        {
+          "id": "control.appearance",
+          "label": "身份与外观",
+          "entity_ids": [
+            "concept.identity-control",
+            "concept.style-control"
+          ],
+          "example_ids": [
+            "method.consisid"
+          ],
+          "representative_source_ids": [
+            "R28",
+            "R54",
+            "R55",
+            "R09"
+          ],
+          "representative_catalog_anchor": "control-appearance"
+        },
+        {
+          "id": "control.structure",
+          "label": "空间结构",
+          "entity_ids": [
+            "concept.structure-control"
+          ],
+          "representative_source_ids": [
+            "R72",
+            "R52",
+            "R50",
+            "R58",
+            "R55"
+          ],
+          "representative_catalog_anchor": "control-structure"
+        },
+        {
+          "id": "control.motion",
+          "label": "运动",
+          "entity_ids": [
+            "concept.motion-control",
+            "concept.pose-control",
+            "concept.trajectory-control",
+            "concept.optical-flow"
+          ],
+          "example_ids": [
+            "method.animate-anyone",
+            "method.draganything"
+          ],
+          "representative_source_ids": [
+            "R27",
+            "R26",
+            "R74",
+            "R55",
+            "R29"
+          ],
+          "representative_catalog_anchor": "control-motion"
+        },
+        {
+          "id": "control.camera",
+          "label": "相机",
+          "entity_ids": [
+            "concept.camera-control"
+          ],
+          "example_ids": [
+            "method.cameractrl"
+          ],
+          "representative_source_ids": [
+            "R25",
+            "R71",
+            "R07"
+          ],
+          "representative_catalog_anchor": "control-camera"
+        },
+        {
+          "id": "control.temporal",
+          "label": "时间锚点",
+          "entity_ids": [
+            "concept.keyframe-control"
+          ],
+          "representative_source_ids": [
+            "R52",
+            "R53",
+            "R58"
+          ],
+          "representative_catalog_anchor": "control-temporal"
+        },
+        {
+          "id": "control.audio",
+          "label": "音频",
+          "entity_ids": [
+            "concept.audio-control"
+          ],
+          "example_ids": [
+            "method.hallo"
+          ],
+          "representative_source_ids": [
+            "R30",
+            "R67",
+            "R73",
+            "R76",
+            "R75"
+          ],
+          "representative_catalog_anchor": "control-audio"
+        },
+        {
+          "id": "control.multiple",
+          "label": "多条件与统一控制",
+          "entity_ids": [
+            "concept.multi-control"
+          ],
+          "example_ids": [
+            "method.videocomposer"
+          ],
+          "representative_source_ids": [
+            "R29",
+            "R74",
+            "R50",
+            "R55"
+          ],
+          "representative_catalog_anchor": "control-multiple"
+        }
+      ]
+    },
+    {
+      "id": "view.training",
+      "label": "训练与推理",
+      "doc_path": "docs/views/06-training-inference.md",
+      "sections": [
+        {
+          "id": "training.data",
+          "label": "数据工程",
+          "entity_ids": [
+            "concept.data-curation",
+            "concept.captioning"
+          ],
+          "representative_source_ids": [
+            "R59",
+            "R60",
+            "R07"
+          ],
+          "representative_catalog_anchor": "training-data"
+        },
+        {
+          "id": "training.pretrain",
+          "label": "预训练",
+          "entity_ids": [
+            "concept.pretraining",
+            "concept.progressive-training",
+            "concept.flow-matching",
+            "concept.diffusion"
+          ],
+          "representative_source_ids": [
+            "R07",
+            "R06",
+            "R05",
+            "R19"
+          ],
+          "representative_catalog_anchor": "training-pretrain"
+        },
+        {
+          "id": "training.parameters",
+          "label": "参数适配",
+          "entity_ids": [
+            "concept.lora"
+          ],
+          "representative_source_ids": [
+            "R31",
+            "R07",
+            "R54",
+            "R25"
+          ],
+          "representative_catalog_anchor": "training-parameters"
+        },
+        {
+          "id": "training.post",
+          "label": "后训练目标",
+          "entity_ids": [
+            "concept.sft",
+            "concept.distillation",
+            "concept.preference-optimization",
+            "concept.reward-rl"
+          ],
+          "example_ids": [
+            "method.localdpo",
+            "method.dancegrpo"
+          ],
+          "representative_source_ids": [
+            "R07",
+            "R22",
+            "R36",
+            "R42",
+            "R62"
+          ],
+          "representative_catalog_anchor": "training-post"
+        },
+        {
+          "id": "training.temporal",
+          "label": "时序训练策略",
+          "entity_ids": [
+            "concept.exposure-bias",
+            "concept.long-context"
+          ],
+          "example_ids": [
+            "method.self-forcing",
+            "method.diffusion-forcing",
+            "method.longlive"
+          ],
+          "representative_source_ids": [
+            "R20",
+            "R21",
+            "R23"
+          ],
+          "representative_catalog_anchor": "training-temporal"
+        },
+        {
+          "id": "training.sampling",
+          "label": "采样与推理",
+          "entity_ids": [
+            "concept.solver",
+            "concept.cfg"
+          ],
+          "representative_source_ids": [
+            "R69",
+            "R70",
+            "R33",
+            "R14"
+          ],
+          "representative_catalog_anchor": "training-sampling"
+        },
+        {
+          "id": "training.efficiency",
+          "label": "效率与系统",
+          "entity_ids": [
+            "concept.distillation",
+            "concept.consistency",
+            "concept.sparse-attention",
+            "concept.quantization",
+            "concept.parallelism"
+          ],
+          "example_ids": [
+            "method.teacache",
+            "method.vsa"
+          ],
+          "groups": [
+            {
+              "id": "training.efficiency.cache",
+              "label": "缓存",
+              "entity_ids": [
+                "concept.kv-cache",
+                "concept.denoising-cache",
+                "concept.vae-cache"
+              ],
+              "representative_source_ids": [
+                "R20",
+                "R34",
+                "R04"
+              ]
+            }
+          ],
+          "representative_source_ids": [
+            "R22",
+            "R61",
+            "R62",
+            "R20",
+            "R34",
+            "R04",
+            "R43",
+            "R63",
+            "R64",
+            "R35"
+          ],
+          "representative_catalog_anchor": "training-efficiency"
+        }
+      ]
+    },
+    {
+      "id": "view.capabilities",
+      "label": "能力与核心问题",
+      "doc_path": "docs/views/07-capabilities.md",
+      "sections": [
+        {
+          "id": "capabilities.visual",
+          "label": "视觉质量",
+          "entity_ids": [
+            "capability.visual-quality"
+          ],
+          "representative_source_ids": [
+            "R04",
+            "R05",
+            "R37",
+            "R38"
+          ],
+          "representative_catalog_anchor": "capabilities-visual"
+        },
+        {
+          "id": "capabilities.semantic",
+          "label": "语义与指令执行",
+          "entity_ids": [
+            "capability.semantic-alignment"
+          ],
+          "representative_source_ids": [
+            "R05",
+            "R58",
+            "R37",
+            "R38"
+          ],
+          "representative_catalog_anchor": "capabilities-semantic"
+        },
+        {
+          "id": "capabilities.motion",
+          "label": "运动质量",
+          "entity_ids": [
+            "capability.motion-quality"
+          ],
+          "representative_source_ids": [
+            "R44",
+            "R27",
+            "R37"
+          ],
+          "representative_catalog_anchor": "capabilities-motion"
+        },
+        {
+          "id": "capabilities.temporal",
+          "label": "时间一致性",
+          "entity_ids": [
+            "capability.temporal-consistency"
+          ],
+          "representative_source_ids": [
+            "R09",
+            "R56",
+            "R72",
+            "R37"
+          ],
+          "representative_catalog_anchor": "capabilities-temporal"
+        },
+        {
+          "id": "capabilities.subject",
+          "label": "主体与场景一致性",
+          "entity_ids": [
+            "capability.subject-consistency"
+          ],
+          "representative_source_ids": [
+            "R28",
+            "R55",
+            "R56",
+            "R37"
+          ],
+          "representative_catalog_anchor": "capabilities-subject"
+        },
+        {
+          "id": "capabilities.geometry",
+          "label": "空间与几何",
+          "entity_ids": [
+            "capability.geometry"
+          ],
+          "representative_source_ids": [
+            "R71",
+            "R25"
+          ],
+          "representative_catalog_anchor": "capabilities-geometry"
+        },
+        {
+          "id": "capabilities.physics",
+          "label": "物理与常识",
+          "entity_ids": [
+            "capability.physical-consistency"
+          ],
+          "representative_source_ids": [
+            "R39",
+            "R38"
+          ],
+          "representative_catalog_anchor": "capabilities-physics"
+        },
+        {
+          "id": "capabilities.long",
+          "label": "长程与叙事",
+          "entity_ids": [
+            "capability.long-horizon"
+          ],
+          "representative_source_ids": [
+            "R24",
+            "R58",
+            "R23",
+            "R57"
+          ],
+          "representative_catalog_anchor": "capabilities-long"
+        },
+        {
+          "id": "capabilities.control",
+          "label": "控制忠实度",
+          "entity_ids": [
+            "capability.controllability"
+          ],
+          "representative_source_ids": [
+            "R25",
+            "R26",
+            "R29",
+            "R38"
+          ],
+          "representative_catalog_anchor": "capabilities-control"
+        },
+        {
+          "id": "capabilities.audio",
+          "label": "音画对应",
+          "entity_ids": [
+            "capability.av-sync"
+          ],
+          "representative_source_ids": [
+            "R67",
+            "R30",
+            "R76",
+            "R68",
+            "R41"
+          ],
+          "representative_catalog_anchor": "capabilities-audio"
+        },
+        {
+          "id": "capabilities.efficiency",
+          "label": "效率与资源",
+          "entity_ids": [
+            "capability.efficiency"
+          ],
+          "representative_source_ids": [
+            "R22",
+            "R34",
+            "R63",
+            "R64"
+          ],
+          "representative_catalog_anchor": "capabilities-efficiency"
+        },
+        {
+          "id": "capabilities.evaluation",
+          "label": "评测方法与协议",
+          "entity_ids": [
+            "benchmark.vbench",
+            "benchmark.vbench2",
+            "benchmark.videophy",
+            "metric.fvd"
+          ],
+          "representative_source_ids": [
+            "R40",
+            "R37",
+            "R38",
+            "R39",
+            "R67"
+          ],
+          "representative_catalog_anchor": "capabilities-evaluation"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "model.wan-report",
+      "type": "adopts",
+      "to": "concept.dit",
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.wan-report",
+      "type": "adopts",
+      "to": "concept.causal-vae",
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.wan-report",
+      "type": "adopts",
+      "to": "concept.flow-matching",
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.wan-report",
+      "type": "adopts",
+      "to": "concept.cross-attention",
+      "source_ids": [
+        "R04"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.cogvideox-report",
+      "type": "adopts",
+      "to": "concept.causal-vae",
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.cogvideox-report",
+      "type": "adopts",
+      "to": "concept.rope3d",
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.cogvideox-report",
+      "type": "adopts",
+      "to": "concept.full-attention",
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "model.cogvideox-report",
+      "type": "adopts",
+      "to": "concept.adaln",
+      "source_ids": [
+        "R05"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.self-forcing",
+      "type": "adopts",
+      "to": "concept.causal-generation",
+      "source_ids": [
+        "R20"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.self-forcing",
+      "type": "adopts",
+      "to": "concept.kv-cache",
+      "source_ids": [
+        "R20"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.self-forcing",
+      "type": "addresses",
+      "to": "concept.exposure-bias",
+      "source_ids": [
+        "R20"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.diffusion-forcing",
+      "type": "adopts",
+      "to": "concept.causal-generation",
+      "source_ids": [
+        "R21"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.causvid",
+      "type": "adopts",
+      "to": "concept.causal-generation",
+      "source_ids": [
+        "R22"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.causvid",
+      "type": "adopts",
+      "to": "concept.distillation",
+      "source_ids": [
+        "R22"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.longlive",
+      "type": "adopts",
+      "to": "concept.kv-cache",
+      "source_ids": [
+        "R23"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.longlive",
+      "type": "adopts",
+      "to": "concept.sliding-window",
+      "source_ids": [
+        "R23"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.longlive",
+      "type": "addresses",
+      "to": "capability.long-horizon",
+      "source_ids": [
+        "R23"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.moviedreamer",
+      "type": "adopts",
+      "to": "concept.hierarchical-generation",
+      "source_ids": [
+        "R24"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.cameractrl",
+      "type": "addresses",
+      "to": "concept.camera-control",
+      "source_ids": [
+        "R25"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.draganything",
+      "type": "addresses",
+      "to": "concept.trajectory-control",
+      "source_ids": [
+        "R26"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.animate-anyone",
+      "type": "adopts",
+      "to": "concept.pose-control",
+      "source_ids": [
+        "R27"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.consisid",
+      "type": "addresses",
+      "to": "concept.identity-control",
+      "source_ids": [
+        "R28"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.videocomposer",
+      "type": "addresses",
+      "to": "concept.multi-control",
+      "source_ids": [
+        "R29"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.hallo",
+      "type": "addresses",
+      "to": "capability.av-sync",
+      "source_ids": [
+        "R30"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.teacache",
+      "type": "adopts",
+      "to": "concept.denoising-cache",
+      "source_ids": [
+        "R34"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.localdpo",
+      "type": "adopts",
+      "to": "concept.preference-optimization",
+      "source_ids": [
+        "R36"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.dancegrpo",
+      "type": "adopts",
+      "to": "concept.reward-rl",
+      "source_ids": [
+        "R42"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "method.vsa",
+      "type": "adopts",
+      "to": "concept.sparse-attention",
+      "source_ids": [
+        "R43"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "benchmark.vbench",
+      "type": "evaluates",
+      "to": "capability.temporal-consistency",
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "benchmark.vbench",
+      "type": "evaluates",
+      "to": "capability.motion-quality",
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "benchmark.vbench",
+      "type": "evaluates",
+      "to": "capability.subject-consistency",
+      "source_ids": [
+        "R37"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "benchmark.vbench2",
+      "type": "evaluates",
+      "to": "capability.physical-consistency",
+      "source_ids": [
+        "R38"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "benchmark.videophy",
+      "type": "evaluates",
+      "to": "capability.physical-consistency",
+      "source_ids": [
+        "R39"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "concept.flow-matching",
+      "type": "related_to",
+      "to": "concept.diffusion",
+      "source_ids": [
+        "R14"
+      ],
+      "evidence_status": "author_report"
+    },
+    {
+      "from": "concept.identity-control",
+      "type": "related_to",
+      "to": "capability.subject-consistency",
+      "source_ids": [],
+      "evidence_status": "editorial"
+    },
+    {
+      "from": "concept.causal-attention",
+      "type": "related_to",
+      "to": "concept.causal-generation",
+      "source_ids": [],
+      "evidence_status": "editorial"
+    },
+    {
+      "from": "concept.video-vae",
+      "type": "related_to",
+      "to": "concept.vae-modeling",
+      "source_ids": [],
+      "evidence_status": "editorial"
+    },
+    {
+      "from": "concept.lora",
+      "type": "related_to",
+      "to": "concept.sft",
+      "source_ids": [],
+      "evidence_status": "editorial"
+    },
+    {
+      "from": "concept.ar-transformer",
+      "type": "related_to",
+      "to": "concept.autoregressive",
+      "source_ids": [
+        "R18"
+      ],
+      "evidence_status": "literature_synthesis"
+    }
+  ],
+  "representative_work_index": "data/representative-works.json",
+  "representative_work_catalog": "docs/02-subclasses-and-representative-works.md"
+}

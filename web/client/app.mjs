@@ -1,4 +1,5 @@
 import { marked } from './vendor/marked.esm.js';
+import { mountVideoMap, videoMapLink } from './video-map.mjs';
 import { dataEngineeringView } from './data-engineering.mjs';
 const main = document.querySelector('#main');
 const esc = (value = '') => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -27,12 +28,13 @@ const isExternal = value => { try { const u = new URL(value); return ['http:', '
 const badge = status => `<span class="badge ${['协议可用', '平台入口', '代码入口', '入口已配置'].includes(status) ? 'badge-ready' : status === '正在开发' ? 'badge-dev' : 'badge-plan'}"><i></i>${esc(status)}</span>`;
 let content, filter = 'all';
 let routeToken = 0;
+let disposePage;
 function externalLink(url, label, cls = 'button button-primary') { return `<a class="${cls}" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ${icon('external')}</a>`; }
 function documentAction(id, label = '阅读方案', cls = 'button button-secondary') { return content.documents[id] ? `<a class="${cls}" href="${docLink(id)}">${icon('file')}${esc(label)}</a>` : ''; }
 function renderNavigation(active = '') {
   const stages = content.modules.filter(m => m.number);
   const shared = content.modules.filter(m => !m.number);
-  document.querySelector('#navigation').innerHTML = `<a class="nav-item ${active === 'home' ? 'active' : ''}" href="#/">${icon('grid')}<span>研发总览</span></a><a class="nav-item ${active === 'tools' ? 'active' : ''}" href="#/tools">${icon('server')}<span>平台与工具</span></a><div class="nav-label">研发流程 <span>01 — 06</span></div>${stages.map(m => `<a class="nav-item ${active === m.id ? 'active' : ''}" href="${moduleLink(m.id)}"><span class="nav-number">${m.number}</span><span>${m.title}</span>${active === m.id ? '<b class="nav-active-dot"></b>' : ''}</a>`).join('')}<div class="nav-label">跨流程共享能力</div>${shared.map(m => `<a class="nav-item ${active === m.id ? 'active' : ''}" href="${moduleLink(m.id)}">${icon(m.icon)}<span>${m.title}</span></a>`).join('')}<div class="nav-divider"></div><a class="nav-item ${active === 'architecture' ? 'active' : ''}" href="${docLink('AIGC-infra/README.md')}">${icon('book')}<span>架构与文档</span></a>`;
+  document.querySelector('#navigation').innerHTML = `<a class="nav-item ${active === 'home' ? 'active' : ''}" href="#/">${icon('grid')}<span>研发总览</span></a><a class="nav-item ${active === 'tools' ? 'active' : ''}" href="#/tools">${icon('server')}<span>平台与工具</span></a><a class="nav-item ${active === 'video-generation' ? 'active' : ''}" href="#/video-generation">${icon('branches')}<span>视频生成技术汇总</span></a><div class="nav-label">研发流程 <span>01 — 06</span></div>${stages.map(m => `<a class="nav-item ${active === m.id ? 'active' : ''}" href="${moduleLink(m.id)}"><span class="nav-number">${m.number}</span><span>${m.title}</span>${active === m.id ? '<b class="nav-active-dot"></b>' : ''}</a>`).join('')}<div class="nav-label">跨流程共享能力</div>${shared.map(m => `<a class="nav-item ${active === m.id ? 'active' : ''}" href="${moduleLink(m.id)}">${icon(m.icon)}<span>${m.title}</span></a>`).join('')}<div class="nav-divider"></div><a class="nav-item ${active === 'architecture' ? 'active' : ''}" href="${docLink('AIGC-infra/README.md')}">${icon('book')}<span>架构与文档</span></a>`;
   document.querySelectorAll('.nav-item.active').forEach(el => el.setAttribute('aria-current', 'page'));
 }
 function breadcrumbs(...items) { document.querySelector('#breadcrumb').innerHTML = ['工作台', ...items].map(esc).join('<span>/</span>'); }
@@ -91,7 +93,7 @@ function resolveLink(href, currentDoc) {
 }
 const safeTags = new Set('p h1 h2 h3 h4 h5 h6 strong em b i a ul ol li blockquote pre code table thead tbody tr th td hr br span div details summary img del'.split(' '));
 export function renderMarkdown(text, currentDoc) {
-  if (content.documents[currentDoc]?.format === 'yaml') return `<pre><code>${esc(text)}</code></pre>`;
+  if (['yaml', 'json'].includes(content.documents[currentDoc]?.format)) return `<pre><code>${esc(text)}</code></pre>`;
   const raw = marked.parse(text.replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---\r?\n/, ''));
   const doc = new DOMParser().parseFromString(raw, 'text/html');
   function clean(node) {
@@ -103,6 +105,8 @@ export function renderMarkdown(text, currentDoc) {
     if (!safeTags.has(tag)) return children;
     let attrs = '';
     if (tag === 'a') {
+      const anchor = node.getAttribute('id');
+      if (!node.getAttribute('href') && /^[a-zA-Z][\w-]*$/.test(anchor || '')) return `<span id="${esc(anchor)}">${children}</span>`;
       const resolved = resolveLink(node.getAttribute('href'), currentDoc);
       if (!resolved) return `<span class="unavailable-reference" title="源材料暂未收录到网页">${children}<span class="reference-label">源资料</span></span>`;
       attrs = ` href="${esc(resolved.href)}"${resolved.external ? ' target="_blank" rel="noopener noreferrer"' : ''}`;
@@ -148,8 +152,9 @@ function documentPage(id, section) {
   const doc = content.documents[id];
   if (!doc) return notFound('这份文档尚未收录。');
   const module = content.modules.find(m => m.documents.some(d => d.id === id));
-  renderNavigation(module?.id || 'architecture'); breadcrumbs(module?.title || (doc.scope === 'algorithm-template' ? '项目协议' : '架构与文档'), doc.title);
-  main.innerHTML = `<div class="page doc-page"><div class="doc-topline"><a class="text-link" href="${module ? moduleLink(module.id) : '#/'}">← ${module?.title || '研发总览'}</a><button class="button button-small button-secondary" data-download="${esc(id)}">下载源文件 ↓</button></div><div class="doc-heading"><div class="eyebrow">${doc.scope === 'algorithm-template' ? 'ALGORITHM TEMPLATE · 项目协议模板' : 'PLANS & DOCUMENTATION'}</div><h1>${esc(doc.title)}</h1><span class="document-path">${esc(id)}</span>${doc.scope === 'algorithm-template' ? '<p class="document-note">模板说明与填写约定；真实项目目标以各项目仓库为准。</p>' : ''}</div><div class="reader-layout"><article class="markdown">${renderMarkdown(doc.text, id)}</article><aside class="document-outline"><span>本页目录</span><nav id="document-toc" aria-label="文档章节"></nav></aside></div></div>`;
+  const videoDoc = id.startsWith('AIGC-infra/vgm-map/');
+  renderNavigation(videoDoc ? 'video-generation' : module?.id || 'architecture'); breadcrumbs(videoDoc ? '视频生成技术汇总' : module?.title || (doc.scope === 'algorithm-template' ? '项目协议' : '架构与文档'), doc.title);
+  main.innerHTML = `<div class="page doc-page"><div class="doc-topline"><a class="text-link" href="${videoDoc ? videoMapLink() : module ? moduleLink(module.id) : '#/'}">← ${videoDoc ? '视频生成技术汇总' : module?.title || '研发总览'}</a><button class="button button-small button-secondary" data-download="${esc(id)}">下载源文件 ↓</button></div><div class="doc-heading"><div class="eyebrow">${doc.scope === 'algorithm-template' ? 'ALGORITHM TEMPLATE · 项目协议模板' : 'PLANS & DOCUMENTATION'}</div><h1>${esc(doc.title)}</h1><span class="document-path">${esc(id)}</span>${doc.scope === 'algorithm-template' ? '<p class="document-note">模板说明与填写约定；真实项目目标以各项目仓库为准。</p>' : ''}</div><div class="reader-layout"><article class="markdown">${renderMarkdown(doc.text, id)}</article><aside class="document-outline"><span>本页目录</span><nav id="document-toc" aria-label="文档章节"></nav></aside></div></div>`;
   main.querySelector('.markdown > h1')?.remove(); enhanceDocument();
   if (section) requestAnimationFrame(() => document.getElementById(section)?.scrollIntoView());
 }
@@ -158,8 +163,17 @@ function toolsPage() {
   const list = Object.values(content.tools).filter(t => filter === 'all' || filter === 'entry' && t.url && !t.linkLabel || filter === 'protocol' && t.status === '协议可用' || filter === 'plan' && ['正在开发', '已提需求', '方案阶段', '待配置入口'].includes(t.status));
   main.innerHTML = `<div class="page tools-page"><div class="page-heading"><div class="eyebrow">PLATFORM DIRECTORY</div><h1>平台与工具</h1><p>已有入口直接进入，尚在建设的能力先阅读方案。</p></div><div class="filter-bar">${[['all', '全部工具'], ['entry', '平台与代码入口'], ['protocol', '文档协议'], ['plan', '规划与待接入']].map(([key, label]) => `<button class="filter-button ${filter === key ? 'selected' : ''}" data-filter="${key}" aria-pressed="${filter === key}">${label}</button>`).join('')}<span>${list.length} 项</span></div><div class="tool-grid tool-directory">${list.map(t => toolCard(t.id)).join('')}</div></div>`;
 }
+function videoGenerationPage(viewId, query) {
+  const map = content.videoMap;
+  if (!map || viewId && !map.views.some(view => view.id === viewId)) return notFound('没有找到这个技术分类。');
+  renderNavigation('video-generation');
+  breadcrumbs('视频生成技术汇总', ...(viewId ? [map.views.find(view => view.id === viewId).label] : []));
+  const params = new URLSearchParams(query);
+  disposePage = mountVideoMap(main, map, { esc, icon, docLink }, { viewId, topicId: params.get('topic'), point: params.get('point'), work: params.get('work') });
+}
 function notFound(message = '没有找到这个页面。') { renderNavigation(); breadcrumbs('页面未找到'); main.innerHTML = `<div class="page empty-state">${icon('file')}<h1>${message}</h1><p>可从研发总览重新进入，或通过搜索查找相关文档。</p><a class="button button-primary" href="#/">返回研发总览</a></div>`; }
 function route() {
+  disposePage?.(); disposePage = undefined;
   const token = ++routeToken;
   document.querySelector('#sidebar').classList.remove('mobile-open');
   document.querySelector('#menu-toggle').setAttribute('aria-expanded', 'false');
@@ -168,6 +182,7 @@ function route() {
   try {
     if (path === '/') home();
     else if (path === '/tools') toolsPage();
+    else if (path === '/video-generation' || path.startsWith('/video-generation/')) videoGenerationPage(decodeURIComponent(path.slice('/video-generation/'.length)), query);
     else if (path.startsWith('/module/')) { const m = content.modules.find(m => m.id === path.slice(8)); m ? modulePage(m) : notFound(); }
     else if (path.startsWith('/doc/')) documentPage(decodeURIComponent(path.slice(5)), new URLSearchParams(query).get('section'));
     else notFound();
@@ -183,7 +198,7 @@ function route() {
 function notify(message) { const toast = document.querySelector('#toast'); toast.textContent = message; toast.classList.add('visible'); setTimeout(() => toast.classList.remove('visible'), 3500); }
 function search(query = '') {
   const term = query.trim().toLowerCase();
-  const options = [ ...content.modules.map(m => ({ title: m.title, type: '模块', text: m.description, href: moduleLink(m.id) })), ...Object.values(content.tools).map(t => ({ title: t.title, type: '工具', text: t.description, href: docLink(t.doc) })), ...Object.values(content.documents).map(d => ({ title: d.title, type: d.scope === 'algorithm-template' ? '协议' : '文档', text: d.text, href: docLink(d.id) })) ];
+  const options = [ ...content.modules.map(m => ({ title: m.title, type: '模块', text: m.description, href: moduleLink(m.id) })), ...Object.values(content.tools).map(t => ({ title: t.title, type: '工具', text: t.description, href: docLink(t.doc) })), ...content.videoMap.views.flatMap(view => view.subclasses.map(topic => ({ title: topic.label, type: '技术', text: view.label + ' ' + topic.summary + ' ' + topic.subdivisions.join(' ') + ' ' + topic.works.map(work => work.label + ' ' + work.title).join(' '), href: videoMapLink(view.id, topic.id) }))), ...Object.values(content.documents).map(d => ({ title: d.title, type: d.scope === 'algorithm-template' ? '协议' : '文档', text: d.text, href: docLink(d.id) })) ];
   const results = options.filter(o => !term || (o.title + ' ' + o.text).toLowerCase().includes(term)).sort((a, b) => Number(b.title.toLowerCase().includes(term)) - Number(a.title.toLowerCase().includes(term))).slice(0, 16);
   document.querySelector('#search-results').innerHTML = results.map(o => `<a href="${o.href}" class="search-result"><span class="result-type">${o.type}</span><div><strong>${esc(o.title)}</strong><small>${esc(o.text.replace(/[#*`\n]/g, '').slice(0, 75))}…</small></div>${icon('arrow')}</a>`).join('') || '<div class="search-empty">没有找到相关内容，试试其他关键词。</div>';
 }

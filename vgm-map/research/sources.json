@@ -1,0 +1,772 @@
+{
+  "schema_version": "0.2",
+  "checked_on": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "policy": "原论文及作者/机构官方仓库；访问深度不等于复现；年份为首发年份，当前版本可能更新。",
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Evolution of Video Generative Foundations",
+      "url": "https://arxiv.org/abs/2604.06339",
+      "first_submission_year": 2026,
+      "access_level": "abstract",
+      "scope": "技术版图；GAN、扩散、自回归和多模态路线的覆盖。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R02",
+      "title": "Controllable Video Generation: A Survey",
+      "url": "https://arxiv.org/abs/2507.16869",
+      "first_submission_year": 2025,
+      "access_level": "targeted_sections",
+      "scope": "摘要与 v3 理论背景部分；控制信号、多条件与通用控制入口。",
+      "section_url": "https://arxiv.org/html/2507.16869v3",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R03",
+      "title": "Video Generation Models: A Survey of Post-Training and Alignment",
+      "url": "https://arxiv.org/abs/2610.00812",
+      "first_submission_year": 2026,
+      "access_level": "abstract",
+      "scope": "后训练分类；SFT、自训练/蒸馏、偏好/奖励、推理时方法。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R04",
+      "title": "Wan: Open and Advanced Large-Scale Video Generative Models",
+      "url": "https://arxiv.org/abs/2503.20314",
+      "first_submission_year": 2025,
+      "access_level": "targeted_sections",
+      "scope": "v2 的 4.1、4.2 与目录：视频 VAE、DiT、Flow Matching 和训练工程。",
+      "section_url": "https://arxiv.org/html/2503.20314v2",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R05",
+      "title": "CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer",
+      "url": "https://arxiv.org/abs/2408.06072",
+      "first_submission_year": 2024,
+      "access_level": "targeted_sections",
+      "scope": "v3 的 2.1–2.2 与目录：因果 VAE、3D RoPE、Expert AdaLN、全时空注意力。",
+      "section_url": "https://arxiv.org/html/2408.06072v3",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R06",
+      "title": "HunyuanVideo: A Systematic Framework For Large Video Generative Models",
+      "url": "https://arxiv.org/abs/2412.03603",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "数据、架构、渐进训练与基础设施构成的系统级案例。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R07",
+      "title": "Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets",
+      "url": "https://arxiv.org/abs/2311.15127",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "潜空间视频生成；分阶段训练、caption 与数据过滤。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R08",
+      "title": "Movie Gen: A Cast of Media Foundation Models",
+      "url": "https://arxiv.org/abs/2410.13720",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "文本生成、个性化、视频编辑与配音任务；模型集合与输出模态。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R09",
+      "title": "Rerender A Video: Zero-Shot Text-Guided Video-to-Video Translation",
+      "url": "https://arxiv.org/abs/2306.07954",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "视频重绘；关键帧翻译和时序传播。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R10",
+      "title": "Generative Adversarial Networks",
+      "url": "https://arxiv.org/abs/1406.2661",
+      "first_submission_year": 2014,
+      "access_level": "abstract",
+      "scope": "对抗生成定义；背景论文，不作为现代视频性能证据。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R11",
+      "title": "Auto-Encoding Variational Bayes",
+      "url": "https://arxiv.org/abs/1312.6114",
+      "first_submission_year": 2013,
+      "access_level": "abstract",
+      "scope": "变分潜变量建模；与视频压缩器的角色区分。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R12",
+      "title": "Denoising Diffusion Probabilistic Models",
+      "url": "https://arxiv.org/abs/2006.11239",
+      "first_submission_year": 2020,
+      "access_level": "abstract",
+      "scope": "扩散概率建模与去噪学习；图像背景论文。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R13",
+      "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+      "url": "https://arxiv.org/abs/2112.10752",
+      "first_submission_year": 2021,
+      "access_level": "abstract",
+      "scope": "预训练自编码器、潜空间生成与条件交叉注意力；图像背景论文。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R14",
+      "title": "Flow Matching for Generative Modeling",
+      "url": "https://arxiv.org/abs/2210.02747",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "向量场回归、概率路径及与扩散路径的联系。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R15",
+      "title": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+      "url": "https://arxiv.org/abs/2209.03003",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "直线路径、rectification 与 ODE 生成。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R16",
+      "title": "Scalable Diffusion Models with Transformers",
+      "url": "https://arxiv.org/abs/2212.09748",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "DiT 是替换 U-Net 的 Transformer 骨干；图像背景论文。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R17",
+      "title": "Phenaki: Variable Length Video Generation From Open Domain Textual Description",
+      "url": "https://arxiv.org/abs/2210.02399",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "离散视频 token、因果 tokenizer 与双向掩码生成器。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R18",
+      "title": "VideoPoet: A Large Language Model for Zero-Shot Video Generation",
+      "url": "https://arxiv.org/abs/2312.14125",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "多模态自回归建模及多种视频任务；详细实现待进一步阅读。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R19",
+      "title": "Video Diffusion Models",
+      "url": "https://arxiv.org/abs/2204.03458",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "视频扩散、图像视频联合训练与时间延展。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R20",
+      "title": "Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion",
+      "url": "https://arxiv.org/abs/2506.08009",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "自生成上下文训练、暴露偏差、少步生成与滚动 KV 缓存。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R21",
+      "title": "Diffusion Forcing: Next-token Prediction Meets Full-Sequence Diffusion",
+      "url": "https://arxiv.org/abs/2407.01392",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "每 token 独立噪声水平和因果序列去噪。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R22",
+      "title": "From Slow Bidirectional to Fast Autoregressive Video Diffusion Models",
+      "url": "https://arxiv.org/abs/2412.07772",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "CausVid；双向教师到因果学生的非对称蒸馏。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R23",
+      "title": "LongLive: Real-time Interactive Long Video Generation",
+      "url": "https://arxiv.org/abs/2509.22622",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "长序列训练、提示切换、KV-recache、短窗口与 frame sink。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R24",
+      "title": "MovieDreamer: Hierarchical Generation for Coherent Long Visual Sequence",
+      "url": "https://arxiv.org/abs/2407.16655",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "全局叙事的自回归规划与扩散渲染组合。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R25",
+      "title": "CameraCtrl: Enabling Camera Control for Text-to-Video Generation",
+      "url": "https://arxiv.org/abs/2404.02101",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "相机轨迹参数化与可插拔姿态控制模块。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R26",
+      "title": "DragAnything: Motion Control for Anything using Entity Representation",
+      "url": "https://arxiv.org/abs/2403.07420",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "实体表示与轨迹驱动的对象运动控制。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R27",
+      "title": "Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation",
+      "url": "https://arxiv.org/abs/2311.17117",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "参考外观、姿态引导与时序连续性的角色动画。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R28",
+      "title": "Identity-Preserving Text-to-Video Generation by Frequency Decomposition",
+      "url": "https://arxiv.org/abs/2411.17440",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "ConsisID；人脸身份条件与频率感知控制。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R29",
+      "title": "VideoComposer: Compositional Video Synthesis with Motion Controllability",
+      "url": "https://arxiv.org/abs/2306.02018",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "文本、空间和时间条件的组合，时空条件编码。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R30",
+      "title": "Hallo: Hierarchical Audio-Driven Visual Synthesis for Portrait Image Animation",
+      "url": "https://arxiv.org/abs/2406.08801",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "语音驱动肖像、口型、表情和姿态对齐。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R31",
+      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "url": "https://arxiv.org/abs/2106.09685",
+      "first_submission_year": 2021,
+      "access_level": "abstract",
+      "scope": "低秩参数适配定义；视频应用需另引视频来源。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R32",
+      "title": "Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference",
+      "url": "https://arxiv.org/abs/2310.04378",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "一致性与少步推理背景；不直接证明视频版本效果。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R33",
+      "title": "Classifier-Free Diffusion Guidance",
+      "url": "https://arxiv.org/abs/2207.12598",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "条件/无条件预测组合及质量、多样性的权衡。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R34",
+      "title": "Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model",
+      "url": "https://arxiv.org/abs/2411.19108",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "TeaCache；依去噪步骤变化估计复用模型计算。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R35",
+      "title": "FastVideo official repository",
+      "url": "https://github.com/hao-ai-lab/FastVideo",
+      "first_submission_year": null,
+      "access_level": "official_readme",
+      "scope": "仓库定位、稀疏注意力与蒸馏入口；未安装、未运行、未审计代码。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R36",
+      "title": "Mind the Generative Details: Direct Localized Detail Preference Optimization for Video Diffusion Models",
+      "url": "https://arxiv.org/abs/2601.04068",
+      "first_submission_year": 2026,
+      "access_level": "abstract",
+      "scope": "LocalDPO；局部时空偏好构造与区域训练目标。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R37",
+      "title": "VBench: Comprehensive Benchmark Suite for Video Generative Models",
+      "url": "https://arxiv.org/abs/2311.17982",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "多维视频质量评估、提示集及人类偏好核验。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R38",
+      "title": "VBench-2.0: Advancing Video Generation Benchmark Suite for Intrinsic Faithfulness",
+      "url": "https://arxiv.org/abs/2503.21755",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "人类形态、控制、创意、物理与常识的细粒度评估。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R39",
+      "title": "VideoPhy: Evaluating Physical Commonsense for Video Generation",
+      "url": "https://arxiv.org/abs/2406.03520",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "材料交互与物理常识评测，区分语义执行与物理合理性。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R40",
+      "title": "Towards Accurate Generative Models of Video: A New Metric & Challenges",
+      "url": "https://arxiv.org/abs/1812.01717",
+      "first_submission_year": 2018,
+      "access_level": "abstract",
+      "scope": "FVD；视频分布级指标及人类判断相关性研究。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R41",
+      "title": "LTX-2 official repository",
+      "url": "https://github.com/Lightricks/LTX-2",
+      "first_submission_year": null,
+      "access_level": "official_readme",
+      "scope": "联合音视频家族说明；仓库持续变化，不固定为某一检查点性能。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R42",
+      "title": "DanceGRPO: Unleashing GRPO on Visual Generation",
+      "url": "https://arxiv.org/abs/2505.07818",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "在视觉生成中适配 GRPO，覆盖扩散和 rectified flow。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R43",
+      "title": "VSA: Faster Video Diffusion with Trainable Sparse Attention",
+      "url": "https://arxiv.org/abs/2505.13389",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "可训练稀疏注意力；结构与训练工程的交叉入口。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R44",
+      "title": "MoCoGAN: Decomposing Motion and Content for Video Generation",
+      "url": "https://arxiv.org/abs/1707.04993",
+      "first_submission_year": 2017,
+      "access_level": "abstract",
+      "scope": "内容与运动潜变量分解；视频对抗生成的实际案例。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R45",
+      "title": "Temporal Generative Adversarial Nets with Singular Value Clipping",
+      "url": "https://arxiv.org/abs/1611.06624",
+      "first_submission_year": 2016,
+      "access_level": "abstract",
+      "scope": "TGAN；时间生成器与图像生成器协作的视频 GAN。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R46",
+      "title": "Stochastic Variational Video Prediction",
+      "url": "https://arxiv.org/abs/1710.11252",
+      "first_submission_year": 2017,
+      "access_level": "abstract",
+      "scope": "SV2P；通过随机潜变量建模未来帧的不确定性。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R47",
+      "title": "Stochastic Video Generation with a Learned Prior",
+      "url": "https://arxiv.org/abs/1802.07687",
+      "first_submission_year": 2018,
+      "access_level": "abstract",
+      "scope": "SVG；学习随历史变化的随机先验，用于视频预测。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R48",
+      "title": "MAGVIT: Masked Generative Video Transformer",
+      "url": "https://arxiv.org/abs/2212.05199",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "三维视频 tokenizer 与多任务掩码 token 生成。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R49",
+      "title": "Language Model Beats Diffusion -- Tokenizer is Key to Visual Generation",
+      "url": "https://arxiv.org/abs/2310.05737",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "MAGVIT-v2；图像与视频共享的离散视觉 tokenizer。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R50",
+      "title": "VACE: All-in-One Video Creation and Editing",
+      "url": "https://arxiv.org/abs/2503.07598",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "参考、视频编辑与遮罩编辑；统一视频条件单元及上下文适配器。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R51",
+      "title": "DynamiCrafter: Animating Open-domain Images with Video Diffusion Priors",
+      "url": "https://arxiv.org/abs/2310.12190",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "图像语义上下文与图像细节条件相结合的开放域图生视频。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R52",
+      "title": "ToonCrafter: Generative Cartoon Interpolation",
+      "url": "https://arxiv.org/abs/2405.17933",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "卡通关键帧之间的生成式插值；双参考解码与草图条件。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R53",
+      "title": "SEINE: Short-to-Long Video Diffusion Model for Generative Transition and Prediction",
+      "url": "https://arxiv.org/abs/2310.20700",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "随机遮罩视频扩散；场景过渡、图生视频和自回归预测。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R54",
+      "title": "DreamVideo: Composing Your Dream Videos with Customized Subject and Motion",
+      "url": "https://arxiv.org/abs/2312.04433",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "主体身份与运动定制；分别学习身份和运动适配器。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R55",
+      "title": "DreamVideo-2: Zero-Shot Subject-Driven Video Customization with Precise Motion Control",
+      "url": "https://arxiv.org/abs/2410.13830",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "参考主体图像与边界框序列联合控制；参考注意力与运动条件。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R56",
+      "title": "StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text",
+      "url": "https://arxiv.org/abs/2403.14773",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "短期上下文与首段外观记忆；长视频延展和片段衔接。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R57",
+      "title": "Frame Context Packing and Drift Prevention in Next-Frame-Prediction Video Diffusion Models",
+      "url": "https://arxiv.org/abs/2504.12626",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "FramePack；按重要性打包历史帧，固定上下文预算并研究漂移抑制。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R58",
+      "title": "VideoDirectorGPT: Consistent Multi-scene Video Generation via LLM-Guided Planning",
+      "url": "https://arxiv.org/abs/2309.15091",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "LLM 场景、实体和布局规划；规划引导的多场景生成。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R59",
+      "title": "OpenVid-1M: A Large-Scale High-Quality Dataset for Text-to-video Generation",
+      "url": "https://arxiv.org/abs/2407.02371",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "高质量文生视频数据集；数据筛选、描述与视频训练入口。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R60",
+      "title": "Panda-70M: Captioning 70M Videos with Multiple Cross-Modality Teachers",
+      "url": "https://arxiv.org/abs/2402.19479",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "语义一致片段切分、多教师 caption 与描述筛选。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R61",
+      "title": "AnimateLCM: Computation-Efficient Personalized Style Video Generation without Personalized Video Data",
+      "url": "https://arxiv.org/abs/2402.00769",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "视频一致性学习与少步生成；分离风格适配和图像/视频加速。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R62",
+      "title": "VideoLCM: Video Latent Consistency Model",
+      "url": "https://arxiv.org/abs/2312.09109",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "视频潜空间一致性蒸馏；少步视频生成案例。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R63",
+      "title": "ViDiT-Q: Efficient and Accurate Quantization of Diffusion Transformers for Image and Video Generation",
+      "url": "https://arxiv.org/abs/2406.02540",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "图像/视频 DiT 的训练后量化与混合精度；层与时间步敏感性。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R64",
+      "title": "xDiT: an Inference Engine for Diffusion Transformers (DiTs) with Massive Parallelism",
+      "url": "https://arxiv.org/abs/2411.01738",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "DiT 推理引擎；序列、流水线与 CFG 并行的组合。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R65",
+      "title": "Latte: Latent Diffusion Transformer for Video Generation",
+      "url": "https://arxiv.org/abs/2401.03048",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "视频潜空间 Transformer；空间/时间分解设计和位置条件。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R66",
+      "title": "Genie: Generative Interactive Environments",
+      "url": "https://arxiv.org/abs/2402.15391",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "视频 tokenizer、潜动作与自回归动力学；交互生成环境的扩展案例。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R67",
+      "title": "A Lip Sync Expert Is All You Need for Speech to Lip Generation In The Wild",
+      "url": "https://arxiv.org/abs/2008.10010",
+      "first_submission_year": 2020,
+      "access_level": "abstract",
+      "scope": "Wav2Lip；现有人脸视频的语音口型生成与同步评估。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R68",
+      "title": "FoleyCrafter: Bring Silent Videos to Life with Lifelike and Synchronized Sounds",
+      "url": "https://arxiv.org/abs/2407.01494",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "无声视频到事件声音；语义与时间对应，不是联合音视频生成。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R69",
+      "title": "DPM-Solver: A Fast ODE Solver for Diffusion Probabilistic Model Sampling in Around 10 Steps",
+      "url": "https://arxiv.org/abs/2206.00927",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "通用扩散 ODE 求解器背景；原文不作为视频性能证据。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R70",
+      "title": "UniPC: A Unified Predictor-Corrector Framework for Fast Sampling of Diffusion Models",
+      "url": "https://arxiv.org/abs/2302.04867",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "通用预测校正采样器背景；具体视频应用需绑定实现。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R71",
+      "title": "SV3D: Novel Multi-view Synthesis and 3D Generation from a Single Image using Latent Video Diffusion",
+      "url": "https://arxiv.org/abs/2403.12008",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "单图生成相机可控的环绕多视角视频，并用于三维生成。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R72",
+      "title": "ControlVideo: Training-free Controllable Text-to-Video Generation",
+      "url": "https://arxiv.org/abs/2305.13077",
+      "first_submission_year": 2023,
+      "access_level": "targeted_sections",
+      "scope": "摘要与论文引言摘录：深度/边缘结构条件、跨帧连接、平滑与分层采样。",
+      "checked_on": "2026-10-07",
+      "reproduced": false,
+      "section_url": "https://openreview.net/pdf?id=5a79AqFr0c"
+    },
+    {
+      "id": "R73",
+      "title": "EMO: Emote Portrait Alive -- Generating Expressive Portrait Videos with Audio2Video Diffusion Model under Weak Conditions",
+      "url": "https://arxiv.org/abs/2402.17485",
+      "first_submission_year": 2024,
+      "access_level": "abstract",
+      "scope": "语音及歌唱驱动的肖像视频；表情和身份保持，不推断全身舞蹈。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R74",
+      "title": "DragNUWA: Fine-grained Control in Video Generation by Integrating Text, Image, and Trajectory",
+      "url": "https://arxiv.org/abs/2308.08089",
+      "first_submission_year": 2023,
+      "access_level": "abstract",
+      "scope": "文字、图像与轨迹的组合控制；轨迹采样与多尺度融合。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R75",
+      "title": "Bailando: 3D Dance Generation by Actor-Critic GPT with Choreographic Memory",
+      "url": "https://arxiv.org/abs/2203.13055",
+      "first_submission_year": 2022,
+      "access_level": "abstract",
+      "scope": "音乐到三维舞蹈姿态序列；相邻运动生成领域，需要渲染才能成为视频。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    },
+    {
+      "id": "R76",
+      "title": "EMO2: End-Effector Guided Audio-Driven Avatar Video Generation",
+      "url": "https://arxiv.org/abs/2501.10687",
+      "first_submission_year": 2025,
+      "access_level": "abstract",
+      "scope": "先由音频生成手部姿态，再条件生成视频；协同表情和伴随语音手势。",
+      "checked_on": "2026-10-07",
+      "reproduced": false
+    }
+  ]
+}

@@ -1,0 +1,2427 @@
+{
+  "schema_version": "0.2",
+  "checked_on": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "source_registry": "../research/sources.json",
+  "classification_policy": "七个交叉视角；代表作按当前条目给出的角色和贡献归类，三级展开点是内容设计，不意味着所列作品覆盖所有技术点。",
+  "role_labels": {
+    "model": "生成模型/系统论文",
+    "method": "研究方法",
+    "codec": "表示/编解码器",
+    "background": "基础背景论文",
+    "dataset": "数据集",
+    "benchmark": "评测基准",
+    "metric": "评测指标",
+    "system": "工程系统",
+    "official_project": "官方项目",
+    "adjacent": "相邻研究领域"
+  },
+  "views": [
+    {
+      "id": "view.tasks",
+      "label": "任务与输入输出",
+      "doc_path": "docs/views/01-tasks.md",
+      "subclasses": [
+        {
+          "id": "tasks.text",
+          "subdivisions": [
+            "单场景生成",
+            "对象、属性与关系组合",
+            "动作、事件顺序与叙事指令"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "文生视频与文本、视频联合建模。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "大规模文生视频系统；联系数据、表示与生成骨干。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "将多场景文字需求转成场景、实体和布局规划。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "文生视频"
+        },
+        {
+          "id": "tasks.image",
+          "subdivisions": [
+            "单图/首帧驱动",
+            "首尾帧约束",
+            "多图/关键帧补全"
+          ],
+          "works": [
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "图像条件的视频潜空间生成。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R51",
+              "label": "DynamiCrafter",
+              "role": "method",
+              "rationale": "结合图像语义上下文与细节条件，驱动静态图像。",
+              "url": "https://arxiv.org/abs/2310.12190",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R52",
+              "label": "ToonCrafter",
+              "role": "method",
+              "rationale": "卡通关键帧之间的生成式插值。",
+              "url": "https://arxiv.org/abs/2405.17933",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R53",
+              "label": "SEINE",
+              "role": "method",
+              "rationale": "不同场景图像之间的过渡生成及图像动画。",
+              "url": "https://arxiv.org/abs/2310.20700",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "ToonCrafter 的验证域是卡通插值；SEINE 研究场景过渡。二者不代表任意数量、任意位置的关键帧控制均已验证。",
+          "label": "图生视频"
+        },
+        {
+          "id": "tasks.reference",
+          "subdivisions": [
+            "人物身份与角色参考",
+            "商品/物体参考",
+            "风格与运动参考",
+            "多主体、多参考绑定"
+          ],
+          "works": [
+            {
+              "source_id": "R28",
+              "label": "ConsisID",
+              "role": "method",
+              "rationale": "人物身份参考驱动的文生视频。",
+              "url": "https://arxiv.org/abs/2411.17440",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R54",
+              "label": "DreamVideo",
+              "role": "method",
+              "rationale": "分别定制主体身份与运动模式。",
+              "url": "https://arxiv.org/abs/2312.04433",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "参考主体图像与边界框运动序列共同约束。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "将参考生成纳入统一创建/编辑框架。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "人物身份、一般物体与多主体绑定需分别记录验证范围；单主体论文不直接证明多主体能力。",
+          "label": "参考生成"
+        },
+        {
+          "id": "tasks.video",
+          "subdivisions": [
+            "指令编辑",
+            "风格重绘",
+            "局部修补/空间扩展",
+            "时间续写",
+            "插值与场景过渡"
+          ],
+          "works": [
+            {
+              "source_id": "R08",
+              "label": "Movie Gen",
+              "role": "model",
+              "rationale": "模型集合中的视频编辑任务。",
+              "url": "https://arxiv.org/abs/2410.13720",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R09",
+              "label": "Rerender A Video",
+              "role": "method",
+              "rationale": "文字引导的视频翻译，结合关键帧处理和时间传播。",
+              "url": "https://arxiv.org/abs/2306.07954",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "视频编辑及遮罩编辑的统一框架。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R53",
+              "label": "SEINE",
+              "role": "method",
+              "rationale": "场景过渡与视频未来预测。",
+              "url": "https://arxiv.org/abs/2310.20700",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "空间扩展是遮罩编辑的专题方向；是否支持某种尺寸或任务需查具体 VACE 实现，不能仅由框架名称推断。",
+          "label": "视频到视频"
+        },
+        {
+          "id": "tasks.audio",
+          "subdivisions": [
+            "语音驱动口型/肖像",
+            "表情与伴随语音手势",
+            "歌唱驱动肖像",
+            "音乐到舞蹈运动（相邻领域）"
+          ],
+          "works": [
+            {
+              "source_id": "R30",
+              "label": "Hallo",
+              "role": "method",
+              "rationale": "音频驱动肖像，分层处理口型、表情与姿态。",
+              "url": "https://arxiv.org/abs/2406.08801",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R67",
+              "label": "Wav2Lip",
+              "role": "method",
+              "rationale": "用语音修改现有人脸视频的口型。",
+              "url": "https://arxiv.org/abs/2008.10010",
+              "first_submission_year": 2020
+            },
+            {
+              "source_id": "R73",
+              "label": "EMO",
+              "role": "method",
+              "rationale": "声音直接驱动表情丰富的说话或歌唱肖像。",
+              "url": "https://arxiv.org/abs/2402.17485",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R76",
+              "label": "EMO2",
+              "role": "method",
+              "rationale": "先预测手部姿态，再结合音频生成手势与表情视频。",
+              "url": "https://arxiv.org/abs/2501.10687",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R75",
+              "label": "Bailando",
+              "role": "adjacent",
+              "rationale": "音乐驱动三维舞蹈姿态序列；供运动生成扩展阅读。",
+              "url": "https://arxiv.org/abs/2203.13055",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "Bailando 的直接输出是三维姿态序列，需要额外渲染才能成为像素视频；歌唱肖像和全身音乐舞蹈是不同任务。",
+          "label": "音频驱动"
+        },
+        {
+          "id": "tasks.multimodal",
+          "subdivisions": [
+            "文本＋图像",
+            "参考＋姿态/轨迹",
+            "图像＋音频",
+            "条件组合与冲突"
+          ],
+          "works": [
+            {
+              "source_id": "R29",
+              "label": "VideoComposer",
+              "role": "method",
+              "rationale": "组合文字、空间和时间条件。",
+              "url": "https://arxiv.org/abs/2306.02018",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R74",
+              "label": "DragNUWA",
+              "role": "method",
+              "rationale": "文字、图像与轨迹共同控制。",
+              "url": "https://arxiv.org/abs/2308.08089",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R27",
+              "label": "Animate Anyone",
+              "role": "method",
+              "rationale": "参考人物图像与姿态序列相结合。",
+              "url": "https://arxiv.org/abs/2311.17117",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R30",
+              "label": "Hallo",
+              "role": "method",
+              "rationale": "肖像图像与音频相结合。",
+              "url": "https://arxiv.org/abs/2406.08801",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "以统一条件接口组织参考与视频编辑输入。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "",
+          "label": "多条件输入"
+        },
+        {
+          "id": "tasks.outputs",
+          "subdivisions": [
+            "无声视频输出",
+            "视频生成后配音",
+            "联合音视频输出"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "用于无声视频生成路线的代表入口。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R68",
+              "label": "FoleyCrafter",
+              "role": "method",
+              "rationale": "给已有无声视频生成对应事件声音。",
+              "url": "https://arxiv.org/abs/2407.01494",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R08",
+              "label": "Movie Gen",
+              "role": "model",
+              "rationale": "视频生成与音频生成模型组成媒体模型集合。",
+              "url": "https://arxiv.org/abs/2410.13720",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R41",
+              "label": "LTX-2",
+              "role": "official_project",
+              "rationale": "官方仓库说明的联合音视频生成模型家族。",
+              "url": "https://github.com/Lightricks/LTX-2",
+              "first_submission_year": null
+            }
+          ],
+          "note": "FoleyCrafter 是视频到音频；Movie Gen 是模型集合；具体联合音视频能力按 LTX-2 版本查看。",
+          "label": "输出模态扩展"
+        }
+      ]
+    },
+    {
+      "id": "view.paradigms",
+      "label": "生成范式",
+      "doc_path": "docs/views/02-paradigms.md",
+      "subclasses": [
+        {
+          "id": "paradigms.gan",
+          "subdivisions": [
+            "视频级对抗学习",
+            "内容—运动解耦",
+            "时间生成器＋逐帧生成器"
+          ],
+          "works": [
+            {
+              "source_id": "R44",
+              "label": "MoCoGAN",
+              "role": "method",
+              "rationale": "把内容与运动分解为不同潜变量。",
+              "url": "https://arxiv.org/abs/1707.04993",
+              "first_submission_year": 2017
+            },
+            {
+              "source_id": "R45",
+              "label": "TGAN",
+              "role": "method",
+              "rationale": "时间生成器输出逐帧潜变量，再由图像生成器合成。",
+              "url": "https://arxiv.org/abs/1611.06624",
+              "first_submission_year": 2016
+            },
+            {
+              "source_id": "R10",
+              "label": "GAN 原论文",
+              "role": "background",
+              "rationale": "解释对抗学习目标。",
+              "url": "https://arxiv.org/abs/1406.2661",
+              "first_submission_year": 2014
+            }
+          ],
+          "note": "",
+          "label": "对抗生成"
+        },
+        {
+          "id": "paradigms.vae",
+          "subdivisions": [
+            "随机未来帧预测",
+            "固定/学习式随机先验",
+            "潜变量与重建、预测目标"
+          ],
+          "works": [
+            {
+              "source_id": "R46",
+              "label": "SV2P",
+              "role": "method",
+              "rationale": "随机潜变量建模未来视频的多种可能。",
+              "url": "https://arxiv.org/abs/1710.11252",
+              "first_submission_year": 2017
+            },
+            {
+              "source_id": "R47",
+              "label": "SVG",
+              "role": "method",
+              "rationale": "学习随过去帧变化的先验用于随机视频生成。",
+              "url": "https://arxiv.org/abs/1802.07687",
+              "first_submission_year": 2018
+            },
+            {
+              "source_id": "R11",
+              "label": "Auto-Encoding Variational Bayes",
+              "role": "background",
+              "rationale": "变分推断与潜变量学习的基础。",
+              "url": "https://arxiv.org/abs/1312.6114",
+              "first_submission_year": 2013
+            }
+          ],
+          "note": "这里的 VAE 是生成建模范式；现代扩散系统中的视频 VAE 编解码器另属模型结构视角。",
+          "label": "变分潜变量生成"
+        },
+        {
+          "id": "paradigms.diffusion",
+          "subdivisions": [
+            "像素空间视频扩散",
+            "潜空间视频扩散",
+            "去噪/得分与预测参数化"
+          ],
+          "works": [
+            {
+              "source_id": "R19",
+              "label": "Video Diffusion Models",
+              "role": "model",
+              "rationale": "视频扩散与图像、视频联合训练的早期路线。",
+              "url": "https://arxiv.org/abs/2204.03458",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "潜空间视频扩散的系统案例。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R12",
+              "label": "DDPM",
+              "role": "background",
+              "rationale": "去噪扩散训练与采样的基础。",
+              "url": "https://arxiv.org/abs/2006.11239",
+              "first_submission_year": 2020
+            },
+            {
+              "source_id": "R13",
+              "label": "Latent Diffusion Models",
+              "role": "background",
+              "rationale": "压缩潜空间中生成的基础路线。",
+              "url": "https://arxiv.org/abs/2112.10752",
+              "first_submission_year": 2021
+            }
+          ],
+          "note": "",
+          "label": "扩散与得分建模"
+        },
+        {
+          "id": "paradigms.flow",
+          "subdivisions": [
+            "Flow Matching",
+            "Rectified Flow",
+            "路径设计与速度场回归"
+          ],
+          "works": [
+            {
+              "source_id": "R14",
+              "label": "Flow Matching",
+              "role": "background",
+              "rationale": "通过向量场回归学习概率路径。",
+              "url": "https://arxiv.org/abs/2210.02747",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R15",
+              "label": "Rectified Flow",
+              "role": "background",
+              "rationale": "学习直线路径与流的整直。",
+              "url": "https://arxiv.org/abs/2209.03003",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "速度场生成目标在视频系统中的具体案例。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "Flow Matching 与 Rectified Flow 有联系但并非同义；连续归一化流作为理论背景继续阅读。",
+          "label": "流与速度场建模"
+        },
+        {
+          "id": "paradigms.ar",
+          "subdivisions": [
+            "离散视觉 token 自回归",
+            "连续帧/块自回归",
+            "文字、视觉、音频的多模态序列"
+          ],
+          "works": [
+            {
+              "source_id": "R18",
+              "label": "VideoPoet",
+              "role": "model",
+              "rationale": "以语言模型式自回归序列处理多模态视频任务。",
+              "url": "https://arxiv.org/abs/2312.14125",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "自回归推进帧/块，块内仍采用视频扩散生成。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R66",
+              "label": "Genie",
+              "role": "adjacent",
+              "rationale": "带潜动作条件的自回归动力学模型。",
+              "url": "https://arxiv.org/abs/2402.15391",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "自回归描述时间或 token 的条件分解，不规定局部生成器必须是离散采样。",
+          "label": "自回归生成"
+        },
+        {
+          "id": "paradigms.masked",
+          "subdivisions": [
+            "离散 token 掩码预测",
+            "迭代填充",
+            "多任务掩码条件"
+          ],
+          "works": [
+            {
+              "source_id": "R48",
+              "label": "MAGVIT",
+              "role": "model",
+              "rationale": "三维 tokenizer 与多任务掩码生成。",
+              "url": "https://arxiv.org/abs/2212.05199",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R17",
+              "label": "Phenaki",
+              "role": "model",
+              "rationale": "因果视频 tokenizer 与双向掩码生成器。",
+              "url": "https://arxiv.org/abs/2210.02399",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "掩码 token 预测与 SEINE 对视频已知区域使用遮罩的扩散方法分别标注。",
+          "label": "掩码生成"
+        },
+        {
+          "id": "paradigms.hybrid",
+          "subdivisions": [
+            "自回归＋扩散",
+            "全局规划＋局部生成",
+            "粗到细/多阶段生成"
+          ],
+          "works": [
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "帧/块自回归与扩散局部生成结合。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "由双向扩散教师训练因果少步学生。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R24",
+              "label": "MovieDreamer",
+              "role": "method",
+              "rationale": "全局自回归叙事与局部扩散渲染。",
+              "url": "https://arxiv.org/abs/2407.16655",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "语言模型规划与布局引导视频合成。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "混合范式"
+        }
+      ]
+    },
+    {
+      "id": "view.temporal",
+      "label": "时序生成机制",
+      "doc_path": "docs/views/03-temporal.md",
+      "subclasses": [
+        {
+          "id": "temporal.joint",
+          "subdivisions": [
+            "整段视频联合去噪/流生成",
+            "双向时空交互",
+            "带已知帧的联合补全"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "整段潜视频的时空联合建模。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "整段潜视频上的 DiT 与速度场生成。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R53",
+              "label": "SEINE",
+              "role": "method",
+              "rationale": "带场景图像约束的随机遮罩视频扩散。",
+              "url": "https://arxiv.org/abs/2310.20700",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "整段联合生成仍有多个去噪/积分步骤；“联合”描述时间维度。",
+          "label": "整段联合生成"
+        },
+        {
+          "id": "temporal.causal",
+          "subdivisions": [
+            "逐帧生成",
+            "逐块生成",
+            "块因果注意力与 KV 复用"
+          ],
+          "works": [
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "双向教师到因果视频学生的生成机制转换。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "自生成历史训练与自回归视频扩散。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R21",
+              "label": "Diffusion Forcing",
+              "role": "method",
+              "rationale": "因果序列与单元独立噪声水平结合。",
+              "url": "https://arxiv.org/abs/2407.01392",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "",
+          "label": "因果生成"
+        },
+        {
+          "id": "temporal.context",
+          "subdivisions": [
+            "滑动窗口/重叠片段",
+            "历史压缩与帧打包",
+            "提示切换与缓存刷新"
+          ],
+          "works": [
+            {
+              "source_id": "R57",
+              "label": "FramePack",
+              "role": "method",
+              "rationale": "按历史帧的重要性打包上下文，控制持续生成成本。",
+              "url": "https://arxiv.org/abs/2504.12626",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R23",
+              "label": "LongLive",
+              "role": "method",
+              "rationale": "短上下文窗口、frame sink 与提示切换后的缓存重建。",
+              "url": "https://arxiv.org/abs/2509.22622",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R56",
+              "label": "StreamingT2V",
+              "role": "method",
+              "rationale": "短期上下文与长时外观信息结合，延展视频。",
+              "url": "https://arxiv.org/abs/2403.14773",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "FramePack 有不同顺序与漂移抑制设计，不把整篇工作一概归为严格单向因果。",
+          "label": "上下文延展"
+        },
+        {
+          "id": "temporal.hierarchical",
+          "subdivisions": [
+            "故事/场景规划",
+            "关键帧或布局计划",
+            "局部片段渲染与衔接"
+          ],
+          "works": [
+            {
+              "source_id": "R24",
+              "label": "MovieDreamer",
+              "role": "method",
+              "rationale": "长视觉叙事的全局计划与扩散渲染。",
+              "url": "https://arxiv.org/abs/2407.16655",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "规划场景、角色布局及跨场景一致关系。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R72",
+              "label": "ControlVideo",
+              "role": "method",
+              "rationale": "分层采样组织短片段与长视频。",
+              "url": "https://arxiv.org/abs/2305.13077",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "分层生成"
+        },
+        {
+          "id": "temporal.memory",
+          "subdivisions": [
+            "历史帧/特征记忆",
+            "紧凑历史与持久外观",
+            "潜在状态/动作动力学（扩展）"
+          ],
+          "works": [
+            {
+              "source_id": "R56",
+              "label": "StreamingT2V",
+              "role": "method",
+              "rationale": "首段外观保留与短期上下文形成两种记忆。",
+              "url": "https://arxiv.org/abs/2403.14773",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R57",
+              "label": "FramePack",
+              "role": "method",
+              "rationale": "保留并压缩不同时间距离的历史帧信息。",
+              "url": "https://arxiv.org/abs/2504.12626",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R66",
+              "label": "Genie",
+              "role": "adjacent",
+              "rationale": "潜动作与学习到的动力学，用于交互环境。",
+              "url": "https://arxiv.org/abs/2402.15391",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "历史信息、外观特征和环境状态是不同记忆对象；Genie 是相邻交互环境案例，并不证明真实世界物理正确。",
+          "label": "状态与记忆"
+        },
+        {
+          "id": "temporal.streaming",
+          "subdivisions": [
+            "首段低延迟与持续出帧",
+            "动态文字/动作条件",
+            "持续生成时的漂移抑制"
+          ],
+          "works": [
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "支持持续自回归推进的少步视频生成。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R23",
+              "label": "LongLive",
+              "role": "method",
+              "rationale": "长视频生成中的动态提示与持续交互。",
+              "url": "https://arxiv.org/abs/2509.22622",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R66",
+              "label": "Genie",
+              "role": "adjacent",
+              "rationale": "潜动作驱动的交互式环境生成。",
+              "url": "https://arxiv.org/abs/2402.15391",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "",
+          "label": "流式与交互"
+        }
+      ]
+    },
+    {
+      "id": "view.architecture",
+      "label": "模型结构与表示",
+      "doc_path": "docs/views/04-architecture.md",
+      "subclasses": [
+        {
+          "id": "architecture.representation",
+          "subdivisions": [
+            "RGB/像素表示",
+            "连续压缩潜变量",
+            "离散视觉 token"
+          ],
+          "works": [
+            {
+              "source_id": "R19",
+              "label": "Video Diffusion Models",
+              "role": "model",
+              "rationale": "像素空间视频生成的代表路线。",
+              "url": "https://arxiv.org/abs/2204.03458",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "连续潜空间视频生成。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R49",
+              "label": "MAGVIT-v2",
+              "role": "codec",
+              "rationale": "图像、视频共享词表的离散视觉 tokenizer。",
+              "url": "https://arxiv.org/abs/2310.05737",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "视频表示"
+        },
+        {
+          "id": "architecture.codec",
+          "subdivisions": [
+            "逐帧二维编码",
+            "时空三维压缩",
+            "因果视频 VAE",
+            "离散视频 tokenizer"
+          ],
+          "works": [
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "从图像潜空间系统扩展视频建模的入口。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan-VAE",
+              "role": "codec",
+              "rationale": "时空压缩、因果处理与分块编解码。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R05",
+              "label": "CogVideoX VAE",
+              "role": "codec",
+              "rationale": "三维因果 VAE 与视频潜变量压缩。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R49",
+              "label": "MAGVIT-v2",
+              "role": "codec",
+              "rationale": "离散 tokenizer 对视频序列建模的作用。",
+              "url": "https://arxiv.org/abs/2310.05737",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "编解码器的因果性与生成网络的因果性分开判断。",
+          "label": "视频编解码器"
+        },
+        {
+          "id": "architecture.backbone",
+          "subdivisions": [
+            "视频 U-Net",
+            "视频 DiT",
+            "自回归 Transformer",
+            "多模态/多分支骨干"
+          ],
+          "works": [
+            {
+              "source_id": "R19",
+              "label": "Video Diffusion Models",
+              "role": "model",
+              "rationale": "扩展视频时间维度的扩散网络。",
+              "url": "https://arxiv.org/abs/2204.03458",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R65",
+              "label": "Latte",
+              "role": "model",
+              "rationale": "潜视频 Transformer 骨干与时空分解设计。",
+              "url": "https://arxiv.org/abs/2401.03048",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "视频生成中的专家 Transformer。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R18",
+              "label": "VideoPoet",
+              "role": "model",
+              "rationale": "多模态自回归 Transformer 视频生成。",
+              "url": "https://arxiv.org/abs/2312.14125",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "DiT 是网络骨干，不能由骨干名称推断具体扩散或流训练目标。",
+          "label": "骨干"
+        },
+        {
+          "id": "architecture.position",
+          "subdivisions": [
+            "时空 patch/token 化",
+            "空间、时间坐标编码",
+            "3D RoPE",
+            "长度/分辨率外推（后续验证）"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "时空 token 与三维旋转位置编码。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R65",
+              "label": "Latte",
+              "role": "model",
+              "rationale": "视频 token 的时空组织及位置条件设计。",
+              "url": "https://arxiv.org/abs/2401.03048",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "视频潜变量 patch 化和时空位置表示。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "位置编码的存在不直接证明任意长度或分辨率外推；外推需单列实验设置。",
+          "label": "Token 化与位置"
+        },
+        {
+          "id": "architecture.attention",
+          "subdivisions": [
+            "全时空注意力",
+            "空间—时间分解",
+            "局部/稀疏注意力",
+            "因果/块因果注意力"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "全时空注意力的代表结构。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R65",
+              "label": "Latte",
+              "role": "model",
+              "rationale": "空间、时间分解的 Transformer 变体。",
+              "url": "https://arxiv.org/abs/2401.03048",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R43",
+              "label": "VSA",
+              "role": "method",
+              "rationale": "可训练的稀疏注意力。",
+              "url": "https://arxiv.org/abs/2505.13389",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "因果自回归学生的时间依赖。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "",
+          "label": "时空连接与注意力"
+        },
+        {
+          "id": "architecture.condition",
+          "subdivisions": [
+            "条件编码器",
+            "拼接/联合序列",
+            "交叉注意力",
+            "AdaLN 调制",
+            "Adapter/条件分支"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "文本、视觉融合与 Expert AdaLN。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "文本条件交叉注意力的视频 DiT。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R51",
+              "label": "DynamiCrafter",
+              "role": "method",
+              "rationale": "图像上下文表示和图像条件拼接。",
+              "url": "https://arxiv.org/abs/2310.12190",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "统一视频条件单元与上下文适配器。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "",
+          "label": "条件编码与注入"
+        },
+        {
+          "id": "architecture.efficiency",
+          "subdivisions": [
+            "潜变量/token 压缩",
+            "分块编解码与特征缓存",
+            "稀疏连接",
+            "结构与并行布局"
+          ],
+          "works": [
+            {
+              "source_id": "R04",
+              "label": "Wan-VAE",
+              "role": "codec",
+              "rationale": "时空压缩与分块处理减少表示、解码成本。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R49",
+              "label": "MAGVIT-v2",
+              "role": "codec",
+              "rationale": "用紧凑离散表示支撑视觉序列建模。",
+              "url": "https://arxiv.org/abs/2310.05737",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R43",
+              "label": "VSA",
+              "role": "method",
+              "rationale": "通过稀疏时空连接降低注意力成本。",
+              "url": "https://arxiv.org/abs/2505.13389",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R64",
+              "label": "xDiT",
+              "role": "system",
+              "rationale": "组织 DiT 序列、流水线与引导分支并行。",
+              "url": "https://arxiv.org/abs/2411.01738",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "本子类从模块结构解释成本；端到端延迟、显存和吞吐在能力视角另行评测。",
+          "label": "模块级效率"
+        }
+      ]
+    },
+    {
+      "id": "view.control",
+      "label": "可控性",
+      "doc_path": "docs/views/05-control.md",
+      "subclasses": [
+        {
+          "id": "control.semantic",
+          "subdivisions": [
+            "文字描述与属性绑定",
+            "编辑指令",
+            "事件/场景计划",
+            "条件引导强度"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "文字语义与视频内容的联合建模。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R08",
+              "label": "Movie Gen",
+              "role": "model",
+              "rationale": "文字指导生成及视频编辑任务。",
+              "url": "https://arxiv.org/abs/2410.13720",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "将文字指令分解为场景与实体规划。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R33",
+              "label": "Classifier-Free Guidance",
+              "role": "background",
+              "rationale": "条件引导强度的基础机制。",
+              "url": "https://arxiv.org/abs/2207.12598",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "",
+          "label": "语义与指令"
+        },
+        {
+          "id": "control.appearance",
+          "subdivisions": [
+            "人脸身份",
+            "整体角色/一般物体",
+            "外观与风格",
+            "主体与运动解耦"
+          ],
+          "works": [
+            {
+              "source_id": "R28",
+              "label": "ConsisID",
+              "role": "method",
+              "rationale": "人脸身份条件与频率分解。",
+              "url": "https://arxiv.org/abs/2411.17440",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R54",
+              "label": "DreamVideo",
+              "role": "method",
+              "rationale": "主体身份和运动各自通过适配器学习。",
+              "url": "https://arxiv.org/abs/2312.04433",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "指定参考主体并控制其运动轨迹。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R09",
+              "label": "Rerender A Video",
+              "role": "method",
+              "rationale": "保留视频内容的文字引导风格翻译。",
+              "url": "https://arxiv.org/abs/2306.07954",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "身份与外观"
+        },
+        {
+          "id": "control.structure",
+          "subdivisions": [
+            "深度/几何结构",
+            "边缘/草图",
+            "遮罩/局部区域",
+            "布局/边界框"
+          ],
+          "works": [
+            {
+              "source_id": "R72",
+              "label": "ControlVideo",
+              "role": "method",
+              "rationale": "输入深度或边缘序列，约束视频空间结构。",
+              "url": "https://arxiv.org/abs/2305.13077",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R52",
+              "label": "ToonCrafter",
+              "role": "method",
+              "rationale": "草图条件辅助卡通帧间生成。",
+              "url": "https://arxiv.org/abs/2405.17933",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "遮罩编辑及统一视频条件表示。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "布局与实体计划指导场景生成。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "边界框序列绑定主体与位置变化。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "法线、任意布局、多区域细粒度组合保留为进一步阅读方向；上述方法各有其条件格式。",
+          "label": "空间结构"
+        },
+        {
+          "id": "control.motion",
+          "subdivisions": [
+            "人体姿态序列",
+            "点/对象轨迹",
+            "光流与运动向量",
+            "对象—运动绑定"
+          ],
+          "works": [
+            {
+              "source_id": "R27",
+              "label": "Animate Anyone",
+              "role": "method",
+              "rationale": "人物参考与姿态序列驱动的角色动画。",
+              "url": "https://arxiv.org/abs/2311.17117",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R26",
+              "label": "DragAnything",
+              "role": "method",
+              "rationale": "通过实体表示对指定对象施加运动轨迹。",
+              "url": "https://arxiv.org/abs/2403.07420",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R74",
+              "label": "DragNUWA",
+              "role": "method",
+              "rationale": "文字、图像和轨迹条件联合控制。",
+              "url": "https://arxiv.org/abs/2308.08089",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "通过边界框序列控制指定主体的运动。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R29",
+              "label": "VideoComposer",
+              "role": "method",
+              "rationale": "使用压缩视频运动向量作为时间条件的代表入口。",
+              "url": "https://arxiv.org/abs/2306.02018",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "光流与压缩视频运动向量分别解释；VideoComposer 的运动向量案例不直接证明光流控制。",
+          "label": "运动"
+        },
+        {
+          "id": "control.camera",
+          "subdivisions": [
+            "相机姿态/轨迹",
+            "视角与环绕路线",
+            "相机内参及镜头运动表达"
+          ],
+          "works": [
+            {
+              "source_id": "R25",
+              "label": "CameraCtrl",
+              "role": "method",
+              "rationale": "相机轨迹参数化和可插拔控制模块。",
+              "url": "https://arxiv.org/abs/2404.02101",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R71",
+              "label": "SV3D",
+              "role": "method",
+              "rationale": "明确相机控制的环绕多视角合成。",
+              "url": "https://arxiv.org/abs/2403.12008",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "相机运动适配的训练案例。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "内参和镜头语义作为展开内容；具体支持的相机参数需查相应版本。",
+          "label": "相机"
+        },
+        {
+          "id": "control.temporal",
+          "subdivisions": [
+            "首帧/首尾帧锚定",
+            "中间关键帧与过渡",
+            "事件顺序/时长计划"
+          ],
+          "works": [
+            {
+              "source_id": "R52",
+              "label": "ToonCrafter",
+              "role": "method",
+              "rationale": "给定卡通关键帧生成中间过渡。",
+              "url": "https://arxiv.org/abs/2405.17933",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R53",
+              "label": "SEINE",
+              "role": "method",
+              "rationale": "给定不同场景图像与文字生成场景过渡。",
+              "url": "https://arxiv.org/abs/2310.20700",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "通过场景计划组织事件和镜头顺序。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "场景顺序规划不等于逐帧精确时间控制；任意关键帧与精确时长另记验证状态。",
+          "label": "时间锚点"
+        },
+        {
+          "id": "control.audio",
+          "subdivisions": [
+            "语音—口型同步",
+            "表情/头部姿态",
+            "伴随语音手势",
+            "歌唱/节奏运动扩展"
+          ],
+          "works": [
+            {
+              "source_id": "R30",
+              "label": "Hallo",
+              "role": "method",
+              "rationale": "分层音频条件控制肖像口型、表情和姿态。",
+              "url": "https://arxiv.org/abs/2406.08801",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R67",
+              "label": "Wav2Lip",
+              "role": "method",
+              "rationale": "语音约束现有视频中的嘴部运动。",
+              "url": "https://arxiv.org/abs/2008.10010",
+              "first_submission_year": 2020
+            },
+            {
+              "source_id": "R73",
+              "label": "EMO",
+              "role": "method",
+              "rationale": "说话及歌唱声音驱动肖像表情。",
+              "url": "https://arxiv.org/abs/2402.17485",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R76",
+              "label": "EMO2",
+              "role": "method",
+              "rationale": "音频到手部姿态，再到表情与手势视频。",
+              "url": "https://arxiv.org/abs/2501.10687",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R75",
+              "label": "Bailando",
+              "role": "adjacent",
+              "rationale": "音乐节拍对应三维舞蹈运动。",
+              "url": "https://arxiv.org/abs/2203.13055",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "Bailando 是音乐到运动序列，不能据此标注为端到端像素视频生成。",
+          "label": "音频"
+        },
+        {
+          "id": "control.multiple",
+          "subdivisions": [
+            "多条件组合",
+            "条件角色/主体绑定",
+            "条件缺失与强度冲突",
+            "统一输入接口"
+          ],
+          "works": [
+            {
+              "source_id": "R29",
+              "label": "VideoComposer",
+              "role": "method",
+              "rationale": "统一编码并组合不同文字、空间和时间条件。",
+              "url": "https://arxiv.org/abs/2306.02018",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R74",
+              "label": "DragNUWA",
+              "role": "method",
+              "rationale": "文字、图像、轨迹三种信息联合控制。",
+              "url": "https://arxiv.org/abs/2308.08089",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R50",
+              "label": "VACE",
+              "role": "method",
+              "rationale": "统一视频条件单元组织创建与编辑任务。",
+              "url": "https://arxiv.org/abs/2503.07598",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "参考主体与边界框运动条件联合约束。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "统一接口、任意条件兼容和冲突自动解决是不同主张，分别记录证据。",
+          "label": "多条件与统一控制"
+        }
+      ]
+    },
+    {
+      "id": "view.training",
+      "label": "训练与推理",
+      "doc_path": "docs/views/06-training-inference.md",
+      "subclasses": [
+        {
+          "id": "training.data",
+          "subdivisions": [
+            "切镜/语义切段",
+            "去重、视觉质量和运动过滤",
+            "caption/重标注",
+            "时间采样与数据混合"
+          ],
+          "works": [
+            {
+              "source_id": "R59",
+              "label": "OpenVid-1M",
+              "role": "dataset",
+              "rationale": "高质量文生视频训练数据的整理案例。",
+              "url": "https://arxiv.org/abs/2407.02371",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R60",
+              "label": "Panda-70M",
+              "role": "dataset",
+              "rationale": "语义片段切分、多教师描述与描述筛选。",
+              "url": "https://arxiv.org/abs/2402.19479",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "数据筛选与分阶段训练联系的案例。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "数据工程"
+        },
+        {
+          "id": "training.pretrain",
+          "subdivisions": [
+            "图像初始化/预训练",
+            "图像—视频联合训练",
+            "分辨率/时长渐进训练",
+            "噪声/时间采样与目标"
+          ],
+          "works": [
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "图像预训练、视频预训练与高质量微调的分阶段路线。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R06",
+              "label": "HunyuanVideo",
+              "role": "model",
+              "rationale": "数据、渐进训练和基础设施的系统案例。",
+              "url": "https://arxiv.org/abs/2412.03603",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "视频表示、形状处理与联合训练的案例。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R19",
+              "label": "Video Diffusion Models",
+              "role": "model",
+              "rationale": "图像与视频联合学习视频扩散。",
+              "url": "https://arxiv.org/abs/2204.03458",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "",
+          "label": "预训练"
+        },
+        {
+          "id": "training.parameters",
+          "subdivisions": [
+            "全参数微调",
+            "LoRA/低秩适配",
+            "Adapter/条件分支"
+          ],
+          "works": [
+            {
+              "source_id": "R31",
+              "label": "LoRA",
+              "role": "background",
+              "rationale": "低秩参数增量的基础；原论文验证语言模型。",
+              "url": "https://arxiv.org/abs/2106.09685",
+              "first_submission_year": 2021
+            },
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "视频模型微调与相机运动 LoRA 案例。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R54",
+              "label": "DreamVideo",
+              "role": "method",
+              "rationale": "身份与运动适配器分开训练。",
+              "url": "https://arxiv.org/abs/2312.04433",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R25",
+              "label": "CameraCtrl",
+              "role": "method",
+              "rationale": "增加可训练相机控制模块。",
+              "url": "https://arxiv.org/abs/2404.02101",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "参数更新方式与监督/偏好/RL 训练目标是可组合的两个维度。",
+          "label": "参数适配"
+        },
+        {
+          "id": "training.post",
+          "subdivisions": [
+            "高质量 SFT",
+            "自训练/合成监督",
+            "教师—学生蒸馏",
+            "局部/整体偏好优化",
+            "奖励优化/RL/GRPO"
+          ],
+          "works": [
+            {
+              "source_id": "R07",
+              "label": "Stable Video Diffusion",
+              "role": "model",
+              "rationale": "高质量视频微调阶段。",
+              "url": "https://arxiv.org/abs/2311.15127",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "从双向扩散教师蒸馏因果少步学生。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R36",
+              "label": "LocalDPO",
+              "role": "method",
+              "rationale": "时空局部细节的直接偏好优化。",
+              "url": "https://arxiv.org/abs/2601.04068",
+              "first_submission_year": 2026
+            },
+            {
+              "source_id": "R42",
+              "label": "DanceGRPO",
+              "role": "method",
+              "rationale": "视觉生成中的奖励与 GRPO 优化。",
+              "url": "https://arxiv.org/abs/2505.07818",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R62",
+              "label": "VideoLCM",
+              "role": "method",
+              "rationale": "视频潜空间一致性蒸馏。",
+              "url": "https://arxiv.org/abs/2312.09109",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "Self Forcing 的自生成历史属于时序训练策略；不因名称相近就当成合成数据自训练。",
+          "label": "后训练目标"
+        },
+        {
+          "id": "training.temporal",
+          "subdivisions": [
+            "真值历史与自生成历史",
+            "自回归 rollout",
+            "逐单元独立噪声",
+            "长序列调优"
+          ],
+          "works": [
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "训练时使用模型自身生成的历史，缓解训练推理差异。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R21",
+              "label": "Diffusion Forcing",
+              "role": "method",
+              "rationale": "训练序列单元采用独立噪声水平。",
+              "url": "https://arxiv.org/abs/2407.01392",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R23",
+              "label": "LongLive",
+              "role": "method",
+              "rationale": "面向长期持续生成的序列调优。",
+              "url": "https://arxiv.org/abs/2509.22622",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "",
+          "label": "时序训练策略"
+        },
+        {
+          "id": "training.sampling",
+          "subdivisions": [
+            "路径/噪声时间调度",
+            "ODE/扩散数值求解器",
+            "CFG 条件引导",
+            "推理时选择/约束（扩展）"
+          ],
+          "works": [
+            {
+              "source_id": "R69",
+              "label": "DPM-Solver",
+              "role": "background",
+              "rationale": "通用扩散 ODE 数值求解器。",
+              "url": "https://arxiv.org/abs/2206.00927",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R70",
+              "label": "UniPC",
+              "role": "background",
+              "rationale": "通用预测—校正采样框架。",
+              "url": "https://arxiv.org/abs/2302.04867",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R33",
+              "label": "Classifier-Free Guidance",
+              "role": "background",
+              "rationale": "条件与无条件预测组合的引导机制。",
+              "url": "https://arxiv.org/abs/2207.12598",
+              "first_submission_year": 2022
+            },
+            {
+              "source_id": "R14",
+              "label": "Flow Matching",
+              "role": "background",
+              "rationale": "路径与速度场决定的生成积分背景。",
+              "url": "https://arxiv.org/abs/2210.02747",
+              "first_submission_year": 2022
+            }
+          ],
+          "note": "这些代表作是通用基础论文。视频系统能否使用某个求解器，取决于预测参数化、调度和实现；不从原文推出视频性能或通用兼容性。",
+          "label": "采样与推理"
+        },
+        {
+          "id": "training.efficiency",
+          "subdivisions": [
+            "少步蒸馏/一致性",
+            "KV/去噪/VAE 三种缓存",
+            "稀疏注意力",
+            "量化/混合精度",
+            "序列/流水线/CFG 并行",
+            "内存与解码成本"
+          ],
+          "works": [
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "少步因果视频扩散的蒸馏。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R61",
+              "label": "AnimateLCM",
+              "role": "method",
+              "rationale": "视频一致性学习与风格适配。",
+              "url": "https://arxiv.org/abs/2402.00769",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R62",
+              "label": "VideoLCM",
+              "role": "method",
+              "rationale": "视频潜空间少步一致性蒸馏。",
+              "url": "https://arxiv.org/abs/2312.09109",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R20",
+              "label": "Self Forcing",
+              "role": "method",
+              "rationale": "自回归持续生成中的滚动 KV 缓存。",
+              "url": "https://arxiv.org/abs/2506.08009",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R34",
+              "label": "TeaCache",
+              "role": "method",
+              "rationale": "复用不同去噪步骤的模型计算。",
+              "url": "https://arxiv.org/abs/2411.19108",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R04",
+              "label": "Wan-VAE",
+              "role": "codec",
+              "rationale": "分块编解码及历史卷积特征复用。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R43",
+              "label": "VSA",
+              "role": "method",
+              "rationale": "通过可训练稀疏注意力减少计算。",
+              "url": "https://arxiv.org/abs/2505.13389",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R63",
+              "label": "ViDiT-Q",
+              "role": "method",
+              "rationale": "视频 DiT 的量化与混合精度。",
+              "url": "https://arxiv.org/abs/2406.02540",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R64",
+              "label": "xDiT",
+              "role": "system",
+              "rationale": "序列、流水线和引导分支的并行组织。",
+              "url": "https://arxiv.org/abs/2411.01738",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R35",
+              "label": "FastVideo",
+              "role": "official_project",
+              "rationale": "视频生成加速与蒸馏的工程入口。",
+              "url": "https://github.com/hao-ai-lab/FastVideo",
+              "first_submission_year": null
+            }
+          ],
+          "note": "每种技术记录优化对象、硬件、精度、视频形状与质量损失；不把模块节省等同端到端收益。",
+          "groups": [
+            {
+              "id": "training.efficiency.cache",
+              "label": "缓存",
+              "works": [
+                {
+                  "source_id": "R20",
+                  "label": "Self Forcing",
+                  "role": "method",
+                  "rationale": "KV 缓存：复用历史注意力 key/value。",
+                  "url": "https://arxiv.org/abs/2506.08009",
+                  "first_submission_year": 2025
+                },
+                {
+                  "source_id": "R34",
+                  "label": "TeaCache",
+                  "role": "method",
+                  "rationale": "去噪缓存：复用去噪步骤之间的模型计算。",
+                  "url": "https://arxiv.org/abs/2411.19108",
+                  "first_submission_year": 2024
+                },
+                {
+                  "source_id": "R04",
+                  "label": "Wan-VAE",
+                  "role": "codec",
+                  "rationale": "VAE 缓存：复用分块编解码的历史卷积特征。",
+                  "url": "https://arxiv.org/abs/2503.20314",
+                  "first_submission_year": 2025
+                }
+              ]
+            }
+          ],
+          "label": "效率与系统"
+        }
+      ]
+    },
+    {
+      "id": "view.capabilities",
+      "label": "能力与核心问题",
+      "doc_path": "docs/views/07-capabilities.md",
+      "subclasses": [
+        {
+          "id": "capabilities.visual",
+          "subdivisions": [
+            "清晰度/细节",
+            "伪影/人体形态",
+            "美学/风格"
+          ],
+          "works": [
+            {
+              "source_id": "R04",
+              "label": "Wan",
+              "role": "model",
+              "rationale": "视觉质量与数据、压缩表示联系的系统研究入口。",
+              "url": "https://arxiv.org/abs/2503.20314",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "高质量视频生成的架构研究入口。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "视觉质量、美学等维度的评测入口。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R38",
+              "label": "VBench-2.0",
+              "role": "benchmark",
+              "rationale": "人类形态等内在忠实度维度的评测。",
+              "url": "https://arxiv.org/abs/2503.21755",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "",
+          "label": "视觉质量"
+        },
+        {
+          "id": "capabilities.semantic",
+          "subdivisions": [
+            "对象/属性/数量",
+            "空间关系与绑定",
+            "动作/事件顺序"
+          ],
+          "works": [
+            {
+              "source_id": "R05",
+              "label": "CogVideoX",
+              "role": "model",
+              "rationale": "文字条件与视觉内容的联合建模研究。",
+              "url": "https://arxiv.org/abs/2408.06072",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "通过实体、布局和场景计划改善复杂需求组织。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "对象、属性、空间关系等语义维度评测。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R38",
+              "label": "VBench-2.0",
+              "role": "benchmark",
+              "rationale": "控制与常识等细粒度评估。",
+              "url": "https://arxiv.org/abs/2503.21755",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "复杂事件顺序需要额外的分项协议，不能用一个总体语义分数完全代表。",
+          "label": "语义与指令执行"
+        },
+        {
+          "id": "capabilities.motion",
+          "subdivisions": [
+            "运动幅度/动态性",
+            "自然性/流畅性",
+            "动作完整性/多样性"
+          ],
+          "works": [
+            {
+              "source_id": "R44",
+              "label": "MoCoGAN",
+              "role": "method",
+              "rationale": "将运动与外观内容分开建模。",
+              "url": "https://arxiv.org/abs/1707.04993",
+              "first_submission_year": 2017
+            },
+            {
+              "source_id": "R27",
+              "label": "Animate Anyone",
+              "role": "method",
+              "rationale": "姿态驱动的角色运动生成。",
+              "url": "https://arxiv.org/abs/2311.17117",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "动态程度与运动流畅性等维度评测。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "运动幅度大、轨迹执行准确与自然性好是不同观察维度。",
+          "label": "运动质量"
+        },
+        {
+          "id": "capabilities.temporal",
+          "subdivisions": [
+            "闪烁/局部抖动",
+            "运动连续",
+            "跨块/跨镜头衔接"
+          ],
+          "works": [
+            {
+              "source_id": "R09",
+              "label": "Rerender A Video",
+              "role": "method",
+              "rationale": "时间传播用于保持视频重绘连续。",
+              "url": "https://arxiv.org/abs/2306.07954",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R56",
+              "label": "StreamingT2V",
+              "role": "method",
+              "rationale": "短期上下文及片段衔接研究。",
+              "url": "https://arxiv.org/abs/2403.14773",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R72",
+              "label": "ControlVideo",
+              "role": "method",
+              "rationale": "跨帧交互与中间帧平滑。",
+              "url": "https://arxiv.org/abs/2305.13077",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "时间闪烁等一致性评估入口。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "",
+          "label": "时间一致性"
+        },
+        {
+          "id": "capabilities.subject",
+          "subdivisions": [
+            "人脸/角色身份",
+            "物体持久性与遮挡后恢复",
+            "场景/背景一致"
+          ],
+          "works": [
+            {
+              "source_id": "R28",
+              "label": "ConsisID",
+              "role": "method",
+              "rationale": "身份保留的专门生成方法。",
+              "url": "https://arxiv.org/abs/2411.17440",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R55",
+              "label": "DreamVideo-2",
+              "role": "method",
+              "rationale": "参考主体与运动绑定。",
+              "url": "https://arxiv.org/abs/2410.13830",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R56",
+              "label": "StreamingT2V",
+              "role": "method",
+              "rationale": "长时外观记忆研究。",
+              "url": "https://arxiv.org/abs/2403.14773",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "主体与背景一致性的评测维度。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            }
+          ],
+          "note": "人脸相似、物体不消失和遮挡后恢复需独立验证，不能相互代替。",
+          "label": "主体与场景一致性"
+        },
+        {
+          "id": "capabilities.geometry",
+          "subdivisions": [
+            "相机/视角一致",
+            "多视角三维结构",
+            "遮挡与几何关系"
+          ],
+          "works": [
+            {
+              "source_id": "R71",
+              "label": "SV3D",
+              "role": "method",
+              "rationale": "相机可控多视角生成与三维重建评估。",
+              "url": "https://arxiv.org/abs/2403.12008",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R25",
+              "label": "CameraCtrl",
+              "role": "method",
+              "rationale": "相机轨迹条件执行的研究。",
+              "url": "https://arxiv.org/abs/2404.02101",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "SV3D 的对象环绕多视角与开放场景动态视频的几何问题分别讨论。",
+          "label": "空间与几何"
+        },
+        {
+          "id": "capabilities.physics",
+          "subdivisions": [
+            "重力/接触/碰撞",
+            "材料/变形/流体交互",
+            "因果顺序/常识"
+          ],
+          "works": [
+            {
+              "source_id": "R39",
+              "label": "VideoPhy",
+              "role": "benchmark",
+              "rationale": "用物体、材料交互检验物理常识。",
+              "url": "https://arxiv.org/abs/2406.03520",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R38",
+              "label": "VBench-2.0",
+              "role": "benchmark",
+              "rationale": "物理和常识的细粒度评测。",
+              "url": "https://arxiv.org/abs/2503.21755",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "这里列的是问题定义和评测代表作，不表示这些基准本身解决物理一致性。",
+          "label": "物理与常识"
+        },
+        {
+          "id": "capabilities.long",
+          "subdivisions": [
+            "长期主体/场景一致",
+            "故事与镜头关系",
+            "状态保持/误差积累"
+          ],
+          "works": [
+            {
+              "source_id": "R24",
+              "label": "MovieDreamer",
+              "role": "method",
+              "rationale": "长视觉叙事的分层生成。",
+              "url": "https://arxiv.org/abs/2407.16655",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R58",
+              "label": "VideoDirectorGPT",
+              "role": "method",
+              "rationale": "多场景故事规划与角色布局关系。",
+              "url": "https://arxiv.org/abs/2309.15091",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R23",
+              "label": "LongLive",
+              "role": "method",
+              "rationale": "长期持续生成与提示切换研究。",
+              "url": "https://arxiv.org/abs/2509.22622",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R57",
+              "label": "FramePack",
+              "role": "method",
+              "rationale": "长视频历史预算与漂移抑制。",
+              "url": "https://arxiv.org/abs/2504.12626",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "多镜头叙事和单镜头持续生成分开评测；输出长不直接等于故事连贯。",
+          "label": "长程与叙事"
+        },
+        {
+          "id": "capabilities.control",
+          "subdivisions": [
+            "姿态/轨迹执行",
+            "相机条件执行",
+            "多条件执行与冲突"
+          ],
+          "works": [
+            {
+              "source_id": "R25",
+              "label": "CameraCtrl",
+              "role": "method",
+              "rationale": "相机轨迹忠实度的研究入口。",
+              "url": "https://arxiv.org/abs/2404.02101",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R26",
+              "label": "DragAnything",
+              "role": "method",
+              "rationale": "指定实体运动轨迹的执行。",
+              "url": "https://arxiv.org/abs/2403.07420",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R29",
+              "label": "VideoComposer",
+              "role": "method",
+              "rationale": "组合文字、空间与时间控制。",
+              "url": "https://arxiv.org/abs/2306.02018",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R38",
+              "label": "VBench-2.0",
+              "role": "benchmark",
+              "rationale": "控制能力评估入口。",
+              "url": "https://arxiv.org/abs/2503.21755",
+              "first_submission_year": 2025
+            }
+          ],
+          "note": "",
+          "label": "控制忠实度"
+        },
+        {
+          "id": "capabilities.audio",
+          "subdivisions": [
+            "口型—语音同步",
+            "手势/表情与语音对应",
+            "视觉事件—声音对应"
+          ],
+          "works": [
+            {
+              "source_id": "R67",
+              "label": "Wav2Lip",
+              "role": "method",
+              "rationale": "口型同步生成及同步评估。",
+              "url": "https://arxiv.org/abs/2008.10010",
+              "first_submission_year": 2020
+            },
+            {
+              "source_id": "R30",
+              "label": "Hallo",
+              "role": "method",
+              "rationale": "音频与口型、表情、姿态对应。",
+              "url": "https://arxiv.org/abs/2406.08801",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R76",
+              "label": "EMO2",
+              "role": "method",
+              "rationale": "伴随语音手势的同步生成。",
+              "url": "https://arxiv.org/abs/2501.10687",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R68",
+              "label": "FoleyCrafter",
+              "role": "method",
+              "rationale": "视觉事件与合成声音的语义、时间对应。",
+              "url": "https://arxiv.org/abs/2407.01494",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R41",
+              "label": "LTX-2",
+              "role": "official_project",
+              "rationale": "联合音视频生成的官方项目入口。",
+              "url": "https://github.com/Lightricks/LTX-2",
+              "first_submission_year": null
+            }
+          ],
+          "note": "口型任务、视频后配音和联合音视频生成采用不同协议。",
+          "label": "音画对应"
+        },
+        {
+          "id": "capabilities.efficiency",
+          "subdivisions": [
+            "首段延迟/持续吞吐",
+            "显存/并发",
+            "训练与端到端成本"
+          ],
+          "works": [
+            {
+              "source_id": "R22",
+              "label": "CausVid",
+              "role": "method",
+              "rationale": "因果少步视频生成的效率研究。",
+              "url": "https://arxiv.org/abs/2412.07772",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R34",
+              "label": "TeaCache",
+              "role": "method",
+              "rationale": "跨去噪步骤复用计算的效率研究。",
+              "url": "https://arxiv.org/abs/2411.19108",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R63",
+              "label": "ViDiT-Q",
+              "role": "method",
+              "rationale": "视频 DiT 精度和资源成本的量化研究。",
+              "url": "https://arxiv.org/abs/2406.02540",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R64",
+              "label": "xDiT",
+              "role": "system",
+              "rationale": "并行推理及通信成本研究。",
+              "url": "https://arxiv.org/abs/2411.01738",
+              "first_submission_year": 2024
+            }
+          ],
+          "note": "这些是优化方法或系统论文；横向比较必须统一硬件、精度、形状、步数和计时范围。",
+          "label": "效率与资源"
+        },
+        {
+          "id": "capabilities.evaluation",
+          "subdivisions": [
+            "分布级指标",
+            "多维通用基准",
+            "物理/同步专项评测",
+            "模型评估与人类判断",
+            "多目标协议"
+          ],
+          "works": [
+            {
+              "source_id": "R40",
+              "label": "FVD",
+              "role": "metric",
+              "rationale": "衡量生成与真实视频分布的距离。",
+              "url": "https://arxiv.org/abs/1812.01717",
+              "first_submission_year": 2018
+            },
+            {
+              "source_id": "R37",
+              "label": "VBench",
+              "role": "benchmark",
+              "rationale": "多维视频生成质量与提示集评测。",
+              "url": "https://arxiv.org/abs/2311.17982",
+              "first_submission_year": 2023
+            },
+            {
+              "source_id": "R38",
+              "label": "VBench-2.0",
+              "role": "benchmark",
+              "rationale": "进一步细分内在忠实度评测。",
+              "url": "https://arxiv.org/abs/2503.21755",
+              "first_submission_year": 2025
+            },
+            {
+              "source_id": "R39",
+              "label": "VideoPhy",
+              "role": "benchmark",
+              "rationale": "专项物理常识评测。",
+              "url": "https://arxiv.org/abs/2406.03520",
+              "first_submission_year": 2024
+            },
+            {
+              "source_id": "R67",
+              "label": "Wav2Lip",
+              "role": "method",
+              "rationale": "口型同步任务的评估入口。",
+              "url": "https://arxiv.org/abs/2008.10010",
+              "first_submission_year": 2020
+            }
+          ],
+          "note": "FVD 是集合分布指标，不是单条视频真实性证明；内容安全等扩展方向需另行专题调研。",
+          "label": "评测方法与协议"
+        }
+      ]
+    }
+  ]
+}

@@ -14,7 +14,7 @@ Windows PowerShell 如果限制 npm 脚本，可执行 `npm.cmd start`。门户�
 
 服务默认监听 **`0.0.0.0:8080`**，本机访问 `http://localhost:8080/`，公司内其他电脑使用启动输出中的 `http://部署机器内网IP:8080/`。远程访问还需要网络路由、主机防火墙及云安全组放行。办公电脑、DSW、反向代理与常驻运行的步骤见[部署说明](docs/deployment.md)。
 
-已实现六阶段总览、九个模块页面、平台工具目录、完整方案阅读、文档搜索与手机布局。Prim Eval 提供真实入口及本地只读界面快照；尚未实现的平台展示方案与研发状态。算法组 dashboard 继续预留入口，不展示虚构项目或 goal。
+已实现六阶段总览、九个模块页面、平台工具目录、视频生成技术汇总、完整方案阅读、文档搜索与手机布局。Prim Eval 提供真实入口及本地只读界面快照；尚未实现的平台展示方案与研发状态。算法组 dashboard 继续预留入口，不展示虚构项目或 goal。
 
 平台地址在 `web/config.json` 管理，可用不入库的 `web/config.local.json` 覆盖；配置后重新启动。目标与方案仍通过仓库文档维护，网页不直接修改项目目标。`npm run build` 可单独生成 `dist/`，`npm run serve` 可运行已构建页面，`npm test` 验证构建和服务行为。
 
@@ -67,6 +67,12 @@ flowchart LR
 | 项目看板、关联图、近期进展 | 根据上述来源生成、可重建的汇总视图 | 聚合展示状态、依赖、资产和变化 |
 
 每个算法项目从 algorithm-template 初始化，使用 `project.yaml`、`docs/problem.md`、`docs/eval.md` 等协议文件定义目标与验收，并通过进展、实验、决策和资产引用贯穿研发过程。规划中的平台接入关联普通运行记录，决策级实验补简短文档。运行携带与 `project.yaml.id` 对应的 `project_id`，需要细分时增加 `task_id`；项目状态、自动验收结果和最近同步时间分别展示，证据不足时显示未知，负责人确认结论与下一步。目标维护方法见 [01 目标与基准](docs/modules/01-goals/README.md)，证据汇总原则见[生命周期设计](docs/platform/project-lifecycle/001-project-lifecycle.design.md)。
+
+## 视频生成技术汇总
+
+左侧栏在“平台与工具”下方提供“视频生成技术汇总”（`#/video-generation`）。页面展示七个技术视角和全部子类；进入大类后，以可折叠分类树和内容面板浏览技术点、概念说明与代表论文，支持跨分类搜索、子类链接、手机阅读和完整资料跳转。
+
+分类、作品和原始来源来自 [vgm-map](vgm-map/README.md)，构建时同步收录到门户。技术知识按多个交叉视角组织，研发流程继续按六阶段展示。实现和维护方式见[技术汇总页面设计](docs/platform/001-video-generation-map.design.md)。
 
 ## 网页入口约定
 

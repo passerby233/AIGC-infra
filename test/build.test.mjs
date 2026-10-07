@@ -9,7 +9,7 @@ async function fixture(t) {
   const parent = await mkdtemp(path.join(os.tmpdir(), 'aigc-build-'));
   const root = path.join(parent, 'portal');
   await mkdir(root);
-  for (const entry of ['README.md', 'docs', 'web']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
+  for (const entry of ['README.md', 'docs', 'web', 'vgm-map']) await cp(path.join(projectRoot, entry), path.join(root, entry), { recursive: true, filter: source => !source.endsWith('config.local.json') });
   t.after(() => rm(parent, { recursive: true, force: true }));
   return root;
 }
