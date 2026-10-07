@@ -1,0 +1,16 @@
+{
+  "name": "aigc-infra-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AIGC 研发流程、平台入口与方案文档门户",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node scripts/start.mjs",
+    "dev": "node --watch scripts/start.mjs",
+    "build": "node scripts/build.mjs",
+    "serve": "node web/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:browser": "node scripts/check-browser.mjs"
+  }
+}

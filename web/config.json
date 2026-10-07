@@ -1,0 +1,14 @@
+{
+  "title": "AIGC Infra",
+  "subtitle": "视频生成研发工作导航",
+  "platforms": {
+    "prim-eval": { "url": "http://117.50.195.94:2051/" },
+    "algorithm-template": { "url": null },
+    "group-dashboard": { "url": null },
+    "pass": { "url": null },
+    "training": { "url": null },
+    "serving": { "url": null },
+    "feedback": { "url": null },
+    "avproc": { "url": "https://git-cc.myhexin.com:6443/10jqka/llm/aigc-05-04/avproc-ray" }
+  }
+}

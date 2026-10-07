@@ -1,0 +1,7 @@
+@charset "utf-8";
+
+._ext_highlight { outline: rgba(255, 0, 0, 0.5) solid 3px; outline-offset: -3px; transition: 0.1s; z-index: 2147483647; }
+
+._ext__floating_popup { position: fixed; top: 80px; right: 30px; background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); text-align: center; border-radius: 2px; margin: auto; height: 30px; white-space: nowrap; padding: 8px; z-index: 2147483647; }
+
+._ext__floating_popup > button { margin-left: 5px; color: black; background-color: white; border: 2px solid rgb(231, 231, 231); cursor: pointer; }

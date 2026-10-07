@@ -1,0 +1,18 @@
+[Unit]
+Description=AIGC Infra portal
+After=network.target
+
+[Service]
+Type=simple
+# Replace User, directory and node path for the deployment machine.
+User=aigc
+WorkingDirectory=/opt/AIGC-infra
+ExecStart=/usr/bin/node /opt/AIGC-infra/web/server.mjs
+Environment=HOST=0.0.0.0
+Environment=PORT=8080
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

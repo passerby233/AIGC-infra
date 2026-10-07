@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+.countdown-ebeglcfo-button { background: 0px 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; box-sizing: border-box; color: rgb(255, 255, 255); cursor: pointer; display: block; font-family: Open-Sans; font-size: 12px; height: auto; line-height: 1; margin: 0px auto; padding: 0px 12px; }
+
+.countdown-ebeglcfo-button:focus { background: 0px 0px; }
+
+.countdown-ebeglcfo-button:hover { background: 0px 0px; }
+
+.countdown-ebeglcfo { background: rgba(59, 59, 59, 0.8); border-radius: 4px; color: rgb(255, 255, 255); left: 50%; padding: 14px 14px 10px; position: fixed; top: 50%; transform: translate(-50%, -50%); z-index: 110000; }
+
+.countdown-ebeglcfo.capture-delayed { left: 50px; top: 50px; transform: translate(0px, 0px); }
+
+.countdown-ebeglcfo-content { height: 120px; position: relative; width: 120px; }
+
+.countdown-ebeglcfo-progress { height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; }
+
+.countdown-ebeglcfo-progress svg { display: block; height: 100%; width: 100%; }
+
+.countdown-ebeglcfo-sep { background: rgb(117, 131, 134); height: 1px; margin: 7px 0px; }
+
+.countdown-ebeglcfo-cancel .nsc-button { color: rgb(255, 255, 255); display: block; font-size: 14px; padding: 0px 3px; text-align: center; width: 100%; }
