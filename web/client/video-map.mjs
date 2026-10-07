@@ -1,3 +1,5 @@
+import { renderVideoMindMaps } from './video-mindmaps.mjs';
+
 export function videoMapLink(viewId = '', topicId = '', point = '', work = '') {
   const query = new URLSearchParams();
   if (topicId) query.set('topic', topicId);
@@ -29,7 +31,7 @@ export function mountVideoMap(container, map, { esc, icon, docLink }, { viewId =
   const header = `<header class="vgm-header"><div class="vgm-topline"><span class="eyebrow">VIDEO GENERATION · KNOWLEDGE MAP</span><span class="vgm-date">资料核验 ${esc(map.checkedOn)}</span></div><div class="vgm-title-row"><div><h1>视频生成技术汇总</h1><p>从七个视角理解视频生成。切换分类，展开技术分支，连接概念、方法与代表论文。</p></div><span class="vgm-header-icon">${icon('branches')}</span></div><div class="vgm-stat-strip">${[['views', '技术视角'], ['subclasses', '子类'], ['points', '展开技术点'], ['works', '代表作']].map(([key, label]) => `<span><b>${map.stats[key]}</b>${label}</span>`).join('')}<a class="text-link" href="${docLink(map.catalogDoc)}">阅读完整资料 ${icon('arrow')}</a></div><div class="vgm-search-wrap"><label class="vgm-search">${icon('search')}<input type="search" id="vgm-search" placeholder="搜索子类、技术点或代表作，例如：相机、缓存、TeaCache" aria-label="搜索视频生成技术"><kbd>/</kbd></label><span class="vgm-search-hint">跨七个分类查找</span></div><div class="vgm-view-tabs" role="tablist" aria-label="切换技术分类">${allViews}</div><div id="vgm-search-status" class="vgm-search-status" role="status" aria-live="polite"></div><div id="vgm-search-results" class="vgm-search-results" hidden></div></header>`;
 
   function viewContent() {
-    return `<div class="vgm-view-intro"><span class="vgm-view-icon">${icon(view.icon)}</span><div><div class="eyebrow">${esc(view.english)}</div><h2>${esc(view.label)}</h2><p><strong>${esc(view.question)}</strong> ${esc(view.description)}</p></div><span class="vgm-view-count">${view.subclasses.length} 个子类</span></div>${tree()}`;
+    return `<div class="vgm-view-intro"><span class="vgm-view-icon">${icon(view.icon)}</span><div><div class="eyebrow">${esc(view.english)}</div><h2>${esc(view.label)}</h2><p><strong>${esc(view.question)}</strong> ${esc(view.description)}</p></div><span class="vgm-view-count">${view.subclasses.length} 个子类</span></div>${renderVideoMindMaps(view, { esc, icon })}${tree()}`;
   }
 
   function tree() {
@@ -105,15 +107,29 @@ export function mountVideoMap(container, map, { esc, icon, docLink }, { viewId =
         leaf.setAttribute('aria-pressed', String(selected));
       }
     }
+    syncMindMapSelection();
     if (updateHistory) {
       const hash = videoMapLink(view.id, selectedId, selectedPoint, selectedWork);
       if (location.hash !== hash) history.pushState(null, '', hash);
+    }
+  }
+  function syncMindMapSelection() {
+    for (const node of panel.querySelectorAll('[data-vgm-map-topic]')) {
+      const active = node.dataset.vgmMapTopic === selectedId && (!node.hasAttribute('data-vgm-map-point') || node.dataset.vgmMapPoint === selectedPoint);
+      node.classList.toggle('is-selected', active);
+      node.setAttribute('aria-pressed', String(active));
     }
   }
   selectTopic(selectedId, selectedPoint, selectedWork, false);
   revealCurrentTab();
 
   function onClick(event) {
+    const mapNode = event.target.closest('[data-vgm-map-topic]');
+    if (mapNode) {
+      selectTopic(mapNode.dataset.vgmMapTopic, mapNode.dataset.vgmMapPoint || '');
+      panel.querySelector('.vgm-branch.is-selected').open = true;
+      panel.querySelector('#vgm-detail').scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
     const tab = event.target.closest('[data-vgm-view]');
     if (tab) selectView(tab.dataset.vgmView);
     const link = event.target.closest('a');
@@ -148,6 +164,7 @@ export function mountVideoMap(container, map, { esc, icon, docLink }, { viewId =
       }
       const hash = videoMapLink(view.id, selectedId, selectedPoint, selectedWork);
       if (location.hash !== hash) history.pushState(null, '', hash);
+      syncMindMapSelection();
     }
   }
   function onSearch() {

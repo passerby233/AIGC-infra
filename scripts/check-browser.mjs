@@ -176,7 +176,13 @@ try {
   assert.ok(await evaluate('new Set([...document.querySelectorAll(".vgm-view-tab")].map(tab=>tab.getBoundingClientRect().top)).size===1'), '七个按钮保持横排');
   assert.ok(await evaluate('document.querySelector(\'#navigation a[href="#/tools"]\').nextElementSibling.getAttribute("href") === "#/video-generation"'), '技术入口紧跟平台工具');
   assert.equal(await evaluate('document.querySelector(\'#navigation a[href="#/video-generation"]\').getAttribute("aria-current")'), 'page');
+  assert.equal(await evaluate('document.querySelectorAll(".vgm-mindmap").length'), 4);
+  assert.ok(await evaluate('document.querySelector(".vgm-mindmaps").getBoundingClientRect().bottom <= document.querySelector(".vgm-tree-toolbar").getBoundingClientRect().top'), '四张导图位于技术分支栏目上方');
+  assert.ok(await evaluate('!document.querySelector(".vgm-mindmaps .vgm-work") && !document.querySelector(".vgm-mindmaps a") && !document.querySelector(".vgm-mindmaps").textContent.includes("代表作与贡献")'), '导图只显示子类及技术点');
   await screenshot('video-map-desktop');
+  const mindMapClip = await evaluate('(()=>{const r=document.querySelector(".vgm-mindmaps").getBoundingClientRect();return {x:r.x,y:r.y+scrollY,width:r.width,height:r.height,scale:1}})()');
+  const mindMapShot = await command('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: mindMapClip });
+  await writeFile(path.join(output, 'video-mindmaps-desktop.png'), Buffer.from(mindMapShot.data, 'base64'));
   const videoViews = await evaluate('(async()=> (await (await fetch("./data/content.json")).json()).videoMap.views.map(view=>({id:view.id,label:view.label,topics:view.subclasses.map(topic=>({id:topic.id,label:topic.label,points:topic.subdivisions.length,works:topic.works.length}))})))()');
   await evaluate('window.vgmPage=document.querySelector(".vgm-page");window.vgmHeader=document.querySelector(".vgm-header");window.vgmSearch=document.querySelector("#vgm-search");window.vgmHashChanges=0;window.addEventListener("hashchange",()=>window.vgmHashChanges++);vgmSearch.value="TeaCache";vgmSearch.dispatchEvent(new Event("input",{bubbles:true}));window.scrollTo({top:80,behavior:"instant"})');
   const vgmPosition = await evaluate('scrollY');
@@ -187,6 +193,9 @@ try {
     assert.equal(await evaluate('document.querySelectorAll(".vgm-view-tab[aria-selected=true]").length'), 1);
     assert.equal(await evaluate('document.querySelector(".vgm-view-tab[aria-selected=true]").dataset.vgmView'), view.id);
     assert.equal(await evaluate('document.querySelectorAll(".vgm-branch").length'), view.topics.length);
+    assert.equal(await evaluate('document.querySelectorAll(".vgm-mindmap").length'), 4);
+    assert.equal(await evaluate('document.querySelectorAll(".vgm-map-topic").length'), view.topics.length);
+    assert.equal(await evaluate('document.querySelectorAll(".vgm-map-point").length'), view.topics.reduce((count, topic) => count + topic.points, 0), '导图覆盖所有技术点');
   }
   assert.equal(await evaluate('vgmHashChanges'), 0, '按钮切换不触发路由跳转');
   await evaluate('vgmSearch.value="";vgmSearch.dispatchEvent(new Event("input",{bubbles:true}));document.querySelector(".vgm-view-tab[aria-selected=true]").focus()');
@@ -205,6 +214,14 @@ try {
       assert.equal(await evaluate('document.querySelectorAll(".vgm-point").length'), topic.points);
       assert.equal(await evaluate('document.querySelectorAll(".vgm-work a[target=\'_blank\']").length'), topic.works);
       assert.ok(await evaluate('[...document.querySelectorAll(".vgm-work a")].every(a=>a.rel.includes("noopener") && a.href.startsWith("https://"))'));
+      await evaluate(`document.querySelector('.vgm-map-topic[data-vgm-map-topic="${topic.id}"]').click()`);
+      assert.ok(await evaluate(`document.querySelector('.vgm-branch.is-selected').dataset.vgmTopic==='${topic.id}' && document.querySelector('.vgm-branch.is-selected').open`), '导图子类复用技术分支选择');
+      assert.equal(await evaluate('location.hash'), '#/video-generation/' + view.id + '?topic=' + topic.id);
+      await evaluate(`document.querySelector('.vgm-map-point[data-vgm-map-topic="${topic.id}"]').click()`);
+      assert.ok(await evaluate('document.querySelector(".vgm-map-point.is-selected").dataset.vgmMapPoint===document.querySelector(".vgm-point.is-selected").dataset.vgmDetailPoint && document.querySelector(".vgm-leaf.is-selected").dataset.vgmPoint===new URLSearchParams(location.hash.split("?")[1]).get("point")'), '导图技术点同步详情、分类树与链接');
+      assert.ok(await evaluate('(()=>{const heading=document.querySelector(".vgm-detail-heading").getBoundingClientRect();return heading.top>=70 && heading.bottom<innerHeight})()'), '点击导图后详情标题在视口中可见，且不被顶栏遮挡');
+      await evaluate(`document.querySelector('[data-vgm-topic="${topic.id}"] > summary').click()`);
+      assert.equal(await evaluate('document.querySelectorAll(".vgm-map-point.is-selected").length'), 0, '原分类树选择同步回导图');
     }
   }
   await route('#/video-generation/view.control?topic=control.motion', '视频生成技术汇总');
@@ -273,6 +290,8 @@ try {
 
   await route('#/video-generation', '视频生成技术汇总');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), '手机技术总览不横向溢出');
+  assert.equal(await evaluate('document.querySelectorAll(".vgm-mindmap").length'), 4);
+  assert.ok(await evaluate('[...document.querySelectorAll(".vgm-mindmap-viewport")].every(viewport=>viewport.scrollWidth>viewport.clientWidth)'), '手机导图在各自视口内横向滚动');
   await screenshot('video-map-mobile');
   assert.ok(await evaluate('document.querySelector(".vgm-view-tabs").scrollWidth > document.querySelector(".vgm-view-tabs").clientWidth'), '手机分类按钮在栏内横向滚动');
   assert.ok(await evaluate('new Set([...document.querySelectorAll(".vgm-view-tab")].map(tab=>tab.getBoundingClientRect().top)).size===1'), '手机七个按钮保持单行');
@@ -291,7 +310,7 @@ try {
 
   assert.deepEqual(exceptions, [], '浏览器执行异常');
   assert.deepEqual(failures, [], '资源请求失败');
-  console.log('浏览器通过：9 个模块、数据流程、视频技术 7 色横排按钮/原位切换/54 个子类、键盘切换与展开、跨类搜索、历史与刷新、资料锚点/JSON、手机横排与布局和代理路径。');
+  console.log('浏览器通过：9 个模块、数据流程、视频技术 7 色按钮/原位切换/每类 4 张思维导图/54 个子类与 191 个技术点联动、键盘、搜索、历史刷新、手机导图滚动和代理路径。');
   console.log(`截图：${output}`);
 } finally {
   socket?.close();
