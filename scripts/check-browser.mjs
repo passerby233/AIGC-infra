@@ -77,20 +77,47 @@ try {
   for (const [id, title] of modules) {
     await route('#/module/' + id, title);
     assert.ok(await evaluate('document.querySelectorAll(".document-row").length >= 1'));
-    assert.ok(await evaluate('document.querySelectorAll(".tool-card").length >= 1'));
+    assert.ok(await evaluate(id === 'data' ? 'document.querySelectorAll(".data-module-card").length === 5' : 'document.querySelectorAll(".tool-card").length >= 1'));
   }
   await route('#/module/data', '数据工程');
   assert.equal(await evaluate('document.querySelectorAll("#data-overview .data-module-node").length'), 5);
   assert.equal(await evaluate('document.querySelectorAll("#data-processing .data-processing-lane").length'), 2);
-  assert.equal(await evaluate(`document.querySelectorAll('.data-connection[data-from="preview"][data-to="consumption"]').length`), 0, '消费从存储读取，不以预览为前置步骤');
+  assert.equal(await evaluate('document.querySelectorAll(".data-connection,.data-handoff-lines,#module-tools,.data-capability-card").length'), 0, '能力模块不显示流转箭头或重复职责卡片');
+  assert.equal(await evaluate('document.querySelector("#data-processing h2").textContent'), '数据处理管线');
   await screenshot('data-desktop');
-  const dataLinks = await evaluate('[...new Set([...document.querySelectorAll(".data-module-node,.data-process-step")].map(a=>a.getAttribute("href")))]');
+  const dataLinks = await evaluate('[...new Set([...document.querySelectorAll(".data-module-node,.data-tool-link")].map(a=>a.getAttribute("href")))].filter(href=>href.startsWith("#/doc/"))');
   for (const href of dataLinks) {
     await route('#/module/data', '数据工程');
-    await evaluate(`[...document.querySelectorAll('.data-module-node,.data-process-step')].find(a=>a.getAttribute('href')===${JSON.stringify(href)}).click()`);
+    await evaluate(`[...document.querySelectorAll('.data-module-node,.data-tool-link')].find(a=>a.getAttribute('href')===${JSON.stringify(href)}).click()`);
     const section = new URLSearchParams(href.split('?')[1]).get('section');
-    await waitFor(`!!(document.querySelector('.doc-page') && document.getElementById(${JSON.stringify(section)}))`);
+    await waitFor(`!!document.querySelector('.doc-page')${section ? ` && !!document.getElementById(${JSON.stringify(section)})` : ''}`);
   }
+  await route('#/module/data', '数据工程');
+  await evaluate('document.querySelector(".data-node-processing .data-module-node").click()');
+  await waitFor('location.hash.includes("section=data-processing")');
+  const stageLinks = await evaluate('[...document.querySelectorAll(".data-process-step")].map(a=>a.getAttribute("href"))');
+  for (const href of stageLinks) {
+    await evaluate(`[...document.querySelectorAll('.data-process-step')].find(a=>a.getAttribute('href')===${JSON.stringify(href)}).click()`);
+    const params = new URLSearchParams(href.split('?')[1]);
+    const selector = `.data-stage-detail[data-pipeline="${params.get('pipeline')}"][data-step="${params.get('stage')}"]`;
+    await waitFor(`!!document.querySelector(${JSON.stringify(selector)})`);
+    assert.equal(await evaluate('document.querySelectorAll(".data-context-node").length'), 3);
+    assert.ok(await evaluate('document.querySelectorAll(".data-operations span").length >= 3'));
+    assert.equal(await evaluate('document.querySelectorAll(".doc-page").length'), 0);
+  }
+  await route('#/module/data?pipeline=multi&stage=caption', '数据工程');
+  await waitFor('document.querySelector(".data-stage-detail[data-pipeline=multi][data-step=caption]")');
+  assert.equal(await evaluate('document.querySelector(".data-context-node.is-active small").textContent'), 'Stage 3');
+  assert.equal(await evaluate('document.querySelector(".data-stage-context a:last-child strong").textContent'), '内容与音频分析');
+  await evaluate('document.querySelector(".data-stage-context a:last-child").click()');
+  await waitFor('document.querySelector(".data-stage-detail[data-step=analyze]")');
+  await evaluate('history.back()');
+  await waitFor('document.querySelector(".data-stage-detail[data-step=caption]")');
+  await command('Page.reload');
+  await waitFor('document.querySelector(".data-stage-detail[data-pipeline=multi][data-step=caption]")');
+  await screenshot('data-stage-desktop');
+  await route('#/module/data?pipeline=single&stage=missing', '数据工程');
+  await waitFor('document.querySelector(".data-stage-detail[data-step=raw_ingest]")');
   await route('#/module/evaluation', '评测与验收');
   await evaluate('document.querySelector("#interface-preview").scrollIntoView()');
   await delay(700);

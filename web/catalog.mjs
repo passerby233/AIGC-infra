@@ -19,12 +19,12 @@ export const dataArchitecture = {
     { id: 'consumption', title: '数据消费', subtitle: '训练 · 评测', icon: 'layers', tone: 'serving', owner: '模型研发 / 使用侧', section: '消费与使用', description: '按固定版本读取训练或评测数据，关联运行并反馈新需求。', input: '固定版本与 JSONL / split', output: '绑定数据版本的训练 / 评测运行', tools: [], related: [{ id: 'training', label: '训练模块' }, { id: 'evaluation', label: '评测模块' }] }
   ],
   steps: {
-    raw_ingest: { title: '入库与预处理', detail: '媒体属性 · 解码 · HDR', section: '原片入库与预处理', tone: 'goals' },
-    segment: { title: '镜头与场景切分', detail: '边界 · 来源 · 音视频关系', section: '镜头与场景切分', tone: 'data' },
-    quality: { title: '去重与质量', detail: '重复组 · 质量 / 同步指标', section: '去重与质量分析', tone: 'evaluation' },
-    analyze: { title: '内容与音频分析', detail: 'VAD · 人像 · 音频语义', section: '内容与音频分析', tone: 'training' },
-    caption: { title: '描述标注', detail: 'caption · 模板 / 模型版本', section: '描述标注', tone: 'serving' },
-    condition_features: { title: '条件与特征', detail: '参考图 · 音色 · 关键帧', section: '条件与特征提取', tone: 'feedback', optional: true }
+    raw_ingest: { title: '入库与预处理', detail: '媒体属性 · 解码 · HDR', section: '原片入库与预处理', tone: 'goals', input: '原片引用 · 来源 meta', operations: ['媒体属性核对', '解码与音轨检查', 'HDR / SDR 预处理', '音频重采样'], output: '可处理媒体 · 属性与变换记录', contract: '保留原片和 raw_id，记录输出引用、变换参数及运行状态。历史扫盘用于补录与对账。' },
+    segment: { title: '镜头与场景切分', detail: '边界 · 来源 · 音视频关系', section: '镜头与场景切分', tone: 'data', input: '预处理媒体 · 切分配置', operations: ['镜头边界检测', '场景关系识别', '切片导出', '音视频时间对齐'], output: '切片媒体 · scene / shot 关系', contract: 'SingleShot 导出单镜头；MultiShot 保留场景内有序镜头。记录 sample_id、原片来源、时间区间与配置版本。' },
+    quality: { title: '去重与质量', detail: '重复组 · 质量 / 同步指标', section: '去重与质量分析', tone: 'evaluation', input: '样本媒体 · 质量配置', operations: ['重复关系分析', '视频质量与美学', '运动指标', '音频质量', '音视频同步'], output: '重复组 · 质量指标 · 运行状态', contract: '算法、模型、结果与筛选规则分别记录版本。执行成功与质量达标分别表达，保留失败、跳过和未知状态。' },
+    analyze: { title: '内容与音频分析', detail: 'VAD · 人像 · 音频语义', section: '内容与音频分析', tone: 'training', input: '样本媒体 · 可用上游结果', operations: ['VAD', '人像分析', '说话人分析', '音频语义', '分布统计'], output: '内容标签 · 音频分析结果', contract: '每个算子声明输入依赖、输出字段和模型版本，供标注或条件提取按需引用。SingleShot 对应 Stage3，MultiShot 对应 Stage4。' },
+    caption: { title: '描述标注', detail: 'caption · 模板 / 模型版本', section: '描述标注', tone: 'serving', input: '样本媒体 · 标注模板 · 可用分析结果', operations: ['视频描述生成', 'ASR 结果引用', '描述融合与改写', '语言与模板记录'], output: 'caption · 标注版本与状态', contract: '按管线模板标注，保存样本引用、模型和提示词版本。SingleShot 对应 Stage4，MultiShot 对应 Stage3；模型选型以实际验证为依据。' },
+    condition_features: { title: '条件与特征', detail: '参考图 · 音色 · 关键帧', section: '条件与特征提取', tone: 'feedback', optional: true, input: '样本媒体 · 标注与分析 · 模型需求', operations: ['参考图与关键帧', '参考音色', '角色 / speaker 关联', '按需 latent / embedding'], output: '条件资产 · 特征与来源引用', contract: '记录时间位置、提取方法和来源关系。特征绑定编码器、预处理版本与输入样本，格式与训练侧共同确认。' }
   },
   lanes: [
     { id: 'single', title: 'SingleShot', label: '单镜头样本', segment: '单镜头切分', steps: ['raw_ingest', 'segment', 'quality', 'analyze', 'caption', 'condition_features'] },
