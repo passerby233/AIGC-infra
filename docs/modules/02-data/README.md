@@ -11,14 +11,14 @@
 
 ## 两层抽象与模块入口
 
-数据工程按获取、处理、存储与版本、预览、消费五个能力模块协作；具体团队和负责人在接入时登记。上层展示能力分工和工具入口，存储读写贯穿所有环节，排列不表示真实数据流转顺序。下层「数据处理管线」展开上层「数据处理」模块，分别展示 SingleShot / MultiShot 的步骤依赖。点击 Stage 保持管线与滚动位置，只切换下方当前模块的处理能力和输入输出详情。
+数据工程按获取、处理、存储与版本、验收、消费五个能力模块协作；具体团队和负责人在接入时登记。数据验收按项目规则组织抽检、保存证据，由负责人确认结论。上层展示能力分工和工具入口，存储读写贯穿所有环节，排列不表示真实数据流转顺序。下层「数据处理管线」展开上层「数据处理」模块，分别展示 SingleShot / MultiShot 的步骤依赖。点击 Stage 保持管线与滚动位置，只切换下方当前模块的处理能力和输入输出详情。
 
 | 模块 | 承担角色 | 交付或使用的内容 | 说明与入口 |
 | --- | --- | --- | --- |
 | 获取与下载 | 下载器 / 采集侧 | 原片、来源 meta、下载状态与交付报告 | [模块说明](002-data-modules.design.md#获取与下载) · [下载交付需求](https://jira.myhexin.com/browse/TCLOUD-12854) |
 | 处理与管线 | avproc-ray / 算子侧 | 切片、指标、caption、条件与运行记录 | [模块说明](002-data-modules.design.md#处理与管线) · [内部管线](003-data-processing.design.md) · [代码入口](https://git-cc.myhexin.com:6443/10jqka/llm/aigc-05-04/avproc-ray) |
 | 存储与版本 | MongoDB / PASS / 公共底座 | 媒体、元数据、固定版本及清单 | [模块说明](002-data-modules.design.md#存储与版本) · [版本协议](001-data-engineering.design.md#数据集版本与训练交付) |
-| 预览与抽检 | DataViewer / 浏览侧 | 样本视图、抽检证据与问题引用 | [模块说明](002-data-modules.design.md#预览与抽检) · [DataViewer](../../platform/data-viewer/README.md) |
+| 验收与抽检 | 数据验收 / 抽检侧，复用 DataViewer | 验收结论、抽检证据与问题引用 | [模块说明](002-data-modules.design.md#验收与抽检) · [DataViewer](../../platform/data-viewer/README.md) |
 | 消费与使用 | 训练 / 评测侧 | 固定数据版本、split、媒体与必需条件 | [模块说明](002-data-modules.design.md#消费与使用) · [训练](../03-training/README.md) · [评测](../04-evaluation/README.md) |
 
 完整说明：[上层能力模块与交付](002-data-modules.design.md) · [下层数据处理管线](003-data-processing.design.md)。
