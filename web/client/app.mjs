@@ -81,6 +81,17 @@ function modulePage(module, params = new URLSearchParams()) {
   <section id="module-documents"><div class="section-header"><div><div class="eyebrow">PLANS & DOCUMENTATION</div><h2>阅读完整方案</h2></div><span class="subtle-label">与仓库 Markdown 保持一致</span></div><div class="document-list">${module.documents.map(d => `<a class="document-row" href="${docLink(d.id)}"><span class="document-icon">${icon('file')}</span><div><h3>${esc(d.title)}</h3><small>${esc(d.id.split('/').at(-1))}</small></div><span class="document-type">${d.id.includes('requirements') ? '需求' : d.id.includes('design') ? '设计' : '说明'}</span>${icon('arrow')}</a>`).join('')}</div></section>${module.number ? `<nav class="stage-pagination" aria-label="阶段切换">${[Number(module.number) - 2, Number(module.number)].map((index, i) => { const m = content.modules[index]; return m?.number ? `<a href="${moduleLink(m.id)}"><small>${i ? '下一阶段' : '上一阶段'}</small><span>${i ? '' : '← '}${m.number} ${m.title}${i ? ' →' : ''}</span></a>` : '<span></span>'; }).join('')}</nav>` : ''}</div>`;
   main.querySelectorAll('.module-tabs a').forEach(el => el.addEventListener('click', event => { event.preventDefault(); main.querySelector(el.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 }
+function updateDataStage(params) {
+  const architecture = content.modules.find(module => module.id === 'data').dataArchitecture;
+  const view = dataEngineeringView(architecture, { content, esc, icon, docLink, moduleLink, externalLink, params });
+  main.querySelector('#data-stage-detail').outerHTML = view.detail;
+  main.querySelectorAll('.data-process-step').forEach(step => {
+    const active = step.closest('.data-processing-lane').dataset.pipeline === view.selectedLaneId && step.dataset.step === view.selectedId;
+    step.classList.toggle('is-active', active);
+    if (active) step.setAttribute('aria-current', 'step');
+    else step.removeAttribute('aria-current');
+  });
+}
 function resolveLink(href, currentDoc) {
   if (!href) return null;
   if (isExternal(href)) return { href, external: true };
@@ -188,6 +199,12 @@ function route() {
   const [rawPath, query = ''] = location.hash.replace(/^#/, '').split('?');
   const path = rawPath || '/';
   try {
+    const params = new URLSearchParams(query);
+    if (path === '/module/data' && main.querySelector('.data-engineering-page') && (!params.get('section') || params.get('section') === 'data-stage-detail')) {
+      updateDataStage(params);
+      document.querySelector('#search-dialog').close();
+      return;
+    }
     if (path === '/') home();
     else if (path === '/tools') toolsPage();
     else if (path === '/video-generation' || path.startsWith('/video-generation/')) videoGenerationPage(decodeURIComponent(path.slice('/video-generation/'.length)), query);

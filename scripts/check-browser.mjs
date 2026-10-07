@@ -102,24 +102,33 @@ try {
   await route('#/module/data', '数据工程');
   await evaluate('document.querySelector(".data-node-processing .data-module-node").click()');
   await waitFor('location.hash.includes("section=data-processing")');
+  await delay(700);
+  await evaluate('window.scrollTo({top:document.querySelector("#data-processing").getBoundingClientRect().top+scrollY-90,behavior:"instant"});window.dataPipelineRef=document.querySelector(".data-processing-panel")');
   const stageLinks = await evaluate('[...document.querySelectorAll(".data-process-step")].map(a=>a.getAttribute("href"))');
   for (const href of stageLinks) {
-    await evaluate(`[...document.querySelectorAll('.data-process-step')].find(a=>a.getAttribute('href')===${JSON.stringify(href)}).click()`);
+    const before = await evaluate('({y:scrollY,top:document.querySelector(".data-processing-panel").getBoundingClientRect().top})');
+    await evaluate(`window.clickedDataStage=[...document.querySelectorAll('.data-process-step')].find(a=>a.getAttribute('href')===${JSON.stringify(href)});clickedDataStage.focus({preventScroll:true});clickedDataStage.click()`);
     const params = new URLSearchParams(href.split('?')[1]);
     const selector = `.data-stage-detail[data-pipeline="${params.get('pipeline')}"][data-step="${params.get('stage')}"]`;
     await waitFor(`!!document.querySelector(${JSON.stringify(selector)})`);
-    assert.equal(await evaluate('document.querySelectorAll(".data-context-node").length'), 3);
+    await delay(80);
+    assert.ok(await evaluate(`Math.abs(scrollY-${before.y})<=1 && Math.abs(document.querySelector('.data-processing-panel').getBoundingClientRect().top-${before.top})<=1`), '切换 Stage 保持页面与管线的位置');
+    assert.ok(await evaluate('document.querySelector(".data-processing-panel")===dataPipelineRef && document.activeElement===clickedDataStage'), '管线节点与键盘焦点保留');
+    assert.equal(await evaluate('document.querySelectorAll(".data-context-node,.data-stage-context").length'), 0);
+    assert.equal(await evaluate('document.querySelectorAll(".data-process-step.is-active").length'), 1);
     assert.ok(await evaluate('document.querySelectorAll(".data-operations span").length >= 3'));
     assert.equal(await evaluate('document.querySelectorAll(".doc-page").length'), 0);
   }
   await route('#/module/data?pipeline=multi&stage=caption', '数据工程');
   await waitFor('document.querySelector(".data-stage-detail[data-pipeline=multi][data-step=caption]")');
-  assert.equal(await evaluate('document.querySelector(".data-context-node.is-active small").textContent'), 'Stage 3');
-  assert.equal(await evaluate('document.querySelector(".data-stage-context a:last-child strong").textContent'), '内容与音频分析');
-  await evaluate('document.querySelector(".data-stage-context a:last-child").click()');
+  assert.ok(await evaluate('document.querySelector(".data-stage-detail .eyebrow").textContent.includes("STAGE 3")'));
+  assert.ok(await evaluate('new Set([...document.querySelectorAll(".data-input-block,.data-output-block,.data-operation")].map(el=>getComputedStyle(el).backgroundColor)).size>=5'), '输入、输出和内部处理能力有不同颜色');
+  const stageScroll = await evaluate('scrollY');
+  await evaluate('document.querySelector(".data-processing-lane[data-pipeline=multi] .data-process-step[data-step=analyze]").click()');
   await waitFor('document.querySelector(".data-stage-detail[data-step=analyze]")');
   await evaluate('history.back()');
   await waitFor('document.querySelector(".data-stage-detail[data-step=caption]")');
+  assert.ok(await evaluate(`Math.abs(scrollY-${stageScroll})<=1`), '历史切换保留管线位置');
   await command('Page.reload');
   await waitFor('document.querySelector(".data-stage-detail[data-pipeline=multi][data-step=caption]")');
   await screenshot('data-stage-desktop');
@@ -226,6 +235,16 @@ try {
   await screenshot('data-mobile');
   await evaluate('const viewport=document.querySelector(".data-overview-diagram .data-diagram-viewport");viewport.scrollLeft=viewport.scrollWidth');
   assert.ok(await evaluate('(()=>{const viewport=document.querySelector(".data-overview-diagram .data-diagram-viewport");const node=document.querySelector(".data-node-consumption");return viewport.scrollLeft>0 && node.getBoundingClientRect().right<=viewport.getBoundingClientRect().right})()'), '手机可在图内滚动查看消费模块');
+  await evaluate('window.scrollTo({top:document.querySelector(".data-processing-lane[data-pipeline=single]").getBoundingClientRect().top+scrollY-75,behavior:"instant"});window.mobileDataViewport=document.querySelector(".data-processing-lane[data-pipeline=single] .data-diagram-viewport");mobileDataViewport.scrollLeft=mobileDataViewport.scrollWidth');
+  const mobileStagePosition = await evaluate('({y:scrollY,x:mobileDataViewport.scrollLeft})');
+  for (const id of ['caption','condition_features']) {
+    await evaluate(`document.querySelector('.data-processing-lane[data-pipeline=single] .data-process-step[data-step=${id}]').click()`);
+    await waitFor(`!!document.querySelector('.data-stage-detail[data-step=${id}]')`);
+    await delay(80);
+    assert.ok(await evaluate(`Math.abs(scrollY-${mobileStagePosition.y})<=1 && document.querySelector('.data-processing-lane[data-pipeline=single] .data-diagram-viewport')===mobileDataViewport && mobileDataViewport.scrollLeft===${mobileStagePosition.x}`), '手机连续切换保留页面与图内滚动位置');
+    assert.ok(await evaluate('document.documentElement.scrollWidth<=innerWidth'));
+  }
+  await screenshot('data-stage-mobile');
 
   await route('#/video-generation', '视频生成技术汇总');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), '手机技术总览不横向溢出');
