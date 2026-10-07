@@ -6,6 +6,20 @@ import { loadVideoMap } from '../web/video-map.mjs';
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const exists = async p => access(p).then(() => true, () => false);
 const readJson = async p => JSON.parse(await readFile(p, 'utf8'));
+async function versionClientAssets(out, version) {
+  const htmlFile = path.join(out, 'index.html');
+  const html = await readFile(htmlFile, 'utf8');
+  await writeFile(htmlFile, html.replace(/((?:src|href)=["'])(\.\/[^"']+\.(?:css|mjs|js))(["'])/g, `$1$2?v=${version}$3`));
+  for (const entry of await readdir(out, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith('.mjs')) continue;
+    const file = path.join(out, entry.name);
+    const source = await readFile(file, 'utf8');
+    const versioned = source
+      .replace(/(\bfrom\s*["'])(\.{1,2}\/[^"']+\.(?:mjs|js))(["'])/g, `$1$2?v=${version}$3`)
+      .replace(/(["'])(\.\/data\/content\.json)(["'])/g, `$1$2?v=${version}$3`);
+    await writeFile(file, versioned);
+  }
+}
 export async function build({ root = projectRoot, out = path.join(root, 'dist') } = {}) {
   const config = await readJson(path.join(root, 'web/config.json'));
   const local = path.join(root, 'web/config.local.json');
@@ -66,8 +80,10 @@ export async function build({ root = projectRoot, out = path.join(root, 'dist') 
   await cp(path.join(root, 'web/client'), out, { recursive: true });
   await mkdir(path.join(out, 'data'), { recursive: true });
   const content = { title: config.title, subtitle: config.subtitle, modules: summaries, tools: resolvedTools, documents, videoMap, builtAt: new Date().toISOString() };
+  const buildVersion = content.builtAt.replace(/\D/g, '');
+  await versionClientAssets(out, buildVersion);
   await writeFile(path.join(out, 'data/content.json'), JSON.stringify(content));
-  await writeFile(path.join(out, 'data/manifest.json'), JSON.stringify({ documents: Object.keys(documents), builtAt: content.builtAt }, null, 2));
+  await writeFile(path.join(out, 'data/manifest.json'), JSON.stringify({ documents: Object.keys(documents), builtAt: content.builtAt, buildVersion }, null, 2));
   console.log(`已构建 ${summaries.length} 个模块，${Object.keys(documents).length} 份文档 → ${out}`);
   return content;
 }

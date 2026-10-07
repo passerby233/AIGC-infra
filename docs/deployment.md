@@ -21,6 +21,8 @@ Windows PowerShell 若限制 npm 的 `.ps1` 执行，可直接使用 `npm.cmd st
 
 `0.0.0.0` 是监听配置，浏览器应使用部署机器的实际 IP 或域名。[Node.js 网络文档](https://nodejs.org/api/net.html#serverlistenport-host-backlog-callback)说明了监听地址的含义。修改源文档或平台地址后重新启动，或先 `npm run build` 再 `npm run serve`。`dist/` 是构建结果，不直接编辑。
 
+更新 Git 代码后，使用 `npm start` 重新构建并启动；`npm run serve` 只读取已有的 `dist/`，单独重启它不会生成新页面。构建会给入口脚本、依赖模块、样式和内容请求加入同一版本参数，重新打开页面时会加载本次构建。视频技术入口为 `http://localhost:8080/#/video-generation`；其他电脑使用部署机器的实际地址。
+
 ## 办公电脑：让同事从公司内网访问
 
 1. 在部署电脑运行 `npm.cmd start`。
