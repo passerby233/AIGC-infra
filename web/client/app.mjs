@@ -39,11 +39,39 @@ function toolCard(id) {
   const tool = content.tools[id];
   return `<article class="tool-card"><div class="tool-top"><span class="tool-icon">${icon(tool.icon)}</span>${badge(tool.status)}</div><div class="tool-kind">${esc(tool.kind)}</div><h3>${esc(tool.title)}</h3><p>${esc(tool.description)}</p>${tool.plan ? `<div class="plan-mini">${tool.plan.map((p, i) => `<span><b>${String(i + 1).padStart(2, '0')}</b>${esc(p)}</span>`).join('')}</div>` : ''}<div class="tool-actions">${tool.url && isExternal(tool.url) ? externalLink(tool.url, tool.linkLabel || '打开平台', 'button button-small button-primary') : ''}${documentAction(tool.doc, tool.status === '协议可用' ? '使用说明' : '阅读方案', 'button button-small button-secondary')}${tool.preview ? `<button class="button button-small button-secondary" data-preview="${id}">${icon('grid')}查看界面</button>` : ''}</div></article>`;
 }
+function workflowDiagram(stages) {
+  const edge = (from, to, type, d, label = '', x = 0, y = 0) => `<g class="workflow-connection edge-${type}" data-from="${from}" data-to="${to}"><path d="${d}" marker-end="url(#workflow-arrow-${type})"/>${label ? `<text x="${x}" y="${y}">${label}</text>` : ''}</g>`;
+  const desktop = [
+    edge('goals', 'data', 'main', 'M225 140H275'),
+    edge('data', 'training', 'main', 'M475 140H525'),
+    edge('training', 'evaluation', 'main', 'M725 140H775'),
+    edge('evaluation', 'serving', 'pass', 'M875 182V258', '通过', 915, 225),
+    edge('serving', 'feedback', 'main', 'M775 300H725'),
+    edge('evaluation', 'training', 'rework', 'M835 98V65H625V98', '未通过：改模型', 730, 56),
+    edge('evaluation', 'data', 'rework', 'M910 98V25H375V98', '未通过：补数据', 620, 20),
+    edge('serving', 'evaluation', 'rework', 'M825 258V215H800V182', '优化后回归评测', 730, 220),
+    edge('feedback', 'goals', 'iteration', 'M525 300H125V182', '下一轮迭代', 325, 290)
+  ].join('');
+  const compact = [
+    edge('goals', 'data', 'main', 'M172 80H228'),
+    edge('data', 'training', 'main', 'M300 122V198'),
+    edge('training', 'evaluation', 'main', 'M228 240H172'),
+    edge('evaluation', 'serving', 'pass', 'M100 282V388', '通过', 125, 340),
+    edge('serving', 'feedback', 'main', 'M172 430H228'),
+    edge('evaluation', 'training', 'rework', 'M135 198V160H265V198', '未通过：改模型', 200, 153),
+    edge('evaluation', 'data', 'rework', 'M28 220H0V20H300V38', '未通过：补数据', 200, 15),
+    edge('serving', 'evaluation', 'rework', 'M145 388V282', '优化后回归评测', 240, 340),
+    edge('feedback', 'goals', 'iteration', 'M300 472V530H12V80H28', '下一轮迭代', 200, 552)
+  ].join('');
+  const svg = (layout, viewBox, edges) => `<svg class="workflow-lines workflow-${layout}" viewBox="${viewBox}" preserveAspectRatio="none" role="img" aria-label="评测通过进入发布；未通过返回模型或数据；优化后回归评测；运行反馈返回目标，开始下一轮迭代。">${(markers + edges).replaceAll('workflow-arrow-', `workflow-${layout}-arrow-`)}</svg>`;
+  const markers = `<defs>${['main', 'pass', 'rework', 'iteration'].map(type => `<marker id="workflow-arrow-${type}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="arrow-${type}" d="M1 1L9 5L1 9Z"/></marker>`).join('')}</defs>`;
+  return `<figure class="workflow-diagram"><div class="workflow-canvas">${svg('desktop', '0 0 1000 400', desktop)}${svg('compact', '0 0 400 580', compact)}${stages.map(m => `<a class="workflow-step workflow-${m.id} tone-${m.id}" href="${moduleLink(m.id)}"><span class="step-number">${m.number}</span><span class="step-icon">${icon(m.icon)}</span><strong>${m.title}</strong><small>${m.english}</small></a>`).join('')}</div><figcaption class="workflow-legend"><span class="legend-main">研发主线</span><span class="legend-pass">评测通过</span><span class="legend-rework">未通过 / 回归评测</span><span class="legend-iteration">下一轮迭代</span></figcaption></figure>`;
+}
 function home() {
   renderNavigation('home'); breadcrumbs('研发总览');
   const stages = content.modules.filter(m => m.number), shared = content.modules.filter(m => !m.number);
   main.innerHTML = `<div class="page home-page"><section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="small-dot"></span> AIGC RESEARCH · INFRASTRUCTURE</div><h1>从问题定义，<br>到可靠交付<span>。</span></h1><p>沿着视频生成研发的完整链路，找到每一步的工具、<br class="desktop-break">平台入口与建设方案。</p><div class="hero-actions"><a class="button button-primary" href="#/module/goals">开始了解研发流程 ${icon('arrow')}</a><a class="text-link" href="#/tools">浏览平台工具 ${icon('external')}</a></div><div class="hero-meta"><span><b>06</b> 研发阶段</span><i></i><span><b>03</b> 共享能力</span><i></i><span>目标 · 资产 · 证据</span></div></div><div class="hero-visual" aria-label="项目协议连接目标、执行和证据"><div class="visual-grid"></div><div class="visual-heading"><span>ONE CONNECTED WORKFLOW</span><span class="visual-plus">＋</span></div><div class="visual-node visual-goal">${icon('target')}<div><small>DEFINE THE PROBLEM</small><strong>目标与验收</strong></div><span>01</span></div><div class="visual-connector"><span></span><i></i><span></span></div><div class="visual-pair"><div>${icon('database')}<span>数据与资产</span></div><div>${icon('layers')}<span>实验与模型</span></div></div><div class="visual-connector"><span></span><i></i><span></span></div><div class="visual-node visual-evidence">${icon('compare')}<div><small>RETURN TO EVIDENCE</small><strong>评测与证据</strong></div><span>04</span></div><div class="visual-caption"><span class="small-dot"></span> algorithm-template 贯穿研发过程</div></div></section>
-  <section class="workflow-section" id="workflow"><div class="section-header"><div><div class="eyebrow">THE RESEARCH LOOP</div><h2>一条主线，持续迭代</h2></div><p>先验证，再规模化。评测贯穿实验与优化。</p></div><div class="workflow-track">${stages.map(m => `<a class="workflow-step tone-${m.id}" href="${moduleLink(m.id)}"><span class="step-number">${m.number}</span><span class="step-icon">${icon(m.icon)}</span><strong>${m.title}</strong><small>${m.english}</small>${icon('arrow', 'flow-arrow')}</a>`).join('')}</div><div class="feedback-path"><span class="feedback-mark">↳</span><span>评测未通过</span><a href="#/module/data">补数据 ↗</a><a href="#/module/training">改模型 ↗</a><span class="feedback-separator"></span><span>推理优化后</span><a href="#/module/evaluation">回归评测 ↗</a><span class="feedback-separator"></span><span>运行反馈</span><a href="#/module/goals">开启下一轮迭代 ↻</a></div></section>
+  <section class="workflow-section" id="workflow"><div class="section-header"><div><div class="eyebrow">THE RESEARCH LOOP</div><h2>一条主线，持续迭代</h2></div><p>先验证，再规模化。评测贯穿实验与优化。</p></div>${workflowDiagram(stages)}</section>
   <section><div class="section-header"><div><div class="eyebrow">EXPLORE EACH STAGE</div><h2>每一步，都有清晰的产物</h2></div><a class="text-link" href="${docLink('AIGC-infra/README.md')}">查看全局架构 ${icon('external')}</a></div><div class="stage-grid">${stages.map(m => `<a class="stage-card tone-${m.id}" href="${moduleLink(m.id)}"><div class="stage-card-top"><span class="stage-icon">${icon(m.icon)}</span><span class="stage-index">${m.number} / ${m.english}</span></div><h3>${m.title} ${icon('arrow')}</h3><p>${m.description}</p><div class="stage-output"><span>阶段产物</span>${m.output}</div></a>`).join('')}</div></section>
   <section class="shared-section"><div class="section-header"><div><div class="eyebrow">ACROSS THE WORKFLOW</div><h2>共享能力，连接整个研发过程</h2></div><span class="subtle-label">跨阶段复用</span></div><div class="shared-grid">${shared.map(m => `<a class="shared-card" href="${moduleLink(m.id)}"><span class="shared-icon">${icon(m.icon)}</span><h3>${m.title}${icon('arrow')}</h3><p>${m.description}</p></a>`).join('')}</div></section>
   <section class="dashboard-callout"><div><div class="eyebrow">PROJECTS & GOALS</div><h2>目标留在项目里，<br>视野汇总到算法组。</h2><p>每个项目从 algorithm-template 初始化。未来通过算法组 dashboard，统一查看各项目的目标与证据。</p><a class="button button-light" href="#/module/goals">查看协议与建设计划 ${icon('arrow')}</a></div><div class="dashboard-plan">${badge('正在开发')}<h3>算法组项目与 Goals</h3><ol><li>项目登记与协议读取</li><li>目标、源文档与证据汇总</li><li>变更刷新与真实入口接入</li></ol></div></section></div>`;
