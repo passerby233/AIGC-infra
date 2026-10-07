@@ -41,6 +41,30 @@ test('独立部署收录六阶段、共享能力及完整协议，并保留事�
   assert.deepEqual(compiled.modules, content.modules);
 });
 
+test('数据模块与处理算子分层，独立部署包含所有模块和步骤说明', async t => {
+  const root = await fixture(t);
+  const content = await build({ root });
+  const architecture = content.modules.find(module => module.id === 'data').dataArchitecture;
+  assert.deepEqual(architecture.modules.map(module => module.id), ['acquisition', 'processing', 'storage', 'preview', 'consumption']);
+  const overview = content.documents[architecture.overviewDoc];
+  const processing = content.documents[architecture.processingDoc];
+  assert.ok(overview && processing);
+  for (const module of architecture.modules) {
+    assert.ok(module.owner && module.input && module.output);
+    assert.ok(overview.text.includes('## ' + module.section));
+    for (const id of module.tools) assert.ok(content.tools[id]);
+    for (const link of module.related) assert.ok(content.modules.some(module => module.id === link.id));
+  }
+  for (const lane of architecture.lanes) {
+    assert.equal(lane.steps[0], 'raw_ingest');
+    for (const id of lane.steps) assert.ok(processing.text.includes('## ' + architecture.steps[id].section));
+  }
+  const [single, multi] = architecture.lanes;
+  assert.ok(single.steps.indexOf('analyze') < single.steps.indexOf('caption'));
+  assert.ok(multi.steps.indexOf('caption') < multi.steps.indexOf('analyze'));
+  assert.ok(architecture.steps.condition_features.optional);
+});
+
 test('真实入口覆盖不伪造完成状态，新增方案自动进入目录', async t => {
   const root = await fixture(t);
   await writeFile(path.join(root, 'web/config.local.json'), JSON.stringify({ platforms: { pass: { url: 'https://pass.company.invalid/' }, 'group-dashboard': { url: 'https://dashboard.company.invalid/' } } }));

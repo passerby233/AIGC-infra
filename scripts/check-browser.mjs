@@ -79,6 +79,18 @@ try {
     assert.ok(await evaluate('document.querySelectorAll(".document-row").length >= 1'));
     assert.ok(await evaluate('document.querySelectorAll(".tool-card").length >= 1'));
   }
+  await route('#/module/data', '数据工程');
+  assert.equal(await evaluate('document.querySelectorAll("#data-overview .data-module-node").length'), 5);
+  assert.equal(await evaluate('document.querySelectorAll("#data-processing .data-processing-lane").length'), 2);
+  assert.equal(await evaluate(`document.querySelectorAll('.data-connection[data-from="preview"][data-to="consumption"]').length`), 0, '消费从存储读取，不以预览为前置步骤');
+  await screenshot('data-desktop');
+  const dataLinks = await evaluate('[...new Set([...document.querySelectorAll(".data-module-node,.data-process-step")].map(a=>a.getAttribute("href")))]');
+  for (const href of dataLinks) {
+    await route('#/module/data', '数据工程');
+    await evaluate(`[...document.querySelectorAll('.data-module-node,.data-process-step')].find(a=>a.getAttribute('href')===${JSON.stringify(href)}).click()`);
+    const section = new URLSearchParams(href.split('?')[1]).get('section');
+    await waitFor(`!!(document.querySelector('.doc-page') && document.getElementById(${JSON.stringify(section)}))`);
+  }
   await route('#/module/evaluation', '评测与验收');
   await evaluate('document.querySelector("#interface-preview").scrollIntoView()');
   await delay(700);
@@ -122,9 +134,11 @@ try {
   assert.ok(await evaluate('!document.querySelector("#sidebar").classList.contains("mobile-open")'));
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
   await screenshot('data-mobile');
+  await evaluate('const viewport=document.querySelector(".data-overview-diagram .data-diagram-viewport");viewport.scrollLeft=viewport.scrollWidth');
+  assert.ok(await evaluate('(()=>{const viewport=document.querySelector(".data-overview-diagram .data-diagram-viewport");const node=document.querySelector(".data-node-consumption");return viewport.scrollLeft>0 && node.getBoundingClientRect().right<=viewport.getBoundingClientRect().right})()'), '手机可在图内滚动查看消费模块');
   assert.deepEqual(exceptions, [], '浏览器执行异常');
   assert.deepEqual(failures, [], '资源请求失败');
-  console.log('浏览器通过：9 个模块、方案/协议跳转、搜索、过滤、Markdown 清理、手机布局、代理路径。');
+  console.log('浏览器通过：9 个模块、数据两层流程与步骤链接、方案/协议跳转、搜索、过滤、Markdown 清理、手机布局、代理路径。');
   console.log(`截图：${output}`);
 } finally {
   socket?.close();

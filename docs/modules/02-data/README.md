@@ -9,6 +9,20 @@
 - **项目关联**：处理运行携带 `project_id`，必要时增加 `task_id`；数据集版本与处理记录作为证据，关联到[项目生命周期管理](../../platform/project-lifecycle/README.md)中的工作项和里程碑。
 - **边界**：本模块定义数据内容与加工规则；存储和通用任务执行复用公共底座。Latent、文本特征缓存按模型与训练方式需要建设，并关联编码器版本。
 
+## 两层流程与模块入口
+
+数据工程按获取、处理、存储与版本、预览、消费五个模块协作；具体团队和负责人在接入时登记。上层图展示原片、加工产物与固定版本的交付和读取关系。处理层另画 SingleShot / MultiShot 管线，保留分析与标注的顺序差异。原片与加工产物写入存储，预览和消费分别读取存储中的数据。
+
+| 模块 | 承担角色 | 交付或使用的内容 | 说明与入口 |
+| --- | --- | --- | --- |
+| 获取与下载 | 下载器 / 采集侧 | 原片、来源 meta、下载状态与交付报告 | [模块说明](002-data-modules.design.md#获取与下载) · [下载交付需求](https://jira.myhexin.com/browse/TCLOUD-12854) |
+| 处理与管线 | avproc-ray / 算子侧 | 切片、指标、caption、条件与运行记录 | [模块说明](002-data-modules.design.md#处理与管线) · [内部管线](003-data-processing.design.md) · [代码入口](https://git-cc.myhexin.com:6443/10jqka/llm/aigc-05-04/avproc-ray) |
+| 存储与版本 | MongoDB / PASS / 公共底座 | 媒体、元数据、固定版本及清单 | [模块说明](002-data-modules.design.md#存储与版本) · [版本协议](001-data-engineering.design.md#数据集版本与训练交付) |
+| 预览与抽检 | DataViewer / 浏览侧 | 样本视图、抽检证据与问题引用 | [模块说明](002-data-modules.design.md#预览与抽检) · [DataViewer](../../platform/data-viewer/README.md) |
+| 消费与使用 | 训练 / 评测侧 | 固定数据版本、split、媒体与必需条件 | [模块说明](002-data-modules.design.md#消费与使用) · [训练](../03-training/README.md) · [评测](../04-evaluation/README.md) |
+
+完整图例：[上层模块链路与交付](002-data-modules.design.md) · [下层处理内部管线](003-data-processing.design.md)。
+
 ## 当前方案与进展
 
 现有规范记录的主链路是：各集群下载后汇总至乌兰察布，在低成本算力上处理并写入 MongoDB，导出 Parquet；按训练需求筛选出 JSONL，同步成品媒体与索引至亚特兰大 OSS，必要时进入 CPFS。原始数据与切片分别使用 `raw_data`、`vidproc` 数据库，媒体保存于存储系统。
@@ -23,6 +37,8 @@
 | --- | --- | --- |
 | [数据工程需求](001-data-engineering.requirements.md) | 现有规范、功能范围、交付与验收要求 | 需求梳理；新增验收场景为草案 |
 | [数据工程设计](001-data-engineering.design.md) | 数据对象、下载写库、处理协议、版本与平台接入、后续开发顺序 | 设计草案；下载 meta 的 MongoDB 选型已确认 |
+| [数据模块分层与交付](002-data-modules.design.md) | 五个模块的职责、上层交付图、模块链接与交付约定 | 模块边界已确认；具体接入待核对 |
+| [数据处理内部管线](003-data-processing.design.md) | SingleShot / MultiShot 的内部算子依赖、步骤链接与处理边界 | 已有管线映射；实际配置待核对 |
 
 关键待定：下载质量阈值冲突与分包口径、现有数据库字段映射、SingleShot / MultiShot 算子版本、标注与多参考方案、平台适配接口，以及各项目的质量和性能验收门槛。
 

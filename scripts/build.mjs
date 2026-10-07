@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, readdir, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { stages, shared, tools } from '../web/catalog.mjs';
+import { stages, shared, tools, dataArchitecture } from '../web/catalog.mjs';
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const exists = async p => access(p).then(() => true, () => false);
 const readJson = async p => JSON.parse(await readFile(p, 'utf8'));
@@ -52,7 +52,7 @@ export async function build({ root = projectRoot, out = path.join(root, 'dist') 
     const text = documents[module.readme].text;
     const facts = Object.fromEntries([...text.matchAll(/^- \*\*([^*]+)\*\*：(.+)$/gm)].map(m => [m[1], m[2]]));
     const prefix = module.readme.slice(0, -'README.md'.length);
-    return { ...module, facts, documents: Object.values(documents).filter(d => d.id.startsWith(prefix)).map(({ id, title }) => ({ id, title })) };
+    return { ...module, ...(module.id === 'data' ? { dataArchitecture } : {}), facts, documents: Object.values(documents).filter(d => d.id.startsWith(prefix)).map(({ id, title }) => ({ id, title })) };
   });
   const resolvedTools = {};
   for (const [id, tool] of Object.entries(tools)) {
