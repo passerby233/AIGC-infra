@@ -8,24 +8,6 @@
 .foundation-platform p { margin: 0; min-width: 0; text-align: right; }
 .foundation-reader .foundation-platform a { text-decoration: none; color: #fff; }
 .foundation-platform-url { display: block; margin-top: 9px; font-size: 11px; color: #72839b; overflow-wrap: anywhere; }
-.foundation-diagram { margin: 28px 0; padding: 28px; border: 1px solid #dee5ef; border-radius: 16px; background: linear-gradient(160deg, #fcfdff, #f2f6fc); }
-.foundation-diagram figcaption { display: grid; gap: 6px; margin-bottom: 22px; }
-.foundation-diagram figcaption strong { font-size: 19px; color: #273b59; }
-.foundation-layer-label { margin-bottom: 10px; font-size: 12px; color: #72839b; }
-.foundation-stage-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.foundation-reader .foundation-stage-grid a { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 6px; border: 1px solid #dce4ef; border-radius: 10px; background: #fff; color: #354d70; font-size: 12px; text-align: center; text-decoration: none; }
-.foundation-stage-grid small { font-size: 10px; color: #8897ab; }
-.foundation-stage-grid .icon { width: 22px; height: 22px; }
-.foundation-shared-layer { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 26px; padding: 18px 12px; margin-top: 12px; border: 1px dashed #b9cbe3; border-radius: 10px; }
-.foundation-shared-layer > span, .foundation-reader .foundation-shared-layer a { display: inline-flex; align-items: center; gap: 7px; color: #546e95; text-decoration: none; font-size: 12px; }
-.foundation-shared-layer > span { font-weight: 600; }
-.foundation-support-arrow { text-align: center; color: #6a8ac3; font-size: 30px; line-height: 1.6; }
-.foundation-base { padding: 20px; border-radius: 12px; background: #263e65; color: #fff; }
-.foundation-base > div { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.foundation-base strong { font-size: 17px; color: #fff; }
-.foundation-base > div > span { margin-left: auto; font-size: 11px; color: #becde4; }
-.foundation-base ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 16px 0 0; list-style: none; }
-.foundation-base li { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 0; padding: 10px 4px; border: 1px solid #567098; border-radius: 7px; font-size: 12px; }
 .foundation-capabilities-viewport { overflow-x: auto; margin: 18px 0 22px; padding-bottom: 6px; }
 .foundation-capabilities { display: grid; grid-template-columns: repeat(5, minmax(160px, 1fr)); gap: 12px; }
 .foundation-capability { padding: 16px; border: 1px solid #dee5ef; border-radius: 12px; background: #fff; }
@@ -37,19 +19,9 @@
 .foundation-reader .table-scroll { margin-top: 0; }
 .foundation-reader table { min-width: 640px; width: 100%; }
 .foundation-reader a:focus-visible { outline: 2px solid #5076b8; outline-offset: 4px; }
-.foundation-reader .foundation-stage-grid a:hover { border-color: #8ca8d2; background: #f5f8ff; }
-@media (max-width: 900px) {
-  .foundation-stage-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .foundation-base ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
 @media (max-width: 700px) {
   .foundation-reader > h1 { font-size: 28px; }
   .foundation-topline .eyebrow { font-size: 9px; }
   .foundation-platform { align-items: flex-start; flex-direction: column; gap: 12px; padding: 18px; }
   .foundation-platform p { text-align: left; }
-  .foundation-diagram { padding: 18px 12px; }
-  .foundation-diagram figcaption strong { font-size: 16px; }
-  .foundation-base { padding: 16px 12px; }
-  .foundation-base > div > span { flex-basis: 100%; margin-left: 0; }
-  .foundation-base ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
