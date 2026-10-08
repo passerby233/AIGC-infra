@@ -1,6 +1,6 @@
 # 数据模块分层与交付
 
-类型：设计 · 状态：模块边界已确认，具体平台接入待核对 · 更新：2026-10-07
+类型：设计 · 状态：模块边界已确认，具体平台接入待核对 · 更新：2026-10-08
 
 [返回模块入口](README.md) · [数据处理管线](003-data-processing.design.md) · [对象与接口协议](001-data-engineering.design.md)
 
@@ -18,7 +18,7 @@
 | [数据处理](#处理与管线) | avproc-ray、SingleShot / MultiShot 管线 |
 | [数据验收](#验收与抽检) | 统一 DataViewer、抽检与验收记录 |
 | [数据消费](#消费与使用) | 训练与评测模块 |
-| [存储与版本](#存储与版本)（共同底层） | MongoDB、PASS、公共技术底座 |
+| [存储与版本](#存储与版本)（共同底层） | MongoDB、[PAAS 数据集浏览](https://paas.myhexin.com/hithinkflow/dataview/list?projectId=42&tenantId=262)、[PAAS 我的数据集](https://paas.myhexin.com/mfasset/compute/my-datasets?tenantId=262&projectId=37)、公共技术底座 |
 
 存储贯穿原片、加工结果和固定版本的生命周期。验收和消费分别读取存储，验收按项目规则组织抽检、记录证据和确认结论；是否作为版本发布或消费的前置门槛，由项目规则定义。算力、文件传输、媒体解析和访问权限复用公共技术底座。
 
@@ -49,7 +49,7 @@
 
 版本构建在固定快照上执行筛选和分组划分，保存排除原因与分布报告。它属于数据资产交付，不并入镜头切分、质量分析等处理算子流程。复制到 OSS / CPFS 不生成新的逻辑数据版本。
 
-入口：[版本构建与训练交付](001-data-engineering.design.md#数据集版本与训练交付) · [公共技术底座](../../platform/foundation/README.md)
+入口：[PAAS 数据集浏览](https://paas.myhexin.com/hithinkflow/dataview/list?projectId=42&tenantId=262) · [PAAS 我的数据集](https://paas.myhexin.com/mfasset/compute/my-datasets?tenantId=262&projectId=37) · [版本构建与训练交付](001-data-engineering.design.md#数据集版本与训练交付) · [公共技术底座](../../platform/foundation/README.md)
 
 ## 验收与抽检
 

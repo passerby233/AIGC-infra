@@ -180,7 +180,7 @@ function documentPage(id, section) {
 }
 function toolsPage() {
   renderNavigation('tools'); breadcrumbs('平台与工具');
-  const list = Object.values(content.tools).filter(t => filter === 'all' || filter === 'entry' && t.url && !t.linkLabel || filter === 'protocol' && t.status === '协议可用' || filter === 'plan' && ['正在开发', '已提需求', '方案阶段', '待配置入口'].includes(t.status));
+  const list = Object.values(content.tools).filter(t => filter === 'all' || filter === 'entry' && t.url && ['平台入口', '代码入口', '入口已配置', '协议可用'].includes(t.status) || filter === 'protocol' && t.status === '协议可用' || filter === 'plan' && ['正在开发', '已提需求', '方案阶段', '待配置入口'].includes(t.status));
   main.innerHTML = `<div class="page tools-page"><div class="page-heading"><div class="eyebrow">PLATFORM DIRECTORY</div><h1>平台与工具</h1><p>已有入口直接进入，尚在建设的能力先阅读方案。</p></div><div class="filter-bar">${[['all', '全部工具'], ['entry', '平台与代码入口'], ['protocol', '文档协议'], ['plan', '规划与待接入']].map(([key, label]) => `<button class="filter-button ${filter === key ? 'selected' : ''}" data-filter="${key}" aria-pressed="${filter === key}">${label}</button>`).join('')}<span>${list.length} 项</span></div><div class="tool-grid tool-directory">${list.map(t => toolCard(t.id)).join('')}</div></div>`;
 }
 function videoGenerationPage(viewId, query) {

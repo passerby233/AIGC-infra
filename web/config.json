@@ -5,8 +5,10 @@
     "prim-eval": { "url": "http://117.50.195.94:2051/" },
     "algorithm-template": { "url": null },
     "group-dashboard": { "url": null },
-    "pass": { "url": null },
-    "training": { "url": null },
+    "pass": { "url": "https://paas.myhexin.com/hithinkflow/dataview/list?projectId=42&tenantId=262" },
+    "paas-datasets": { "url": "https://paas.myhexin.com/mfasset/compute/my-datasets?tenantId=262&projectId=37" },
+    "training": { "url": "https://paas.myhexin.com/mfasset/model/list/createtraintask?projectId=37&tenantId=262&from=trainTaskModelCreate" },
+    "paas-task-skill": { "url": "https://paas.myhexin.com/skill-market-front/skill-detail/953847f3-d535-44e0-8a31-9c66060a580a" },
     "serving": { "url": null },
     "feedback": { "url": null },
     "avproc": { "url": "https://git-cc.myhexin.com:6443/10jqka/llm/aigc-05-04/avproc-ray" }

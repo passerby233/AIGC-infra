@@ -87,7 +87,7 @@ HOST=127.0.0.1 PORT=8080 BASE_PATH=/aigc-infra/ npm start
 
 ## 配置真实的平台入口
 
-已有地址：Prim Eval、avproc-ray 代码仓库，以及两个 Jira 需求。PASS、训练平台、推理服务、反馈平台和算法组 dashboard 的入口尚待提供。没有地址时只展示方案或协议。
+已有地址：Prim Eval、PAAS 数据集浏览与我的数据集、avproc-ray 代码仓库，以及两个 Jira 需求。训练平台、推理服务、反馈平台和算法组 dashboard 的入口尚待提供。没有地址时只展示方案或协议。
 
 创建不入库的 `web/config.local.json`，只列出需要覆盖的配置：
 

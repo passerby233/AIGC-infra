@@ -19,7 +19,7 @@
 | 处理与管线 | avproc-ray / 算子侧 | 切片、指标、caption、条件与运行记录 | [模块说明](002-data-modules.design.md#处理与管线) · [内部管线](003-data-processing.design.md) · [代码入口](https://git-cc.myhexin.com:6443/10jqka/llm/aigc-05-04/avproc-ray) |
 | 验收与抽检 | 数据验收 / 抽检侧，复用 DataViewer | 验收结论、抽检证据与问题引用 | [模块说明](002-data-modules.design.md#验收与抽检) · [DataViewer](../../platform/data-viewer/README.md) |
 | 消费与使用 | 训练 / 评测侧 | 固定数据版本、split、媒体与必需条件 | [模块说明](002-data-modules.design.md#消费与使用) · [训练](../03-training/README.md) · [评测](../04-evaluation/README.md) |
-| 存储与版本（共同底层） | MongoDB / PASS / 公共底座 | 媒体、元数据、固定版本及清单 | [模块说明](002-data-modules.design.md#存储与版本) · [版本协议](001-data-engineering.design.md#数据集版本与训练交付) |
+| 存储与版本（共同底层） | MongoDB / PAAS / 公共底座 | 媒体、元数据、固定版本及清单 | [PAAS 数据集浏览](https://paas.myhexin.com/hithinkflow/dataview/list?projectId=42&tenantId=262) · [PAAS 我的数据集](https://paas.myhexin.com/mfasset/compute/my-datasets?tenantId=262&projectId=37) · [模块说明](002-data-modules.design.md#存储与版本) · [版本协议](001-data-engineering.design.md#数据集版本与训练交付) |
 
 完整说明：[上层能力模块与交付](002-data-modules.design.md) · [下层数据处理管线](003-data-processing.design.md)。
 
